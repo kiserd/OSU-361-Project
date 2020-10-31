@@ -1,1 +1,1 @@
-web: node practice.js
+web: node index.js
