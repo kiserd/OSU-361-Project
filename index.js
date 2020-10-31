@@ -12,7 +12,15 @@ app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req , res, next) => {
-  res.render('home');
+  res.render('choose_recipe');
+});
+
+app.get('/build_recipe', (req , res, next) => {
+  res.render('build_recipe');
+});
+
+app.get('/my_recipes', (req , res, next) => {
+  res.render('my_recipes');
 });
 
 app.use(function(req,res){
