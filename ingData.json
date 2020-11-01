@@ -1,0 +1,2122 @@
+{
+    "crops": [
+        {
+            "name": "Wheat (Durum wheat, Wheat nes and meslin)",
+            "green": "1277",
+            "blue": "342",
+            "grey": "207"
+        },
+        {
+            "name": "Wheat or meslin flour",
+            "green": "1292",
+            "blue": "347",
+            "grey": "210"
+        },
+        {
+            "name": "Wheat bread",
+            "green": "1124",
+            "blue": "301",
+            "grey": "183"
+        },
+        {
+            "name": "Dry pasta",
+            "green": "1292",
+            "blue": "347",
+            "grey": "210"
+        },
+        {
+            "name": "Wheat groats and meal",
+            "green": "1423",
+            "blue": "382",
+            "grey": "231"
+        },
+        {
+            "name": "Wheat pellets",
+            "green": "1423",
+            "blue": "382",
+            "grey": "231"
+        },
+        {
+            "name": "Wheat, starch",
+            "green": "1004",
+            "blue": "269",
+            "grey": "163"
+        },
+        {
+            "name": "Wheat gluten, whether or not dried",
+            "green": "2928",
+            "blue": "785",
+            "grey": "476"
+        },
+        {
+            "name": "Rice in the husk (paddy or rough)",
+            "green": "1146",
+            "blue": "341",
+            "grey": "187"
+        },
+        {
+            "name": "Rice, husked (brown)",
+            "green": "1488",
+            "blue": "443",
+            "grey": "242"
+        },
+        {
+            "name": "Rice, semi-milled or wholly milled, whether or not polished or glazed",
+            "green": "1653",
+            "blue": "492",
+            "grey": "269"
+        },
+        {
+            "name": "Rice, broken",
+            "green": "1710",
+            "blue": "509",
+            "grey": "278"
+        },
+        {
+            "name": "Rice flour",
+            "green": "1800",
+            "blue": "535",
+            "grey": "293"
+        },
+        {
+            "name": "Rice groats and meal",
+            "green": "1527",
+            "blue": "454",
+            "grey": "249"
+        },
+        {
+            "name": "Barley",
+            "green": "1213",
+            "blue": "79",
+            "grey": "131"
+        },
+        {
+            "name": "Barley, rolled or flaked grains",
+            "green": "1685",
+            "blue": "110",
+            "grey": "182"
+        },
+        {
+            "name": "Barley,hulled,pearled,sliced or kibbled",
+            "green": "1685",
+            "blue": "110",
+            "grey": "182"
+        },
+        {
+            "name": "Malt, not roasted",
+            "green": "1662",
+            "blue": "108",
+            "grey": "180"
+        },
+        {
+            "name": "Malt, roasted",
+            "green": "2078",
+            "blue": "135",
+            "grey": "225"
+        },
+        {
+            "name": "Beer made from malt",
+            "green": "254",
+            "blue": "16",
+            "grey": "27"
+        },
+        {
+            "name": "Maize (corn)",
+            "green": "947",
+            "blue": "81",
+            "grey": "194"
+        },
+        {
+            "name": "Maize (corn) nes",
+            "green": "947",
+            "blue": "81",
+            "grey": "194"
+        },
+        {
+            "name": "Maize (corn) flour",
+            "green": "971",
+            "blue": "83",
+            "grey": "199"
+        },
+        {
+            "name": "Maize (corn) groats and meal",
+            "green": "837",
+            "blue": "72",
+            "grey": "171"
+        },
+        {
+            "name": "Maize (corn), hulled, pearled, sliced or kibbled",
+            "green": "1018",
+            "blue": "87",
+            "grey": "209"
+        },
+        {
+            "name": "Maize (corn) starch",
+            "green": "1295",
+            "blue": "111",
+            "grey": "265"
+        },
+        {
+            "name": "Maize (corn) oil crude",
+            "green": "1956",
+            "blue": "168",
+            "grey": "400"
+        },
+        {
+            "name": "Maize (corn) oil and its fractions,refined but not chemically modified",
+            "green": "1996",
+            "blue": "171",
+            "grey": "409"
+        },
+        {
+            "name": "Rye",
+            "green": "1419",
+            "blue": "25",
+            "grey": "99"
+        },
+        {
+            "name": "Rye flour",
+            "green": "1774",
+            "blue": "32",
+            "grey": "124"
+        },
+        {
+            "name": "Oats",
+            "green": "1479",
+            "blue": "181",
+            "grey": "128"
+        },
+        {
+            "name": "Oat groats and meal",
+            "green": "2098",
+            "blue": "257",
+            "grey": "182"
+        },
+        {
+            "name": "Oats, rolled or flaked grains",
+            "green": "1998",
+            "blue": "245",
+            "grey": "173"
+        },
+        {
+            "name": "Oats, hulled,pearled,sliced or kibbled",
+            "green": "2026",
+            "blue": "248",
+            "grey": "175"
+        },
+        {
+            "name": "Millet",
+            "green": "4306",
+            "blue": "57",
+            "grey": "115"
+        },
+        {
+            "name": "Grain sorghum",
+            "green": "2857",
+            "blue": "103",
+            "grey": "87"
+        },
+        {
+            "name": "Buckwheat",
+            "green": "2769",
+            "blue": "144",
+            "grey": "229"
+        },
+        {
+            "name": "Quinoa",
+            "green": "4184",
+            "blue": "48",
+            "grey": "280"
+        },
+        {
+            "name": "Fonio",
+            "green": "4938",
+            "blue": "",
+            "grey": "13"
+        },
+        {
+            "name": "Triticale",
+            "green": "826",
+            "blue": "38",
+            "grey": "89"
+        },
+        {
+            "name": "Canary seed",
+            "green": "4872",
+            "blue": "2",
+            "grey": "314"
+        },
+        {
+            "name": "Mixed grain",
+            "green": "1598",
+            "blue": "33",
+            "grey": "28"
+        },
+        {
+            "name": "Cereals unmilled nes",
+            "green": "3316",
+            "blue": "115",
+            "grey": "9"
+        },
+        {
+            "name": "Cereal flour nes",
+            "green": "3468",
+            "blue": "121",
+            "grey": "9"
+        },
+        {
+            "name": "Cereal groats and meal nes",
+            "green": "2896",
+            "blue": "101",
+            "grey": "8"
+        },
+        {
+            "name": "Cereal pellets nes",
+            "green": "2896",
+            "blue": "101",
+            "grey": "8"
+        },
+        {
+            "name": "Cereals, rolled or flaked grains nes",
+            "green": "3902",
+            "blue": "136",
+            "grey": "10"
+        },
+        {
+            "name": "Cereals, hulled, pearled, sliced or kibbled nes",
+            "green": "3902",
+            "blue": "136",
+            "grey": "10"
+        },
+        {
+            "name": "Germ of cereals, whole, rolled, flaked or ground",
+            "green": "2757",
+            "blue": "96",
+            "grey": "7"
+        },
+        {
+            "name": "Potatoes, fresh or chilled nes",
+            "green": "191",
+            "blue": "33",
+            "grey": "63"
+        },
+        {
+            "name": "Tapioca of potatoes",
+            "green": "955",
+            "blue": "165",
+            "grey": "317"
+        },
+        {
+            "name": "Potatoes, frozen",
+            "green": "382",
+            "blue": "66",
+            "grey": "127"
+        },
+        {
+            "name": "Potato flour and meal",
+            "green": "955",
+            "blue": "165",
+            "grey": "317"
+        },
+        {
+            "name": "Potato flakes",
+            "green": "694",
+            "blue": "120",
+            "grey": "230"
+        },
+        {
+            "name": "Potato starch",
+            "green": "1005",
+            "blue": "173",
+            "grey": "333"
+        },
+        {
+            "name": "Sweet potatoes, fresh or dried, whether or not sliced or pelleted",
+            "green": "324",
+            "blue": "5",
+            "grey": "53"
+        },
+        {
+            "name": "Manioc (cassava), fresh or dried, whether or not sliced or pelleted",
+            "green": "550",
+            "blue": "0",
+            "grey": "13"
+        },
+        {
+            "name": "Tapioca of cassava",
+            "green": "2750",
+            "blue": "1",
+            "grey": "66"
+        },
+        {
+            "name": "Flour of cassava",
+            "green": "1833",
+            "blue": "1",
+            "grey": "44"
+        },
+        {
+            "name": "Dried cassava",
+            "green": "1571",
+            "blue": "1",
+            "grey": "38"
+        },
+        {
+            "name": "Manioc (cassava) starch",
+            "green": "2200",
+            "blue": "1",
+            "grey": "53"
+        },
+        {
+            "name": "Yautia (cocoyam)",
+            "green": "849",
+            "blue": "22",
+            "grey": "11"
+        },
+        {
+            "name": "Taro (coco yam)",
+            "green": "587",
+            "blue": "3",
+            "grey": "15"
+        },
+        {
+            "name": "Yams",
+            "green": "341",
+            "blue": "0",
+            "grey": "1"
+        },
+        {
+            "name": "Salad beetroot,salsif,celeriac,radish&sim edibl roots,fresh/chilld nes",
+            "green": "348",
+            "blue": "15",
+            "grey": "22"
+        },
+        {
+            "name": "Arrowroot,salep etc fr o drid whether o not slicd o pelletd&sago pith",
+            "green": "348",
+            "blue": "15",
+            "grey": "22"
+        },
+        {
+            "name": "Roots and tubers nes",
+            "green": "348",
+            "blue": "15",
+            "grey": "22"
+        },
+        {
+            "name": "Flour&meal of sago&of roots or tubers with hi starch or inulin content",
+            "green": "1392",
+            "blue": "61",
+            "grey": "88"
+        },
+        {
+            "name": "Sugar cane, fresh or dried, whether or not ground",
+            "green": "139",
+            "blue": "57",
+            "grey": "13"
+        },
+        {
+            "name": "Raw sugar, cane",
+            "green": "1107",
+            "blue": "455",
+            "grey": "104"
+        },
+        {
+            "name": "Refined sugar,in solid form,containg added flavourg or colourg matter",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Refined sugar, in solid form, nes",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Maple sugar and maple syrup",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Glucose&glucose syrup nt cntg fruct/cntg in dry state <20% by wt fruct",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Glucose inc syrup cntg in dry state min 20% but <50% by wt of fructose",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Fructose, chemically pure",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Fructose&fructose syrup nes,cntg in dry state >50% by wght of fructose",
+            "green": "1184",
+            "blue": "487",
+            "grey": "111"
+        },
+        {
+            "name": "Cane molasses",
+            "green": "350",
+            "blue": "144",
+            "grey": "33"
+        },
+        {
+            "name": "Sugar beet, fresh or dried, whether or not ground",
+            "green": "82",
+            "blue": "26",
+            "grey": "25"
+        },
+        {
+            "name": "Raw sugar, beet",
+            "green": "535",
+            "blue": "167",
+            "grey": "162"
+        },
+        {
+            "name": "Molasses nes",
+            "green": "139",
+            "blue": "43",
+            "grey": "42"
+        },
+        {
+            "name": "Sugar crops, nes",
+            "green": "980",
+            "blue": "",
+            "grey": "94"
+        },
+        {
+            "name": "Sugar nes, including invert sugar",
+            "green": "9795",
+            "blue": "",
+            "grey": "935"
+        },
+        {
+            "name": "Beans,small red (Adzuki) dried,shelled,whether or not skinned or split",
+            "green": "3945",
+            "blue": "125",
+            "grey": "983"
+        },
+        {
+            "name": "Kidney beans&white pea beans drid shelld,whether o not skinnd o split",
+            "green": "3945",
+            "blue": "125",
+            "grey": "983"
+        },
+        {
+            "name": "Beans dried, shelled, whether or not skinned or split, nes",
+            "green": "3945",
+            "blue": "125",
+            "grey": "983"
+        },
+        {
+            "name": "Flour and meal of the dried leguminous vegetables of heading No 07.13",
+            "green": "5479",
+            "blue": "173",
+            "grey": "1366"
+        },
+        {
+            "name": "Broad beans&horse beans dried,shelled,whether or not skinned or split",
+            "green": "1317",
+            "blue": "205",
+            "grey": "496"
+        },
+        {
+            "name": "Peas dried, shelled, whether or not skinned or split",
+            "green": "1453",
+            "blue": "33",
+            "grey": "493"
+        },
+        {
+            "name": "Chickpeas, dried, shelled, whether or not skinned or split",
+            "green": "2972",
+            "blue": "224",
+            "grey": "981"
+        },
+        {
+            "name": "Cow peas, dry",
+            "green": "6841",
+            "blue": "10",
+            "grey": "55"
+        },
+        {
+            "name": "Pigeon peas",
+            "green": "4739",
+            "blue": "72",
+            "grey": "683"
+        },
+        {
+            "name": "Lentils dried, shelled, whether or not skinned or split",
+            "green": "4324",
+            "blue": "489",
+            "grey": "1060"
+        },
+        {
+            "name": "Bambara beans",
+            "green": "3162",
+            "blue": "71",
+            "grey": "34"
+        },
+        {
+            "name": "Vetches",
+            "green": "2031",
+            "blue": "109",
+            "grey": "213"
+        },
+        {
+            "name": "Lupins",
+            "green": "1350",
+            "blue": "21",
+            "grey": "506"
+        },
+        {
+            "name": "Urd,mung,black/green gram beans drid shelld,whether/not skinnd/split",
+            "green": "2217",
+            "blue": "250",
+            "grey": "650"
+        },
+        {
+            "name": "Pulses nes",
+            "green": "2217",
+            "blue": "250",
+            "grey": "650"
+        },
+        {
+            "name": "Brazil nuts, with shell",
+            "green": "248",
+            "blue": "",
+            "grey": "8"
+        },
+        {
+            "name": "Cashew nuts",
+            "green": "12853",
+            "blue": "921",
+            "grey": "444"
+        },
+        {
+            "name": "Chestnuts, fresh or dried, whether or not shelled or peeled",
+            "green": "2432",
+            "blue": "174",
+            "grey": "144"
+        },
+        {
+            "name": "Almonds in shell fresh or dried",
+            "green": "4632",
+            "blue": "1908",
+            "grey": "1507"
+        },
+        {
+            "name": "Almonds,fresh or dried,shelled or peeled",
+            "green": "9264",
+            "blue": "3816",
+            "grey": "3015"
+        },
+        {
+            "name": "Walnuts in shell, fresh or dried",
+            "green": "2805",
+            "blue": "1299",
+            "grey": "814"
+        },
+        {
+            "name": "Walnuts, fresh or dried, shelled or peeled",
+            "green": "5293",
+            "blue": "2451",
+            "grey": "1536"
+        },
+        {
+            "name": "Pistachios, fresh or dried, whether or not shelled or peeled",
+            "green": "3095",
+            "blue": "7602",
+            "grey": "666"
+        },
+        {
+            "name": "Kolanuts",
+            "green": "23345",
+            "blue": "26",
+            "grey": "19"
+        },
+        {
+            "name": "Hazelnuts or filberts in shell fresh or dried",
+            "green": "3813",
+            "blue": "1090",
+            "grey": "354"
+        },
+        {
+            "name": "Hazelnuts or filberts, fresh or dried, shelled or peeled",
+            "green": "7627",
+            "blue": "2180",
+            "grey": "709"
+        },
+        {
+            "name": "Arecanuts",
+            "green": "10621",
+            "blue": "139",
+            "grey": "406"
+        },
+        {
+            "name": "Nuts edible, fresh or dried, whether or not shelled or peeled, nes",
+            "green": "8379",
+            "blue": "1156",
+            "grey": "891"
+        },
+        {
+            "name": "Soya beans",
+            "green": "2037",
+            "blue": "70",
+            "grey": "37"
+        },
+        {
+            "name": "Soya sauce",
+            "green": "582",
+            "blue": "20",
+            "grey": "11"
+        },
+        {
+            "name": "Soya curd (tofu)",
+            "green": "543",
+            "blue": "19",
+            "grey": "10"
+        },
+        {
+            "name": "soybean ingredient into the soymilk",
+            "green": "3574",
+            "blue": "123",
+            "grey": "65"
+        },
+        {
+            "name": "Soy burger",
+            "green": "3574",
+            "blue": "123",
+            "grey": "65"
+        },
+        {
+            "name": "Soya bean flour and meals",
+            "green": "2397",
+            "blue": "83",
+            "grey": "44"
+        },
+        {
+            "name": "Soya-bean oil crude, whether or not degummed",
+            "green": "3900",
+            "blue": "135",
+            "grey": "71"
+        },
+        {
+            "name": "Soya-bean oil and its fractions, refined but not chemically modified",
+            "green": "3980",
+            "blue": "137",
+            "grey": "73"
+        },
+        {
+            "name": "Soya-bean oil-cake&oth solid residues,whether or not ground or pellet",
+            "green": "1690",
+            "blue": "58",
+            "grey": "31"
+        },
+        {
+            "name": "Ground-nuts in shell not roasted or otherwise cooked",
+            "green": "2469",
+            "blue": "150",
+            "grey": "163"
+        },
+        {
+            "name": "Ground-nuts shelld,whether or not broken,not roastd or otherwise cookd",
+            "green": "3526",
+            "blue": "214",
+            "grey": "234"
+        },
+        {
+            "name": "Ground-nut oil, crude",
+            "green": "6547",
+            "blue": "397",
+            "grey": "434"
+        },
+        {
+            "name": "Ground-nut oil and its fractions refined but not chemically modified",
+            "green": "6681",
+            "blue": "405",
+            "grey": "442"
+        },
+        {
+            "name": "Ground-nut oil-cake&oth solid residues,whether or not ground or pellet",
+            "green": "1317",
+            "blue": "80",
+            "grey": "87"
+        },
+        {
+            "name": "Coconuts",
+            "green": "2669",
+            "blue": "2",
+            "grey": "16"
+        },
+        {
+            "name": "Copra",
+            "green": "2079",
+            "blue": "1",
+            "grey": "12"
+        },
+        {
+            "name": "Coconut (husked)",
+            "green": "1248",
+            "blue": "1",
+            "grey": "7"
+        },
+        {
+            "name": "Coconut (copra) oil crude",
+            "green": "4372",
+            "blue": "3",
+            "grey": "26"
+        },
+        {
+            "name": "Coconut (copra) oil&its fractions refined but not chemically modified",
+            "green": "4461",
+            "blue": "3",
+            "grey": "27"
+        },
+        {
+            "name": "Coconut/copra oil-cake&oth solid residues,whether/not ground/pellet",
+            "green": "829",
+            "blue": "1",
+            "grey": "5"
+        },
+        {
+            "name": "Coconut (coir) fibre, raw",
+            "green": "3245",
+            "blue": "2",
+            "grey": "19"
+        },
+        {
+            "name": "Coconut (coir) fibre,processd nt spun;tow,noils&waste of coconut fib",
+            "green": "2434",
+            "blue": "2",
+            "grey": "15"
+        },
+        {
+            "name": "Palm nuts and kernels, whether or not broken",
+            "green": "2762",
+            "blue": "1",
+            "grey": "105"
+        },
+        {
+            "name": "Oil palm fruit",
+            "green": "1057",
+            "blue": "0",
+            "grey": "40"
+        },
+        {
+            "name": "Palm oil, crude",
+            "green": "4691",
+            "blue": "1",
+            "grey": "179"
+        },
+        {
+            "name": "Palm oil and its fractions refined but not chemically modified",
+            "green": "4787",
+            "blue": "1",
+            "grey": "182"
+        },
+        {
+            "name": "Palm kernel or babassu oil, crude",
+            "green": "5098",
+            "blue": "1",
+            "grey": "194"
+        },
+        {
+            "name": "Palm kernel/babassu oil their fract,refind but not chemically modifid",
+            "green": "5202",
+            "blue": "1",
+            "grey": "198"
+        },
+        {
+            "name": "Palm nut/kernel oil-cake&oth solid residues,whether/not ground/pellet",
+            "green": "802",
+            "blue": "0",
+            "grey": "31"
+        },
+        {
+            "name": "Olives",
+            "green": "2470",
+            "blue": "499",
+            "grey": "45"
+        },
+        {
+            "name": "Olives,provisionally preservd but nt suitable f immediate consumption",
+            "green": "2470",
+            "blue": "499",
+            "grey": "45"
+        },
+        {
+            "name": "Olive oil, virgin",
+            "green": "11826",
+            "blue": "2388",
+            "grey": "217"
+        },
+        {
+            "name": "Olive oil and its fractions refined but not chemically modified",
+            "green": "12067",
+            "blue": "2437",
+            "grey": "221"
+        },
+        {
+            "name": "Oils&thr fract nes obt from olives,ref'd/not,not chem mod,incl blends",
+            "green": "5260",
+            "blue": "1062",
+            "grey": "96"
+        },
+        {
+            "name": "Castor oil seeds, whether or not broken",
+            "green": "8423",
+            "blue": "1175",
+            "grey": "298"
+        },
+        {
+            "name": "Castor oil&its fractions,whether/not refind,but not chemically modifid",
+            "green": "21058",
+            "blue": "2938",
+            "grey": "744"
+        },
+        {
+            "name": "Sunflower seeds, whether or not broken",
+            "green": "3017",
+            "blue": "148",
+            "grey": "201"
+        },
+        {
+            "name": "Sunflower-seed or safflower oil, crude",
+            "green": "5967",
+            "blue": "293",
+            "grey": "397"
+        },
+        {
+            "name": "Sunflower-sed/safflower oil&their fractions refind but nt chem modifid",
+            "green": "6088",
+            "blue": "299",
+            "grey": "405"
+        },
+        {
+            "name": "Sunflower sed oil-cake&oth solid residues,whether/not ground/pellet",
+            "green": "1215",
+            "blue": "60",
+            "grey": "81"
+        },
+        {
+            "name": "Rape or colza seeds, whether or not broken",
+            "green": "1703",
+            "blue": "231",
+            "grey": "336"
+        },
+        {
+            "name": "Rape, colza or mustard oil crude",
+            "green": "3162",
+            "blue": "429",
+            "grey": "624"
+        },
+        {
+            "name": "Rape,colza o mustard oil&their fract,refind but not chemically modifid",
+            "green": "3226",
+            "blue": "438",
+            "grey": "636"
+        },
+        {
+            "name": "Rape/colza sed oil-cake&oth solid residues,whether/not ground/pellet",
+            "green": "837",
+            "blue": "114",
+            "grey": "165"
+        },
+        {
+            "name": "Safflower seeds, whether or not broken",
+            "green": "6000",
+            "blue": "938",
+            "grey": "283"
+        },
+        {
+            "name": "Sesamum seeds, whether or not broken",
+            "green": "8460",
+            "blue": "509",
+            "grey": "403"
+        },
+        {
+            "name": "Sesame oil&its fractions whether/not refind,but not chemically modifid",
+            "green": "19674",
+            "blue": "1183",
+            "grey": "936"
+        },
+        {
+            "name": "Mustard seeds, whether or not broken",
+            "green": "2463",
+            "blue": "1",
+            "grey": "345"
+        },
+        {
+            "name": "Poppy seeds, whether or not broken",
+            "green": "1723",
+            "blue": "",
+            "grey": "464"
+        },
+        {
+            "name": "Melonseed",
+            "green": "5087",
+            "blue": "56",
+            "grey": "41"
+        },
+        {
+            "name": "Seed cotton",
+            "green": "2282",
+            "blue": "1306",
+            "grey": "440"
+        },
+        {
+            "name": "Cotton seeds, whether or not broken",
+            "green": "755",
+            "blue": "432",
+            "grey": "146"
+        },
+        {
+            "name": "Cotton lint",
+            "green": "5163",
+            "blue": "2955",
+            "grey": "996"
+        },
+        {
+            "name": "Cotton linters",
+            "green": "1474",
+            "blue": "844",
+            "grey": "284"
+        },
+        {
+            "name": "Cotton-seed oil crude, whether or not gossypol has been removed",
+            "green": "2242",
+            "blue": "1283",
+            "grey": "432"
+        },
+        {
+            "name": "Cotton-seed and its fractions refined but not chemically modified",
+            "green": "2242",
+            "blue": "1283",
+            "grey": "432"
+        },
+        {
+            "name": "Cotton sed oil-cake&oth solid residues,whether or not ground or pellet",
+            "green": "487",
+            "blue": "279",
+            "grey": "94"
+        },
+        {
+            "name": "Cotton, not carded or combed",
+            "green": "5163",
+            "blue": "2955",
+            "grey": "996"
+        },
+        {
+            "name": "Cotton yarn waste (including thread waste)",
+            "green": "950",
+            "blue": "544",
+            "grey": "183"
+        },
+        {
+            "name": "Garnetted stock of cotton",
+            "green": "1426",
+            "blue": "816",
+            "grey": "275"
+        },
+        {
+            "name": "Cotton waste, nes",
+            "green": "1677",
+            "blue": "960",
+            "grey": "323"
+        },
+        {
+            "name": "Cotton, carded or combed",
+            "green": "5359",
+            "blue": "3067",
+            "grey": "1034"
+        },
+        {
+            "name": "Cotton fabric and finished textiles",
+            "green": "5384",
+            "blue": "3253",
+            "grey": "1344"
+        },
+        {
+            "name": "Linseed, whether or not broken",
+            "green": "4730",
+            "blue": "268",
+            "grey": "170"
+        },
+        {
+            "name": "Linseed oil, crude",
+            "green": "8445",
+            "blue": "478",
+            "grey": "303"
+        },
+        {
+            "name": "Linseed oil and its fractions, refined but not chemically modified",
+            "green": "8618",
+            "blue": "488",
+            "grey": "310"
+        },
+        {
+            "name": "Linseed oil-cake&other solid residues,whether or not ground or pellet",
+            "green": "2816",
+            "blue": "160",
+            "grey": "101"
+        },
+        {
+            "name": "Hempseed",
+            "green": "3257",
+            "blue": "12",
+            "grey": "417"
+        },
+        {
+            "name": "Oilseeds, Nes",
+            "green": "3230",
+            "blue": "131",
+            "grey": "61"
+        },
+        {
+            "name": "Shea nuts (karite nuts), whether or not broken",
+            "green": "3230",
+            "blue": "131",
+            "grey": "61"
+        },
+        {
+            "name": "Oil seeds and oleaginous fruits, nes, whether or not broken",
+            "green": "3230",
+            "blue": "131",
+            "grey": "61"
+        },
+        {
+            "name": "Flours and meals of oil seeds or oleaginous fruits,except mustard,nes",
+            "green": "4037",
+            "blue": "163",
+            "grey": "76"
+        },
+        {
+            "name": "Jojoba oil&its fractions whether/not refind,but not chemically modifid",
+            "green": "3230",
+            "blue": "131",
+            "grey": "61"
+        },
+        {
+            "name": "Cabbages,kohlrabi,kale and sim edible brassicas nes,fresh or chilled",
+            "green": "181",
+            "blue": "26",
+            "grey": "73"
+        },
+        {
+            "name": "Globe artichokes, fresh or chilled",
+            "green": "478",
+            "blue": "242",
+            "grey": "98"
+        },
+        {
+            "name": "Asparagus, fresh or chilled",
+            "green": "1524",
+            "blue": "119",
+            "grey": "507"
+        },
+        {
+            "name": "Cabbage lettuce (head lettuce) fresh or chilled",
+            "green": "133",
+            "blue": "28",
+            "grey": "77"
+        },
+        {
+            "name": "Lettuce, fresh or chilled nes",
+            "green": "133",
+            "blue": "28",
+            "grey": "77"
+        },
+        {
+            "name": "Spinach,N-Z spinach & orache spinach (garden spinach),fresh or chilled",
+            "green": "118",
+            "blue": "14",
+            "grey": "160"
+        },
+        {
+            "name": "Spinach, N-Z spinach and orache spinach (garden spinach), frozen",
+            "green": "338",
+            "blue": "39",
+            "grey": "457"
+        },
+        {
+            "name": "Tomatoes, fresh or chilled",
+            "green": "108",
+            "blue": "63",
+            "grey": "43"
+        },
+        {
+            "name": "Tomato juice, concentrated",
+            "green": "539",
+            "blue": "316",
+            "grey": "213"
+        },
+        {
+            "name": "Tomato paste",
+            "green": "431",
+            "blue": "253",
+            "grey": "171"
+        },
+        {
+            "name": "Tomato ketchup",
+            "green": "270",
+            "blue": "158",
+            "grey": "107"
+        },
+        {
+            "name": "Tomato puree",
+            "green": "360",
+            "blue": "211",
+            "grey": "142"
+        },
+        {
+            "name": "Peeled tomatoes",
+            "green": "135",
+            "blue": "79",
+            "grey": "53"
+        },
+        {
+            "name": "Tomato, dried",
+            "green": "2157",
+            "blue": "1265",
+            "grey": "853"
+        },
+        {
+            "name": "Tomato juice unfermented&not spirited,whether or not sugared or sweet",
+            "green": "135",
+            "blue": "79",
+            "grey": "53"
+        },
+        {
+            "name": "Cauliflowers and headed broccoli, fresh or chilled",
+            "green": "189",
+            "blue": "21",
+            "grey": "75"
+        },
+        {
+            "name": "Brussels sprouts, fresh or chilled",
+            "green": "189",
+            "blue": "21",
+            "grey": "75"
+        },
+        {
+            "name": "Pumpkins, squash and gourds",
+            "green": "228",
+            "blue": "24",
+            "grey": "84"
+        },
+        {
+            "name": "Cucumbers and gherkins, fresh or chilled",
+            "green": "206",
+            "blue": "42",
+            "grey": "105"
+        },
+        {
+            "name": "Cucumbers&gherkins provisionally presvd,but nt f immediate consumption",
+            "green": "206",
+            "blue": "42",
+            "grey": "105"
+        },
+        {
+            "name": "Aubergines(egg-plants), fresh or chilled",
+            "green": "234",
+            "blue": "33",
+            "grey": "95"
+        },
+        {
+            "name": "Peppers of the genus Capsicum or of the genus Pimenta,fresh or chilled",
+            "green": "240",
+            "blue": "42",
+            "grey": "97"
+        },
+        {
+            "name": "Onions and shallots, fresh or chilled",
+            "green": "176",
+            "blue": "44",
+            "grey": "51"
+        },
+        {
+            "name": "Onions,provisionally preservd but nt suitable f immediate consumption",
+            "green": "192",
+            "blue": "88",
+            "grey": "65"
+        },
+        {
+            "name": "Onions dried but not further prepared",
+            "green": "192",
+            "blue": "88",
+            "grey": "65"
+        },
+        {
+            "name": "Garlic, fresh or chilled",
+            "green": "337",
+            "blue": "81",
+            "grey": "170"
+        },
+        {
+            "name": "Garlic powder",
+            "green": "1297",
+            "blue": "313",
+            "grey": "655"
+        },
+        {
+            "name": "Beans, shelled or unshelled, fresh or chilled",
+            "green": "320",
+            "blue": "54",
+            "grey": "188"
+        },
+        {
+            "name": "Beans, frozen",
+            "green": "456",
+            "blue": "76",
+            "grey": "269"
+        },
+        {
+            "name": "Peas, shelled or unshelled, fresh or chilled",
+            "green": "382",
+            "blue": "63",
+            "grey": "150"
+        },
+        {
+            "name": "Peas, frozen",
+            "green": "546",
+            "blue": "89",
+            "grey": "215"
+        },
+        {
+            "name": "String beans",
+            "green": "301",
+            "blue": "104",
+            "grey": "143"
+        },
+        {
+            "name": "Carrots and turnips, fresh or chilled",
+            "green": "106",
+            "blue": "28",
+            "grey": "61"
+        },
+        {
+            "name": "Celery, other than celeriac, fresh or chilled",
+            "green": "106",
+            "blue": "28",
+            "grey": "61"
+        },
+        {
+            "name": "Okra",
+            "green": "474",
+            "blue": "36",
+            "grey": "65"
+        },
+        {
+            "name": "Maize, green",
+            "green": "455",
+            "blue": "157",
+            "grey": "88"
+        },
+        {
+            "name": "Sweet corn, frozen",
+            "green": "455",
+            "blue": "157",
+            "grey": "88"
+        },
+        {
+            "name": "Carobs",
+            "green": "4557",
+            "blue": "334",
+            "grey": "703"
+        },
+        {
+            "name": "Vegetables, fresh or chilled nes",
+            "green": "205",
+            "blue": "33",
+            "grey": "101"
+        },
+        {
+            "name": "Vegetables, frozen nes",
+            "green": "292",
+            "blue": "47",
+            "grey": "144"
+        },
+        {
+            "name": "Mixtures of vegetables, frozen",
+            "green": "205",
+            "blue": "33",
+            "grey": "101"
+        },
+        {
+            "name": "Vegetables nes&mixtures provis presvd but nt f immediate consumptn",
+            "green": "205",
+            "blue": "33",
+            "grey": "101"
+        },
+        {
+            "name": "Vegetables and mixtures dried, but not further prepared nes",
+            "green": "584",
+            "blue": "94",
+            "grey": "288"
+        },
+        {
+            "name": "Vegetable products nes used primarily for human consumption",
+            "green": "205",
+            "blue": "33",
+            "grey": "101"
+        },
+        {
+            "name": "Bananas including plantains, fresh or dried",
+            "green": "660",
+            "blue": "97",
+            "grey": "33"
+        },
+        {
+            "name": "Bananas",
+            "green": "660",
+            "blue": "97",
+            "grey": "33"
+        },
+        {
+            "name": "Plantains",
+            "green": "1570",
+            "blue": "27",
+            "grey": "6"
+        },
+        {
+            "name": "Oranges, fresh or dried",
+            "green": "401",
+            "blue": "110",
+            "grey": "49"
+        },
+        {
+            "name": "Orange juice,unfermentd&not spiritd,whether/not sugard/sweet,frozen",
+            "green": "729",
+            "blue": "199",
+            "grey": "90"
+        },
+        {
+            "name": "Orange juice nes,unfermentd&not spiritd,whether or not sugard or sweet",
+            "green": "729",
+            "blue": "199",
+            "grey": "90"
+        },
+        {
+            "name": "Mandarins(tang&sats)clementines&wilkgs &sim citrus hybrids,fresh/drid",
+            "green": "479",
+            "blue": "118",
+            "grey": "152"
+        },
+        {
+            "name": "Lemons and limes, fresh or dried",
+            "green": "432",
+            "blue": "152",
+            "grey": "58"
+        },
+        {
+            "name": "Grapefruit, fresh or dried",
+            "green": "367",
+            "blue": "85",
+            "grey": "54"
+        },
+        {
+            "name": "Grapefruit juice,unfermentd&not spiritd,whether or not sugard or sweet",
+            "green": "490",
+            "blue": "114",
+            "grey": "71"
+        },
+        {
+            "name": "Citrus fruits, fresh or dried, nes",
+            "green": "1145",
+            "blue": "62",
+            "grey": "35"
+        },
+        {
+            "name": "Peel of citrus fruit/melons (watermelons) fresh,frz,drid/prov presvd",
+            "green": "1370",
+            "blue": "74",
+            "grey": "42"
+        },
+        {
+            "name": "Citrus fruit juice nes exc mx unferment unspiritd,wthr/nt sug/sweet",
+            "green": "1459",
+            "blue": "79",
+            "grey": "45"
+        },
+        {
+            "name": "Fruit&veg juice nes (exc mx) unferment unspiritd,whether/not sug/sweet",
+            "green": "1459",
+            "blue": "79",
+            "grey": "45"
+        },
+        {
+            "name": "Mixtures of juices unfermentd&not spiritd whether o not sugard o sweet",
+            "green": "1459",
+            "blue": "79",
+            "grey": "45"
+        },
+        {
+            "name": "Apples, fresh",
+            "green": "561",
+            "blue": "133",
+            "grey": "127"
+        },
+        {
+            "name": "Apples, dried",
+            "green": "4678",
+            "blue": "1111",
+            "grey": "1058"
+        },
+        {
+            "name": "Apple juice unfermented&not spiritd whether or not sugard or sweetend",
+            "green": "780",
+            "blue": "185",
+            "grey": "176"
+        },
+        {
+            "name": "Pears and quinces, fresh",
+            "green": "645",
+            "blue": "94",
+            "grey": "183"
+        },
+        {
+            "name": "Apricots, fresh",
+            "green": "694",
+            "blue": "502",
+            "grey": "92"
+        },
+        {
+            "name": "Apricots, dried",
+            "green": "2392",
+            "blue": "1730",
+            "grey": "316"
+        },
+        {
+            "name": "Sour cherries",
+            "green": "1098",
+            "blue": "213",
+            "grey": "99"
+        },
+        {
+            "name": "Cherries, fresh",
+            "green": "961",
+            "blue": "531",
+            "grey": "112"
+        },
+        {
+            "name": "Cherries provisionally preservd but unsuitable f immediate consumption",
+            "green": "961",
+            "blue": "531",
+            "grey": "112"
+        },
+        {
+            "name": "Peaches, including nectarines, fresh",
+            "green": "583",
+            "blue": "188",
+            "grey": "139"
+        },
+        {
+            "name": "Plums and sloes, fresh",
+            "green": "1570",
+            "blue": "188",
+            "grey": "422"
+        },
+        {
+            "name": "Prunes, dried",
+            "green": "4487",
+            "blue": "537",
+            "grey": "1204"
+        },
+        {
+            "name": "Stone fruit, nes",
+            "green": "868",
+            "blue": "1049",
+            "grey": "136"
+        },
+        {
+            "name": "Mixtures of edible nuts or dried fruits of this chapter",
+            "green": "868",
+            "blue": "1049",
+            "grey": "136"
+        },
+        {
+            "name": "Apricot,peach/plum stones&kernels nes,usd primly f human consumption",
+            "green": "868",
+            "blue": "1049",
+            "grey": "136"
+        },
+        {
+            "name": "Strawberries, fresh",
+            "green": "201",
+            "blue": "109",
+            "grey": "37"
+        },
+        {
+            "name": "Strawberries,uncookd o steamd o boild in water,sweetend o not,frozen",
+            "green": "201",
+            "blue": "109",
+            "grey": "37"
+        },
+        {
+            "name": "Strawberries provis preservd but unsuitable f immediate consumption",
+            "green": "201",
+            "blue": "109",
+            "grey": "37"
+        },
+        {
+            "name": "Raspberries, blackberries, mulberries and loganberries, fresh",
+            "green": "293",
+            "blue": "53",
+            "grey": "67"
+        },
+        {
+            "name": "Raspberries,mulberries,etc uncook,steam/boil in water sweetend/nt,froz",
+            "green": "293",
+            "blue": "53",
+            "grey": "67"
+        },
+        {
+            "name": "Gooseberries",
+            "green": "487",
+            "blue": "8",
+            "grey": "31"
+        },
+        {
+            "name": "Black, white or red currants and gooseberries, fresh",
+            "green": "457",
+            "blue": "19",
+            "grey": "23"
+        },
+        {
+            "name": "Currants",
+            "green": "457",
+            "blue": "19",
+            "grey": "23"
+        },
+        {
+            "name": "Blueberries",
+            "green": "341",
+            "blue": "334",
+            "grey": "170"
+        },
+        {
+            "name": "Cranberries, bilberries and other fruits of the genus Vaccinium, fresh",
+            "green": "91",
+            "blue": "108",
+            "grey": "77"
+        },
+        {
+            "name": "Berries Nes",
+            "green": "200",
+            "blue": "175",
+            "grey": "74"
+        },
+        {
+            "name": "Grapes, fresh",
+            "green": "425",
+            "blue": "97",
+            "grey": "87"
+        },
+        {
+            "name": "Grapes, dried",
+            "green": "1700",
+            "blue": "386",
+            "grey": "347"
+        },
+        {
+            "name": "Grape juice (incl grape must) unferment&unspiritd,wthr/nt sug/sweet",
+            "green": "567",
+            "blue": "129",
+            "grey": "116"
+        },
+        {
+            "name": "Grape wines, sparkling",
+            "green": "607",
+            "blue": "138",
+            "grey": "124"
+        },
+        {
+            "name": "Grape wines nes,incl fort&grape must,unfermntd by add alc in ctnr</=2l",
+            "green": "494",
+            "blue": "112",
+            "grey": "101"
+        },
+        {
+            "name": "Grape wines nes,incl fort&grape must,unfermntd by add alc,in ctnr > 2l",
+            "green": "494",
+            "blue": "112",
+            "grey": "101"
+        },
+        {
+            "name": "Grape must nes, unfermented, other than that of heading No 20.09",
+            "green": "494",
+            "blue": "112",
+            "grey": "101"
+        },
+        {
+            "name": "Vermouth&oth grape wines flav w plants o arom subst in ctnr </= 2 l",
+            "green": "607",
+            "blue": "138",
+            "grey": "124"
+        },
+        {
+            "name": "Vermouth&oth grape wines flav with plants or arom subst in ctnr > 2 l",
+            "green": "607",
+            "blue": "138",
+            "grey": "124"
+        },
+        {
+            "name": "Fermented beverages nes (for example, cider, perry, mead, etc)",
+            "green": "607",
+            "blue": "138",
+            "grey": "124"
+        },
+        {
+            "name": "Spirits obtained by distilling grape wine or grape marc",
+            "green": "607",
+            "blue": "138",
+            "grey": "124"
+        },
+        {
+            "name": "Watermelons",
+            "green": "150",
+            "blue": "25",
+            "grey": "63"
+        },
+        {
+            "name": "Other melons (inc.cantaloupes)",
+            "green": "125",
+            "blue": "29",
+            "grey": "67"
+        },
+        {
+            "name": "Figs, fresh or dried",
+            "green": "1504",
+            "blue": "1544",
+            "grey": "227"
+        },
+        {
+            "name": "Guavas, mangoes and mangosteens, fresh or dried",
+            "green": "1314",
+            "blue": "362",
+            "grey": "124"
+        },
+        {
+            "name": "Avocados, fresh or dried",
+            "green": "849",
+            "blue": "237",
+            "grey": "87"
+        },
+        {
+            "name": "Pineapples, fresh or dried",
+            "green": "215",
+            "blue": "9",
+            "grey": "31"
+        },
+        {
+            "name": "Pineapple juice,unfermented&not spiritd,whether or not sugard or sweet",
+            "green": "1075",
+            "blue": "45",
+            "grey": "153"
+        },
+        {
+            "name": "Dates, fresh or dried",
+            "green": "930",
+            "blue": "1250",
+            "grey": "98"
+        },
+        {
+            "name": "Cashewapple",
+            "green": "3638",
+            "blue": "34",
+            "grey": "121"
+        },
+        {
+            "name": "Kiwi fruit",
+            "green": "307",
+            "blue": "168",
+            "grey": "38"
+        },
+        {
+            "name": "Papaws (papayas), fresh",
+            "green": "399",
+            "blue": "40",
+            "grey": "21"
+        },
+        {
+            "name": "Fruit, tropical fresh nes",
+            "green": "1455",
+            "blue": "200",
+            "grey": "172"
+        },
+        {
+            "name": "Fruits, fresh nes",
+            "green": "1199",
+            "blue": "201",
+            "grey": "112"
+        },
+        {
+            "name": "Fruits, dried nes",
+            "green": "4794",
+            "blue": "806",
+            "grey": "448"
+        },
+        {
+            "name": "Coffee, not roasted, not decaffeinated",
+            "green": "15249",
+            "blue": "116",
+            "grey": "532"
+        },
+        {
+            "name": "Coffee, not roasted, decaffeinated",
+            "green": "15249",
+            "blue": "116",
+            "grey": "532"
+        },
+        {
+            "name": "Coffee, roasted, not decaffeinated",
+            "green": "18153",
+            "blue": "139",
+            "grey": "633"
+        },
+        {
+            "name": "Coffee, roasted, decaffeinated",
+            "green": "18153",
+            "blue": "139",
+            "grey": "633"
+        },
+        {
+            "name": "Cocoa beans, whole or broken, raw or roasted",
+            "green": "19745",
+            "blue": "4",
+            "grey": "179"
+        },
+        {
+            "name": "Cocoa shells, husks, skins and other cocoa waste",
+            "green": "2662",
+            "blue": "1",
+            "grey": "24"
+        },
+        {
+            "name": "Cocoa paste not defatted",
+            "green": "24015",
+            "blue": "5",
+            "grey": "218"
+        },
+        {
+            "name": "Cocoa paste wholly or partly defatted",
+            "green": "24015",
+            "blue": "5",
+            "grey": "218"
+        },
+        {
+            "name": "Cocoa butter, fat and oil",
+            "green": "33626",
+            "blue": "7",
+            "grey": "305"
+        },
+        {
+            "name": "Cocoa powder, not containing added sugar or other sweetening matter",
+            "green": "15492",
+            "blue": "3",
+            "grey": "141"
+        },
+        {
+            "name": "Chocolate",
+            "green": "16805",
+            "blue": "198",
+            "grey": "193"
+        },
+        {
+            "name": "Cocoa powder, containing added sugar or other sweetening matter",
+            "green": "15492",
+            "blue": "3",
+            "grey": "141"
+        },
+        {
+            "name": "Tea",
+            "green": "7232",
+            "blue": "898",
+            "grey": "726"
+        },
+        {
+            "name": "Green tea (not fermented) in packages not exceeding 3 kg",
+            "green": "7232",
+            "blue": "898",
+            "grey": "726"
+        },
+        {
+            "name": "Green tea (not fermented) in packages exceeding 3 kg",
+            "green": "7232",
+            "blue": "898",
+            "grey": "726"
+        },
+        {
+            "name": "Black tea (fermented)&partly fermentd tea in packages not exceedg 3 kg",
+            "green": "7232",
+            "blue": "898",
+            "grey": "726"
+        },
+        {
+            "name": "Black tea (fermented) & partly fermented tea in packages exceedg 3 kg",
+            "green": "7232",
+            "blue": "898",
+            "grey": "726"
+        },
+        {
+            "name": "Hop cones, not ground, powdered or pelleted",
+            "green": "2382",
+            "blue": "269",
+            "grey": "1414"
+        },
+        {
+            "name": "Hop cones, ground, powdered or pelleted and lupulin",
+            "green": "2382",
+            "blue": "269",
+            "grey": "1414"
+        },
+        {
+            "name": "Hop extract",
+            "green": "9528",
+            "blue": "1077",
+            "grey": "5654"
+        },
+        {
+            "name": "Pepper of the genus Piper,ex cubeb pepper,neither crushd nor ground",
+            "green": "6540",
+            "blue": "467",
+            "grey": "604"
+        },
+        {
+            "name": "Pepper of the genus Piper, except cubeb pepper, crushed or ground",
+            "green": "6540",
+            "blue": "467",
+            "grey": "604"
+        },
+        {
+            "name": "Fruits of the genus Capsicum or Pimenta, dried, crushed or ground",
+            "green": "5869",
+            "blue": "1125",
+            "grey": "371"
+        },
+        {
+            "name": "Vanilla beans",
+            "green": "86392",
+            "blue": "39048",
+            "grey": "1065"
+        },
+        {
+            "name": "Cinnamon and cinnamon-tree flowers neither crushed nor ground",
+            "green": "14853",
+            "blue": "41",
+            "grey": "632"
+        },
+        {
+            "name": "Cinnamon and cinnamon-tree flowers crushed or ground",
+            "green": "14853",
+            "blue": "41",
+            "grey": "632"
+        },
+        {
+            "name": "Cloves (whole fruit, cloves and stems)",
+            "green": "59834",
+            "blue": "30",
+            "grey": "1341"
+        },
+        {
+            "name": "Nutmeg, Mace, Cardamons",
+            "green": "30683",
+            "blue": "2623",
+            "grey": "1014"
+        },
+        {
+            "name": "Anise or badian seeds",
+            "green": "5369",
+            "blue": "1865",
+            "grey": "1046"
+        },
+        {
+            "name": "Coriander seeds",
+            "green": "5369",
+            "blue": "1865",
+            "grey": "1046"
+        },
+        {
+            "name": "Ginger",
+            "green": "1525",
+            "blue": "40",
+            "grey": "92"
+        },
+        {
+            "name": "Turmeric (curcuma)",
+            "green": "1525",
+            "blue": "40",
+            "grey": "92"
+        },
+        {
+            "name": "Curry",
+            "green": "1525",
+            "blue": "40",
+            "grey": "92"
+        },
+        {
+            "name": "Mixtures of two/more of the prods of different headgs to this chapter",
+            "green": "2735",
+            "blue": "242",
+            "grey": "390"
+        },
+        {
+            "name": "Spices nes",
+            "green": "2735",
+            "blue": "242",
+            "grey": "390"
+        },
+        {
+            "name": "Peppermint",
+            "green": "206",
+            "blue": "63",
+            "grey": "19"
+        },
+        {
+            "name": "Flax fibre, raw or retted",
+            "green": "2637",
+            "blue": "443",
+            "grey": "401"
+        },
+        {
+            "name": "Flax fibre, broken or scutched",
+            "green": "2637",
+            "blue": "443",
+            "grey": "401"
+        },
+        {
+            "name": "Flax fibre, otherwise processed but not spun",
+            "green": "2866",
+            "blue": "481",
+            "grey": "436"
+        },
+        {
+            "name": "Flax tow and waste (including yarn waste and garnetted stock)",
+            "green": "581",
+            "blue": "98",
+            "grey": "88"
+        },
+        {
+            "name": "True hemp fibre (Cannabis sativa l), raw or retted",
+            "green": "1824",
+            "blue": "",
+            "grey": "624"
+        },
+        {
+            "name": "True hemp fibre otherwise processd but not spun;tow&waste of true hemp",
+            "green": "2026",
+            "blue": "",
+            "grey": "693"
+        },
+        {
+            "name": "Jute and other textile bast fibres, raw or retted",
+            "green": "2356",
+            "blue": "33",
+            "grey": "217"
+        },
+        {
+            "name": "Jute and other tex bast fib,not spun,nes;tow and waste of these fibres",
+            "green": "2618",
+            "blue": "37",
+            "grey": "241"
+        },
+        {
+            "name": "Other Bastfibres",
+            "green": "3492",
+            "blue": "200",
+            "grey": "500"
+        },
+        {
+            "name": "Ramie & other vegetable textile fibers, raw or processed but not spun; tow, noils & waste of these fibres",
+            "green": "3712",
+            "blue": "201",
+            "grey": "595"
+        },
+        {
+            "name": "Sisal",
+            "green": "6112",
+            "blue": "708",
+            "grey": "222"
+        },
+        {
+            "name": "Sisal and other textile fibres of the genus Agave, raw",
+            "green": "6112",
+            "blue": "708",
+            "grey": "222"
+        },
+        {
+            "name": "Sisal textile fibres processed but not spun;tow&waste of sisal fibres",
+            "green": "6791",
+            "blue": "787",
+            "grey": "246"
+        },
+        {
+            "name": "Agave Fibres Nes",
+            "green": "6434",
+            "blue": "9",
+            "grey": "106"
+        },
+        {
+            "name": "Abaca fibre, raw",
+            "green": "19376",
+            "blue": "246",
+            "grey": "766"
+        },
+        {
+            "name": "Abaca fibre,processed but not spun;tow,noils and waste of abaca fibres",
+            "green": "21529",
+            "blue": "273",
+            "grey": "851"
+        },
+        {
+            "name": "Fibre Crops Nes",
+            "green": "5796",
+            "blue": "142",
+            "grey": "270"
+        },
+        {
+            "name": "Vegetable textile fibres nes, raw",
+            "green": "5796",
+            "blue": "142",
+            "grey": "270"
+        },
+        {
+            "name": "Vegetable tex fib nes,processd nt spun;tow,noils&waste of these fibres",
+            "green": "6440",
+            "blue": "157",
+            "grey": "300"
+        },
+        {
+            "name": "Tobacco, unmanufactured, not stemmed or stripped",
+            "green": "2021",
+            "blue": "205",
+            "grey": "700"
+        },
+        {
+            "name": "Tobacco, unmanufactured, partly or wholly stemmed or stripped",
+            "green": "2021",
+            "blue": "205",
+            "grey": "700"
+        },
+        {
+            "name": "Tobacco refuse",
+            "green": "2021",
+            "blue": "205",
+            "grey": "700"
+        },
+        {
+            "name": "Natural rubber",
+            "green": "12964",
+            "blue": "361",
+            "grey": "422"
+        }
+    ]
+}

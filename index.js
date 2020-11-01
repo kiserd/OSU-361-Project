@@ -1,15 +1,18 @@
-var express = require('express');
-var path = require('path')
-var handlebars = require('express-handlebars').create({ defaultLayout:'main' });
-var PORT = process.env.PORT || 5000
-var app = express();
+const express = require('express');
+const cors = require('cors')
+const path = require('path')
+const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
+const PORT = process.env.PORT || 5000
+const app = express();
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
+app.use(cors())
+app.use('/graphql', graphqlHTTP({schema, rootValue}))
+app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
 
 app.get('/', (req , res, next) => {
   res.render('choose_recipe');
