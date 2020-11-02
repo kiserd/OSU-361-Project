@@ -4,16 +4,33 @@ const path = require('path');
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
-const { mongo } = require('./mongodbcon.js');
+const { MongoClient } = require('mongodb');
+const uri = "mongodb+srv://kiserd:ntTnMUdRWyfn9uqc@cluster0.uyadt.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
-app.use(cors());
+// app.use(cors());
 //app.use('/graphql', graphqlHTTP({schema, rootValue}));
 //app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
+
+async function getAllIngredients(client) {
+  try {
+    await client.connect();
+    const cursor = client.db("food_data").collection("ingredients").find({});
+    const results = await cursor.toArray();
+    console.log(results);
+  } catch(e) {
+      console.log(e);
+  } finally {
+      await client.close();
+  }
+}
+
+getAllIngredients(client)
 
 app.get('/', (req , res, next) => {
   res.render('choose_recipe');
