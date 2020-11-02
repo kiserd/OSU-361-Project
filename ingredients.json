@@ -1,0 +1,15 @@
+[
+    {"type": "meat", "name": "ground beef", "impact": 13021},
+    {"type": "meat", "name": "chicken", "impact": 2868},
+    {"type": "meat", "name": "pork", "impact": 5736},
+    {"type": "bread", "name": "pasta", "impact": 616},
+    {"type": "bread", "name": "bread", "impact": 536},
+    {"type": "bread", "name": "rice", "impact": 832},
+    {"type": "vegetable", "name": "lettuce", "impact": 133},
+    {"type": "vegetable", "name": "tomato", "impact": 108},
+    {"type": "dairy", "name": "cheese", "impact": 3153},
+    {"type": "dairy", "name": "butter", "impact": 7193},
+    {"type": "dairy", "name": "egg", "impact": 2017},
+    {"type": "sauce", "name": "ketchup", "impact": 178},
+    {"type": "sauce", "name": "tomato sauce", "impact": 285}
+]

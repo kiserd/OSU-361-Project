@@ -1,0 +1,12 @@
+[
+    {"type": "breakfast", "name": "Oatmeal", "ingredients": ["oats", "milk", "cranberries", "cinnamon", "sugar"]},
+    {"type": "breakfast", "name": "Scrambled Eggs", "ingredients": ["egg", "cheese", "bell pepper"]},
+    {"type": "lunch", "name": "Bean Burrito", "ingredients": ["beans", "cheese", "rice", "tortilla", "salsa"]},
+    {"type": "lunch", "name": "Chicken Teriyaki", "ingredients": ["rice", "chicken", "teriyaki sauce"]},
+    {"type": "lunch", "name": "Turkey Sandwich", "ingredients": ["turkey", "bread", "cheese", "mayonaise", "lettuce", "tomato"]},
+    {"type": "dinner", "name": "Pepperoni Pizza", "ingredients": ["pork", "flour", "cheese", "tomato sauce"]},
+    {"type": "dinner", "name": "Cheeseburger", "ingredients": ["ground beef", "ketchup", "bread", "lettuce", "tomato", "cheese"]},
+    {"type": "dinner", "name": "Mac and Cheese", "ingredients": ["pasta", "milk", "butter", "cheese"]},
+    {"type": "dinner", "name": "Spaghetti", "ingredients": ["pasta", "tomato sauce", "ground beef"]},
+    {"type": "dinner", "name": "Mostaccioli", "ingredients": ["pasta", "cheese", "egg", "pork", "tomato sauce"]}
+]
