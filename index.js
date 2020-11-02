@@ -27,6 +27,7 @@ app.get('/', (req , res, next) => {
   for (var i = 0; i < recipes.length; i++) {
     context.push(recipes[i]["name"]);
   }
+  console.log(context);
   res.render('choose_recipe', context);
 });
 
