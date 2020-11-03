@@ -10,31 +10,16 @@
         </thead>
         <tbody>
             {{#each ingredients}}
+            <tr>
                 <td>{{this.name}}</td>
                 <td>{{this.impact}}</td>
-                <td>button for substitutes</td>
+                <td>
+                    <form action="" method="get">
+                            <button class="btn btn-primary" name="ingredient" value="{{this.name}}">View Substitutes</button>
+                    </form>
+                </td>
+            </tr>
             {{/each}}
         </tbody>
     </table>
-</div>
-
-
-
-
-
-<div class="container-fluid">
-    <h3>{{recipe}}</h3>
-    <div class="col-md-6">
-        <ul class="list-group">
-            {{#each ingredients}}
-            <li class="list-group-item">{{this}}
-                <div class="input-group">
-                    <form action="https://spooky-wizard-97644.herokuapp.com/view_substitutes" method="get">
-                        <button class="btn btn-primary" name="ingredient" value="{{this}}">View Substitutes</button>
-                    </form>
-                </div>
-            </li>
-            {{/each}}
-        </ul>
-    </div>
 </div>
