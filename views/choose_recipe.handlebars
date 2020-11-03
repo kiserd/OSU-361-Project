@@ -1,17 +1,17 @@
 <div class="containder-fluid">
     <h3>bunch of recipes here</h3>
-    <ul>
+    <ul class="list-group">
         {{#each recipes}}
-        <div class="d-inline">
-            <li>{{this}}
-                <form action="https://spooky-wizard-97644.herokuapp.com/view_ingredients" method="get">
-                    <button class="btn btn-primary" name="recipe" value="{{this}}">View Ingredient</button>
-                </form>
-                <form action="" method="get">
-                    <button class="btn btn-primary" name="recipe" value="{{this}}">Save Recipe</button>
-                </form>
+            <li class="list-group-item">{{this}}
+                <div class="input-group">
+                    <form action="https://spooky-wizard-97644.herokuapp.com/view_ingredients" method="get">
+                        <button class="btn btn-primary" name="recipe" value="{{this}}">View Ingredient</button>
+                    </form>
+                    <form action="" method="get">
+                        <button class="btn btn-primary" name="recipe" value="{{this}}">Save Recipe</button>
+                    </form>
+                </div>
             </li>
-        </div>
         {{/each}}
     </ul>
 </div>
