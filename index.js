@@ -32,7 +32,23 @@ function getImpactByRecipeIngredient(recipe) {
 }
 
 function getSubstitutesByIngredient(ingredient) {
-  //todo
+  var type = null;
+  var impact = null;
+  for (var i = 0; i < ingredients.length; i++) {
+    if (ingredients[i]["name"] == ingredient) {
+      type = ingredients[i]["type"];
+      impact = ingredients[i]["impact"];
+    }
+  }
+  var substitutes = [];
+  for (var i = 0; i < ingredients.length; i++) {
+    if (ingredients[i]["type"] == type && ingredients[i]["impact"] < impact) {
+      var temp_dict = {};
+      temp_dict["name"] = ingredients[i]["name"];
+      temp_dict["impact"] = ingredients[i]["impact"];
+    }
+  }
+  return substitutes;
 }
 
 app.get('/', (req , res, next) => {
@@ -51,6 +67,14 @@ app.get('/view_ingredients', (req , res, next) => {
   context["recipe"] = recipe;
   context["ingredients"] = getImpactByRecipeIngredient(recipe);
   res.render('view_ingredients', context);
+});
+
+app.get('/view_substitutes', (req, res, next) => {
+  var context = {};
+  var ingredient = req.query["ingredient"];
+  context["ingredient"] = ingredient;
+  context["substitutes"] = getSubstitutesByIngredient(ingredient);
+  res.render('view_substitutes', context);
 });
 
 app.get('/build_recipe', (req , res, next) => {

@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <h3>{{ingredient}}</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Substitute</th>
+                <th scope="col">Ethical Impact</th>
+                <th scope="col">Choose Substitute</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each substitutes}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.impact}}</td>
+                <td>
+                    <form action="https://spooky-wizard-97644.herokuapp.com/make_substitution" method="get">
+                            <button class="btn btn-primary" name="substitute" value="{{this.name}}">Choose Substitute</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
