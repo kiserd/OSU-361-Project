@@ -46,6 +46,7 @@ function getSubstitutesByIngredient(ingredient) {
       var temp_dict = {};
       temp_dict["name"] = ingredients[i]["name"];
       temp_dict["impact"] = ingredients[i]["impact"];
+      substitutes.push(temp_dict);
     }
   }
   return substitutes;
