@@ -12,6 +12,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
+function getImpactByRecipeIngredient(recipe) {
+  var impacts = [];
+  for (var i = 0; i < recipes.length; i++) {
+    if (recipes[i]["name"] == recipe) {
+      for (var j = 0; j < recipes[i]["ingredients"].length; j++) {
+        for (var k = 0; k < ingredients.length; k++) {
+          if (ingredients[k]["name"] == recipes[i]["ingredients"][j]) {
+            var ingDict = {}
+            ingDict["name"] = recipes[i]["ingredients"][j];
+            ingDict["impact"] = ingredients[k]["impact"];
+            impacts.push(ingDict);
+          }
+        }
+      }
+    }
+  }
+  return impacts
+}
+
 app.get('/', (req , res, next) => {
   var context = {};
   context['recipes'] = []
@@ -26,11 +45,8 @@ app.get('/view_ingredients', (req , res, next) => {
   var context = {};
   var recipe = req.query["recipe"];
   context["recipe"] = recipe;
-  for (var i = 0; i < recipes.length; i++) {
-    if (recipes[i]["name"] == recipe) {
-      context["ingredients"] = recipes[i]["ingredients"]
-    }
-  }
+  context["ingredients"] = getImpactByRecipeIngredient(recipe);
+  
   res.render('view_ingredients', context);
 });
 

@@ -1,14 +1,40 @@
 <div class="container-fluid">
     <h3>{{recipe}}</h3>
-    <ul class="list-group">
-        {{#each ingredients}}
-        <div class="d-inline">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Ingredient</th>
+                <th scope="col">Ethical Impact</th>
+                <th scope="col">View Substitutes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each ingredients}}
+                <td>{{this.name}}</td>
+                <td>{{this.impact}}</td>
+                <td>button for substitutes</td>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<div class="container-fluid">
+    <h3>{{recipe}}</h3>
+    <div class="col-md-6">
+        <ul class="list-group">
+            {{#each ingredients}}
             <li class="list-group-item">{{this}}
-                <form action="https://spooky-wizard-97644.herokuapp.com/view_substitutes" method="get">
-                    <button class="btn btn-primary" name="ingredient" value="{{this}}">View Substitutes</button>
-                </form>
+                <div class="input-group">
+                    <form action="https://spooky-wizard-97644.herokuapp.com/view_substitutes" method="get">
+                        <button class="btn btn-primary" name="ingredient" value="{{this}}">View Substitutes</button>
+                    </form>
+                </div>
             </li>
-        </div>
-        {{/each}}
-    </ul>
+            {{/each}}
+        </ul>
+    </div>
 </div>
