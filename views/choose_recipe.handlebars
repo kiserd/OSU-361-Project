@@ -2,7 +2,7 @@
     <h3>bunch of recipes here</h3>
     <ul>
         {{#each recipes}}
-        <span>
+        <div class="d-inline">
             <li>{{this}}
                 <form action="https://spooky-wizard-97644.herokuapp.com/view_ingredients" method="get">
                     <button class="btn btn-primary" name="recipe" value="{{this}}">View Ingredient</button>
@@ -11,7 +11,7 @@
                     <button class="btn btn-primary" name="recipe" value="{{this}}">Save Recipe</button>
                 </form>
             </li>
-        </span>
+        </div>
         {{/each}}
     </ul>
 </div>
