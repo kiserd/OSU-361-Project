@@ -22,11 +22,16 @@ app.get('/', (req , res, next) => {
   res.render('choose_recipe', context);
 });
 
-app.get('/view_ingredient', (req , res, next) => {
-  var context = {}
-  var ingredient = req.query["ingredient"]
-  context["ingredient"] = ingredient
-  res.render('view_ingredient', context);
+app.get('/view_ingredients', (req , res, next) => {
+  var context = {};
+  var recipe = req.query["recipe"];
+  context["recipe"] = recipe;
+  for (var i = 0; i < recipes.length; i++) {
+    if (recipes[i]["name"] == recipe) {
+      context["ingredients"] = recipes[i]["ingredients"]
+    }
+  }
+  res.render('view_ingredients', context);
 });
 
 app.get('/build_recipe', (req , res, next) => {
