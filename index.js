@@ -31,6 +31,10 @@ function getImpactByRecipeIngredient(recipe) {
   return impacts
 }
 
+function getSubstitutesByIngredient(ingredient) {
+  //todo
+}
+
 app.get('/', (req , res, next) => {
   var context = {};
   context['recipes'] = []
@@ -46,7 +50,6 @@ app.get('/view_ingredients', (req , res, next) => {
   var recipe = req.query["recipe"];
   context["recipe"] = recipe;
   context["ingredients"] = getImpactByRecipeIngredient(recipe);
-  
   res.render('view_ingredients', context);
 });
 
