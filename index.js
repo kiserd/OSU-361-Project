@@ -19,13 +19,14 @@ app.use(express.static(__dirname + '/public'));
 //app.use('/graphql', graphqlHTTP({schema, rootValue}));
 //app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
 
-console.log(ingredients);
-console.log(recipes);
+// console.log(ingredients);
+// console.log(recipes);
 
 app.get('/', (req , res, next) => {
-  var context = [];
+  var context = {};
+  context['ingredients'] = []
   for (var i = 0; i < recipes.length; i++) {
-    context.push(recipes[i]["name"]);
+    context['ingredients'].push(recipes[i]["name"]);
   }
   console.log(context);
   res.render('choose_recipe', context);
