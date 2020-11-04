@@ -6,6 +6,7 @@ const app = express();
 const ingredients = require('./ingredients.json');
 const recipes = require('./recipes.json');
 
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: false }));
@@ -83,7 +84,43 @@ app.get('/build_recipe', (req , res, next) => {
 });
 
 app.get('/my_recipes', (req , res, next) => {
-  res.render('my_recipes');
+  var context = {};
+  var recipeBook = require('./myRecipes.json');
+
+  if (req.query.recipe){
+    var fs = require('fs');
+    var recipeToAdd = {};
+    var recipe = req.query["recipe"];
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    recipeToAdd["name"] = recipe;
+    recipeToAdd["date"] = date.toString();
+    recipeToAdd["impact"] = 0;
+    fs.readFile(recipeBook, 'utf8', function readFileCallback(err, data){
+      if (err){
+          console.log(err);
+      } 
+      else {
+      obj = JSON.parse(data); //now it an object
+      obj.table.push(recipeToAdd); //add some data
+      json = JSON.stringify(obj); //convert it back to json
+      fs.writeFile(recipeBook, json, 'utf8', callback); // write it back 
+      }
+    });
+  }
+
+  context["myRecipes"] = [];
+  for (var i = 0; i < myRecipes.length; i++) {
+    var recipe_dict = {};
+    recipe_dict["name"] = recipeBook[i]["name"];
+    recipe_dict["date"] = recipeBook[i]["date"];
+    recipe_dict["impact"] = recipeBook[i]["impact"];
+    myRecipes.push(recipe_dict);
+  }
+
+  console.log(context);
+
+  res.render('my_recipes', context);
 });
 
 app.use(function(req,res){

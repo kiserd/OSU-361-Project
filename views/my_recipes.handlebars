@@ -23,12 +23,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each myRecipes}}
                         <tr>
-                            <td>Example Name</td>
-                            <td>Example Date</td>
-                            <td>Example Impact</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.date}}</td>
+                            <td>{{this.impact}}</td>
                             <td>
-                                <form action="/customize-student" method="get">
+                                <form action=# method="get">
                                     <div class="form-group">
                                         <input type="submit" name="update" value="View/Edit" class="btn btn-primary" />
                                     </div>
@@ -38,6 +39,7 @@
                                 <a href= #><button type="button" class="btn btn-danger">Delete</button></a>
                             </td>
                         </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </div>
