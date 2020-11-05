@@ -110,12 +110,12 @@ app.get('/my_recipes', (req , res, next) => {
   }
 
   context["myRecipes"] = [];
-  for (var i = 0; i < myRecipes.length; i++) {
+  for (var i = 0; i < recipeBook.length; i++) {
     var recipe_dict = {};
     recipe_dict["name"] = recipeBook[i]["name"];
     recipe_dict["date"] = recipeBook[i]["date"];
     recipe_dict["impact"] = recipeBook[i]["impact"];
-    myRecipes.push(recipe_dict);
+    context["myRecipes"].push(recipe_dict);
   }
 
   console.log(context);
