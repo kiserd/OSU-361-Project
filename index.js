@@ -88,25 +88,26 @@ app.get('/my_recipes', (req , res, next) => {
   var recipeBook = require('./myRecipes.json');
 
   if (req.query.recipe){
-    var fs = require('fs');
-    var recipeToAdd = {};
-    var recipe = req.query["recipe"];
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    recipeToAdd["name"] = recipe;
-    recipeToAdd["date"] = date.toString();
-    recipeToAdd["impact"] = 0;
-    fs.readFile(recipeBook, 'utf8', function readFileCallback(err, data){
-      if (err){
-          console.log(err);
-      } 
-      else {
-      obj = JSON.parse(data); //now it an object
-      obj.table.push(recipeToAdd); //add some data
-      json = JSON.stringify(obj); //convert it back to json
-      fs.writeFile(recipeBook, json, 'utf8', callback); // write it back 
-      }
-    });
+    console.log(recipe);
+    // var fs = require('fs');
+    // var recipeToAdd = {};
+    // var recipe = req.query["recipe"];
+    // var today = new Date();
+    // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    // recipeToAdd["name"] = recipe;
+    // recipeToAdd["date"] = date.toString();
+    // recipeToAdd["impact"] = 0;
+    // fs.readFile(recipeBook, 'utf8', function readFileCallback(err, data){
+    //   if (err){
+    //       console.log(err);
+    //   } 
+    //   else {
+    //   obj = JSON.parse(data); //now it an object
+    //   obj.table.push(recipeToAdd); //add some data
+    //   json = JSON.stringify(obj); //convert it back to json
+    //   fs.writeFile(recipeBook, json, 'utf8', callback); // write it back 
+    //   }
+    // });
   }
 
   context["myRecipes"] = [];
