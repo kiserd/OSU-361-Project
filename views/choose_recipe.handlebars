@@ -5,10 +5,10 @@
             {{#each recipes}}
                 <li class="list-group-item">{{this}}
                     <div class="input-group">
-                        <form action="https://spooky-wizard-97644.herokuapp.com/view_ingredients" method="get">
+                        <form action="/view_ingredients" method="get">
                             <button class="btn btn-primary" name="recipe" value="{{this}}">View Ingredient</button>
                         </form>
-                        <form action="https://spooky-wizard-97644.herokuapp.com/my_recipes" method="get">
+                        <form action="/my_recipes" method="get">
                             <button class="btn btn-primary" name="recipe" value="{{this}}">Save Recipe</button>
                         </form>
                     </div>
