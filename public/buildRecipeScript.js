@@ -27,43 +27,67 @@ recipeListDiv.style.backgroundColor = "orange";
 
 function generateIngredientDiv(ingredient, type, impact) {
     var ingredientDiv = document.createElement("div");
-    ingredientDiv.style.backgroundColor = get_rand_color();
+
     ingredientDiv.style.borderWidth = "2px";
+    ingredientDiv.style.margin = "auto";
+    ingredientDiv.style.marginTop = "8px";
+    ingredientDiv.style.marginRight = "4px";
+    ingredientDiv.style.width = "15rem";
+    ingredientDiv.style.float = "left";
+    ingredientDiv.className = "card";
+
+    ingredientColor = document.createElement("div");
+    ingredientColor.className = "rounded-circle";
+    ingredientColor.style.width = "30px";
+    ingredientColor.style.height = "30px";
+    ingredientColor.style.float = "right";
+    ingredientColor.style.backgroundColor = get_rand_color();
+
+    ingredientDivCardBody = document.createElement("div");
+    ingredientDivCardBody.className = "card-body";
 
     var ingredientDivGrid1 = document.createElement("div");
-    ingredientDivGrid1.className = "col-sm-8";
+    
 
     var ingredientDivGrid2 = document.createElement("div");
-    ingredientDivGrid2.className = "col-sm-2";
+    
 
     var name = document.createElement("h4");
+    name.className = "card-title";
+
     var ingredientType = document.createElement("h5");
-    var ingredientImpact = document.createElement("h5");
+    ingredientType.className = "card-subtitle mb-2 text-muted";
+
+    var ingredientImpact = document.createElement("p");
+    impact.className = "card-text";
 
     name.innerHTML = ingredient;
     ingredientType.innerHTML = type;
     ingredientImpact.innerHTML = impact;
 
     var add = document.createElement("button");
-    add.style.backgroundColor = "green";
+    add.className = "btn btn-success";
     add.innerHTML = "Add";
     add.style.marginTop = "20px";
 
+    ingredientDivGrid1.appendChild(ingredientColor);
     ingredientDivGrid1.appendChild(name);
     ingredientDivGrid1.appendChild(ingredientType);
     ingredientDivGrid1.appendChild(ingredientImpact);
     ingredientDivGrid2.appendChild(add);
-    ingredientDiv.appendChild(ingredientDivGrid1);
-    ingredientDiv.appendChild(ingredientDivGrid2);
+    ingredientDivCardBody.appendChild(ingredientDivGrid1);
+    ingredientDivCardBody.appendChild(ingredientDivGrid2);
+
+    ingredientDiv.appendChild(ingredientDivCardBody);
 
     add.addEventListener("click", function () {
         var recipeListhtml = document.getElementById("recipeList");
         var ingredientToAddClone = ingredientDiv.cloneNode(true);
-        ingredientToAddClone.childNodes[1].firstChild.innerHTML = "Delete";
-        ingredientToAddClone.childNodes[1].firstChild.style.backgroundColor = "red";
+        ingredientToAddClone.firstChild.childNodes[1].firstChild.innerHTML = "Delete";
+        ingredientToAddClone.firstChild.childNodes[1].firstChild.className = "btn btn-danger";
 
         // when "delete" button clicked, remove item from recipe list
-        var deleteButton = ingredientToAddClone.childNodes[1].firstChild.addEventListener("click", () => {
+        var deleteButton = ingredientToAddClone.firstChild.childNodes[1].firstChild.addEventListener("click", () => {
             recipeListhtml.removeChild(ingredientToAddClone);
         });
 
