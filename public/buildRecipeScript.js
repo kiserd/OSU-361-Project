@@ -46,7 +46,7 @@ function generateIngredientDiv(ingredient, type, impact) {
     ingredientDiv.style.marginRight = "4px";
     ingredientDiv.style.width = "15rem";
     ingredientDiv.style.float = "left";
-    ingredientDiv.className = "card";
+    ingredientDiv.className = "card shadow fade";
 
     ingredientColor = document.createElement("div");
     ingredientColor.className = "rounded border border-dark";
@@ -85,8 +85,10 @@ function generateIngredientDiv(ingredient, type, impact) {
     var name = document.createElement("h4");
     name.className = "card-title";
 
-    var ingredientType = document.createElement("h5");
-    ingredientType.className = "card-subtitle mb-2 text-muted";
+    var ingredientType = document.createElement("span");
+    ingredientType.className = "badge badge-dark";
+    ingredientType.style.float = "right";
+    ingredientType.style.marginTop = "0.5rem";
 
     var ingredientImpact = document.createElement("p");
     impact.className = "card-text";
@@ -102,7 +104,7 @@ function generateIngredientDiv(ingredient, type, impact) {
 
     ingredientDivGrid1.appendChild(ingredientColor);
     ingredientDivGrid1.appendChild(name);
-    ingredientDivGrid1.appendChild(ingredientType);
+    ingredientColor.appendChild(ingredientType);
     ingredientDivGrid1.appendChild(ingredientImpact);
     ingredientDivGrid2.appendChild(add);
     ingredientDivCardBody.appendChild(ingredientDivGrid1);
@@ -115,6 +117,7 @@ function generateIngredientDiv(ingredient, type, impact) {
         var ingredientToAddClone = ingredientDiv.cloneNode(true);
         ingredientToAddClone.firstChild.childNodes[1].firstChild.innerHTML = "Delete";
         ingredientToAddClone.firstChild.childNodes[1].firstChild.className = "btn btn-danger";
+        ingredientToAddClone.className = "card shadow fade";
 
         // when "delete" button clicked, remove item from recipe list
         var deleteButton = ingredientToAddClone.firstChild.childNodes[1].firstChild.addEventListener("click", () => {
@@ -122,6 +125,7 @@ function generateIngredientDiv(ingredient, type, impact) {
         });
 
         recipeListhtml.appendChild(ingredientToAddClone);
+        setTimeout(()=>{ingredientToAddClone.classList.add("show")}, 100);
     });
 
     return ingredientDiv;
@@ -129,7 +133,9 @@ function generateIngredientDiv(ingredient, type, impact) {
 
 for (var i = 0; i < testJSON.length; i++) {
     var ingredientList = document.getElementById("ingredientList");
-    ingredientList.appendChild(generateIngredientDiv(testJSON[i].name, testJSON[i].type, testJSON[i].impact.toString()));
+    let newDiv = generateIngredientDiv(testJSON[i].name, testJSON[i].type, testJSON[i].impact.toString())
+    ingredientList.appendChild(newDiv);
+    setTimeout(()=>{newDiv.classList.add("show")}, 200);
 }
 
 
