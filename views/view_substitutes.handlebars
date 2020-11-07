@@ -1,5 +1,6 @@
 <div class="container-fluid">
-    <h3>{{ingredient}}</h3>
+    <h3>Recipe: {{recipe}}</h3>
+    <h3>Ingredient: {{ingredient}}</h3>
     <table class="table">
         <thead>
             <tr>
@@ -14,7 +15,8 @@
                 <td>{{this.name}}</td>
                 <td>{{this.impact}}</td>
                 <td>
-                    <form action="/make_substitution" method="get">
+                    <form class="form-inline" action="/make_substitution" method="get">
+                            <input type="text" name="recipe">
                             <button class="btn btn-primary" name="substitute" value="{{this.name}}">Choose Substitute</button>
                     </form>
                 </td>

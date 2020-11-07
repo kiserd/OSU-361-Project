@@ -74,6 +74,8 @@ app.get('/view_ingredients', (req , res, next) => {
 app.get('/view_substitutes', (req, res, next) => {
   var context = {};
   var ingredient = req.query["ingredient"];
+  var recipe = req.query["recipe"];
+  context["recipe"] = recipe;
   context["ingredient"] = ingredient;
   context["substitutes"] = getSubstitutesByIngredient(ingredient);
   res.render('view_substitutes', context);
