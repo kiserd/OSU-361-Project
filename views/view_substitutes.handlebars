@@ -16,8 +16,8 @@
                 <td>{{this.impact}}</td>
                 <td>
                     <form class="form-inline" action="/make_substitution" method="get">
-                            <input type="hidden" name="ingredient" value={{ingredient}}>
-                            <input type="hidden" name="recipe" value={{recipe}}>
+                            <input type="hidden" name="ingredient" value={{../ingredient}}>
+                            <input type="hidden" name="recipe" value={{../recipe}}>
                             <input type="text" name="recipe" placeholder="new recipe name">
                             <button class="btn btn-primary" name="substitute" value="{{this.name}}">Choose Substitute</button>
                     </form>
