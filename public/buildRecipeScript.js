@@ -27,7 +27,6 @@ var testJSON = [
 ];
 
 var div = document.getElementById("ingredientList");
-div.style.backgroundColor = "beige";
 
 var ingredientTitle = document.getElementById("ingredientListTitle");
 var recipeTitle = document.getElementById("recipeListTitle");
@@ -35,7 +34,6 @@ ingredientTitle.style.textAlign = "center";
 recipeTitle.style.textAlign = "center";
 
 var recipeListDiv = document.getElementById("recipeList");
-recipeListDiv.style.backgroundColor = "orange";
 
 function generateIngredientDiv(ingredient, type, impact) {
     var ingredientDiv = document.createElement("div");
@@ -44,7 +42,7 @@ function generateIngredientDiv(ingredient, type, impact) {
     ingredientDiv.style.margin = "auto";
     ingredientDiv.style.marginTop = "8px";
     ingredientDiv.style.marginRight = "4px";
-    ingredientDiv.style.width = "15rem";
+    ingredientDiv.style.width = "14rem";
     ingredientDiv.style.float = "left";
     ingredientDiv.className = "card shadow fade";
 
@@ -82,36 +80,39 @@ function generateIngredientDiv(ingredient, type, impact) {
     var ingredientDivGrid2 = document.createElement("div");
     
 
-    var name = document.createElement("h4");
+    var name = document.createElement("h5");
     name.className = "card-title";
 
     var ingredientType = document.createElement("span");
-    ingredientType.className = "badge badge-dark";
+    ingredientType.className = "badge badge-light";
     ingredientType.style.float = "right";
     ingredientType.style.marginTop = "0.5rem";
 
     var ingredientImpact = document.createElement("p");
-    impact.className = "card-text";
+    ingredientImpact.className = "badge badge-info";
 
     name.innerHTML = ingredient[0].toUpperCase() + ingredient.slice(1);
     ingredientType.innerHTML = type;
     ingredientImpact.innerHTML = impact;
 
     var add = document.createElement("button");
-    add.className = "btn btn-success";
-    add.innerHTML = "Add";
-    add.style.marginTop = "20px";
-
+    add.className = "close";
+    add.type = "button";
+    add.innerHTML = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+  </svg>`;
+    add.style.marginTop = "2px";
+    
     ingredientDivGrid1.appendChild(ingredientColor);
     ingredientDivGrid1.appendChild(name);
     ingredientColor.appendChild(ingredientType);
     ingredientDivGrid1.appendChild(ingredientImpact);
-    ingredientDivGrid2.appendChild(add);
+    
     ingredientDivCardBody.appendChild(ingredientDivGrid1);
     ingredientDivCardBody.appendChild(ingredientDivGrid2);
-
+    
     ingredientDiv.appendChild(ingredientDivCardBody);
-
+    ingredientDivGrid2.appendChild(add);
     add.addEventListener("click", function () {
         var recipeListhtml = document.getElementById("recipeList");
         var ingredientToAddClone = ingredientDiv.cloneNode(true);

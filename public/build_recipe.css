@@ -1,0 +1,12 @@
+/* https://codepen.io/danichk/pen/ojpRyg */
+#recipeList {
+    background: white;
+    background-image: linear-gradient(90deg, rgba(200,0,0,.2) 50%, transparent 0),
+      linear-gradient(rgba(200,0,0,.5) 50%, transparent 0);
+    background-size: 30px 30px;
+  }
+
+#recipeListTitleDiv{
+    background:white;
+    height: 3rem;
+}
