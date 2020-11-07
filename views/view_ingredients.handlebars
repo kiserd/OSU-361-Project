@@ -15,7 +15,7 @@
                 <td>{{this.impact}}</td>
                 <td>
                     <form action="/view_substitutes" method="get">
-                            <input type="hidden" name="recipe" value={{../recipe}}>
+                            <input type="hidden" name="recipe" value="{{../recipe}}">
                             <button class="btn btn-primary" name="ingredient" value="{{this.name}}">View Substitutes</button>
                     </form>
                 </td>
