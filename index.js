@@ -218,10 +218,10 @@ app.get('/my_recipes', (req , res, next) => {
       console.log(arrayOfObjects);
     })
 
-    fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
-      if (err) throw err
-      console.log('Done!')
-    })
+    //fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
+    //  if (err) throw err
+    //  console.log('Done!')
+    //})
 
     context["myRecipes"] = [];
     for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
