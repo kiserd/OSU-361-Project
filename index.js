@@ -182,11 +182,11 @@ app.get('/my_recipes', (req , res, next) => {
   
 
   context["myRecipes"] = [];
-  for (var i = 0; i < recipeBook.length; i++) {
+  for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
     var recipe_dict = {};
-    recipe_dict["name"] = recipeBook[i]["name"];
-    recipe_dict["date"] = recipeBook[i]["date"];
-    recipe_dict["impact"] = recipeBook[i]["impact"];
+    recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
+    recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
+    recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
     context["myRecipes"].push(recipe_dict);
   }
 
