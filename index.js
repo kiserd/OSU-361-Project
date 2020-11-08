@@ -197,8 +197,8 @@ app.get('/my_recipes', (req , res, next) => {
     fs.readFile('./myRecipes.json', 'utf-8', function(err, data) {
       if (err) throw err
     
-      arrayOfObjects = JSON.parse(data)
-      arrayOfObjects.savedRecipes.push(addRecipe);
+      //arrayOfObjects = JSON.parse(data)
+      //arrayOfObjects.savedRecipes.push(addRecipe);
     })
 
     // fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
