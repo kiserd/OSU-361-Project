@@ -6,13 +6,13 @@
 
     	<!-- Bootstrap and local CSS -->
     	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+		<link rel="stylesheet" href="main.css">
     	<title>Ethical Eating - CoolJoeVim</title>
 <link href="https://fonts.googleapis.com/css2?family=Jost&family=Patrick+Hand+SC&display=swap" rel="stylesheet"> 	</head>
 	<body style="font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
 		<!-- Utilize stylish bootstrap navbar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a href="/homepage" class="navbar-brand">Ethical Eating</a>
+		<a href="/" class="navbar-brand">Ethical Eating</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -34,10 +34,11 @@
 		<div class="nav-item dropdown navbar-dark navbar-nav">
 					{{#if session.loggedin}}
 					<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					{{session.username}}
+					<span style="display:inline-block; vertical-align:middle">{{session.user.username}}</span>
+					<div class="rounded img-thumbnail" id="nav_avatar" style="background-color:{{session.user.color}};"></div>
 					</button>
 					<div class="dropdown-menu dropdown-menu-right">
-					<a class="dropdown-item" href="#">Logout</a>
+					<a class="dropdown-item" href="/logout">Logout</a>
 					</div>
 					{{else}}
 					<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,7 +57,7 @@
 						<button type="submit" class="btn my-2 btn-primary">Sign in</button>
 					</form>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">New around here? Sign up</a>
+					<a class="dropdown-item" href="/new_user">New around here? Sign up</a>
 					<a class="dropdown-item" href="#">Forgot password?</a>
 					</div>
 					{{/if}}

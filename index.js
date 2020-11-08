@@ -1,6 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const users = require('./users.json') 
+const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -62,9 +64,6 @@ var ingredients = [
   {"type": "sauce", "name": "ketchup", "impact": 178},
   {"type": "sauce", "name": "tomato sauce", "impact": 285}
 ]
-
-var USERS = new Map();
-USERS.set("pollocco", "1234");
 
 function getImpactByRecipeIngredient(recipe) {
   var impacts = [];
@@ -136,6 +135,15 @@ function getSubstitutesByIngredient(ingredient) {
   return substitutes;
 }
 
+function get_rand_rgb(){
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  const r = randomBetween(0, 255);
+  const g = randomBetween(0, 255);
+  const b = randomBetween(0, 255);
+  const rgb = `rgba(${r},${g},${b}, 1)`; // Collect all to a css color string
+  return rgb
+}
+
 app.get('/', (req , res, next) => {
   res.render('homepage');
 });
@@ -205,8 +213,6 @@ app.get('/my_recipes', (req , res, next) => {
     addRecipe.date = date.toString();
     addRecipe.impact = 0;
 
-    var fs = require('fs')
-
     var arrayOfObjects;
 
     fs.readFile('./myRecipes.json', 'utf-8', function(err, data) {
@@ -250,35 +256,41 @@ app.get('/my_recipes', (req , res, next) => {
 var register = async function(req, res){
   var username = req.body.username;
   var password = req.body.password;
-  if(USERS.get(username) != null){
+  if(users[username] != null){
     res.send({
       "code":409,
       "failed":"Username already registered"
     })
   }else{
-    USERS.set(username, password);
-    req.session.loggedin = true;
-    req.session.username = username;
-    res.redirect('/');
+    users[username] = {"username":username, "password":password, "color":get_rand_rgb()};
+    fs.writeFile('./users.json', JSON.stringify(users), err=>{
+      if(err){
+        throw err;
+      } else {
+        req.session.loggedin = true;
+        req.session.user = users[username];
+        res.redirect('/');
+      }
+    }) 
   }
 }
 
 var login = async function(req, res){
   var username = req.body.username;
   var password = req.body.password;
-  if(USERS.get(username) == null){
+  if(users[username] == null){
     res.send({
       "code":206,
       "success":"Invalid E-mail"
     }) 
-  } else if(USERS.get(username) != password){
+  } else if(users[username].password != password){
     res.send({
       "code":204,
       "success":"Bad Credentials, Please Try Again"
     })
   } else{
     req.session.loggedin = true;
-    req.session.username = username;
+    req.session.user = users[username];
     res.redirect('/');
   }
 }
@@ -296,6 +308,10 @@ app.get('/logout', function(req, res, next){
       }
     })
   }
+})
+
+app.get('/new_user', function(req, res, next){
+  res.render('new_user')
 })
 
 app.use(function(req,res){

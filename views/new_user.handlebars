@@ -1,0 +1,64 @@
+<br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Register New Account</h1>
+                <p>Get ethical with us!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <form action="/register" method="POST" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input pattern="[0-9a-zA-Z]{4,16}" type="text" class="form-control" id="username" name="username" aria-describedby="userHelp" placeholder="Enter a username" required>
+                    <small id="userHelp" class="form-text text-muted">Must be between 4-16 characters, letters and numbers only.</small>
+                    <div class="invalid-feedback">
+                        Please provide a valid username.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" aria-describedby="passHelp" placeholder="Password"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$" required>
+                    <small id="userHelp" class="form-text text-muted">Must be at least 4 characters and contain a letter and a number.</small>
+                    <div class="invalid-feedback">
+                        Please provide a valid password.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                    <label for="disabledSelect">How ethical would you say you are?</label>
+                    <select id="disabledSelect" class="form-control" disabled>
+                        <option>I'm a monster and I love it</option>
+                    </select>
+                    <small class="form-text text-muted">We'll be telling your parents.</small>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign-Up</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <script>
+// Adapted from example at https://getbootstrap.com/docs/4.0/components/forms/#custom-styles
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
