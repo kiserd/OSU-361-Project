@@ -3,8 +3,8 @@ const path = require('path');
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
-const ingredients = require('./ingredients.json');
-const recipes = require('./recipes.json');
+var ingredients = require('./ingredients.json');
+var recipes = require('./recipes.json');
 
 
 app.engine('handlebars', handlebars.engine);
