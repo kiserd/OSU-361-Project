@@ -121,6 +121,10 @@ function getSubstitutesByIngredient(ingredient) {
   return substitutes;
 }
 
+app.get('/homepage', (req , res, next) => {
+  res.render('homepage');
+});
+
 app.get('/', (req , res, next) => {
   var context = {};
   context['recipes'] = []
