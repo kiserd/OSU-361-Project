@@ -182,9 +182,29 @@ app.get('/my_recipes', (req , res, next) => {
   if(req.query["recipe"])
   {
     var recipe = req.query["recipe"];
+
     var addRecipe = {}
     addRecipe.name = recipe;
-    console.log(addRecipe.name);
+    var today = new Date();
+    var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+    addRecipe.date = date.toString();
+    addRecipe.impact = 0;
+
+    var fs = require('fs')
+
+    fs.readFile('./myRecipes.json', 'utf-8', function(err, data) {
+      if (err) throw err
+    
+      var arrayOfObjects = JSON.parse(data)
+      arrayOfObjects.savedRecipes.push(addRecipe);
+    })
+
+    console.log(arrayOfObjects)
+
+    fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
+      if (err) throw err
+      console.log('Done!')
+    })
     
   }
 
