@@ -29,7 +29,7 @@ app.use(function(req, res, next){
 
 // main recipes 'database' :P
 var recipes = [
-    {"type": "breakfast", "userRecipe": false, "name": "Oatmeal", "ingredients": ["oats", "milk", "cranberry", "cinnamon", "sugar"]},
+    {"type": "breakfast", "userRecipe": false, "name": "Oatmeal", "ingredients": ["oat", "milk", "cranberry", "cinnamon", "sugar"]},
     {"type": "breakfast", "userRecipe": false, "name": "Scrambled Eggs", "ingredients": ["egg", "cheese", "bell pepper"]},
     {"type": "breakfast", "userRecipe": false, "name": "Breakfast Burrito", "ingredients": ["tortilla", "bean", "egg", "onion", "potato", "sour cream", "salsa", "avocado"]},
     {"type": "lunch", "userRecipe": false, "name": "Bean Burrito", "ingredients": ["beans", "cheese", "rice", "tortilla", "salsa"]},
@@ -68,6 +68,10 @@ var ingredients = [
   {"type": "vegetable", "name": "potato", "impact": 381},
   {"type": "vegetable", "name": "pumpkin", "impact": 441},
   {"type": "vegetable", "name": "onion", "impact": 780},
+  {"type": "vegetable", "name": "bell pepper", "impact": 379},
+  // logan made these seasonings up... educated guess
+  {"type": "seasoning", "name": "cinnamon", "impact": 5},
+  {"type": "seasoning", "name": "sugar", "impact": 10},
   {"type": "dairy", "name": "cheese", "impact": 3153},
   {"type": "dairy", "name": "butter", "impact": 7193},
   {"type": "dairy", "name": "egg", "impact": 2017},
@@ -83,6 +87,7 @@ var ingredients = [
   {"type": "fruit", "name": "blueberry", "impact": 641},
   {"type": "fruit", "name": "cranberry", "impact": 209},
   {"type": "fruit", "name": "apple", "impact": 1172},
+  {"type": "grain", "name": "oat", "impact": 846},
   {"type": "nut", "name": "almond", "impact": 21284},
   {"type": "nut", "name": "walnut", "impact": 12273},
   {"type": "bean", "name": "soy bean", "impact": 2834}
