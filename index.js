@@ -197,7 +197,7 @@ app.get('/my_recipes', (req , res, next) => {
     
       //var arrayOfObjects = JSON.parse(data)
     //   arrayOfObjects.savedRecipes.push(addRecipe);
-    })
+    //})
 
     //console.log(arrayOfObjects)
 
