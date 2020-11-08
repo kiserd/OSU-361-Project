@@ -58,11 +58,20 @@ var ingredients = [
   {"type": "bread", "name": "rice", "impact": 832},
   {"type": "vegetable", "name": "lettuce", "impact": 133},
   {"type": "vegetable", "name": "tomato", "impact": 108},
+  {"type": "vegetable", "name": "avocado", "impact": 2623},
+  {"type": "vegetable", "name": "corn", "impact": 1611},
+  {"type": "vegetable", "name": "green bean", "impact": 741},
+  {"type": "vegetable", "name": "broccoli", "impact": 381},
+  {"type": "vegetable", "name": "carrot", "impact": 261},
   {"type": "dairy", "name": "cheese", "impact": 3153},
   {"type": "dairy", "name": "butter", "impact": 7193},
   {"type": "dairy", "name": "egg", "impact": 2017},
   {"type": "sauce", "name": "ketchup", "impact": 178},
-  {"type": "sauce", "name": "tomato sauce", "impact": 285}
+  {"type": "sauce", "name": "tomato sauce", "impact": 285},
+  {"type": "fruit", "name": "apricot", "impact": 1701},
+  {"type": "nut", "name": "almond", "impact": 21284},
+  {"type": "nut", "name": "walnut", "impact": 12273},
+  {"type": "bean", "name": "soy bean", "impact": 2834}
 ]
 
 function getImpactByRecipeIngredient(recipe) {
