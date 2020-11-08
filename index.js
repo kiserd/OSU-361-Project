@@ -199,7 +199,8 @@ app.get('/my_recipes', (req , res, next) => {
     
       arrayOfObjects = JSON.parse(data)
       console.log(arrayOfObjects);
-      //arrayOfObjects.savedRecipes.push(addRecipe);
+      arrayOfObjects.savedRecipes.push(addRecipe);
+      console.log(arrayOfObjects);
     })
 
     // fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
