@@ -163,7 +163,7 @@ app.get('/make_substitution', (req, res, next) => {
   new_recipe["userRecipe"] = true;
   new_recipe["name"] = name;
   new_recipe["ingredients"] = ingredients;
-  ingredients.push(new_recipe);
+  recipes.push(new_recipe);
   res.render('make_substitution', context);
 });
 
