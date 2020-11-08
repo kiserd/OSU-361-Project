@@ -182,6 +182,9 @@ app.get('/my_recipes', (req , res, next) => {
   if(req.query["recipe"])
   {
     var recipe = req.query["recipe"];
+    var addRecipe = {}
+    addRecipe.name = recipe;
+    console.log(addRecipe.name);
     
   }
 
