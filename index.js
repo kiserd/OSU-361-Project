@@ -198,10 +198,8 @@ app.get('/my_recipes', (req , res, next) => {
       if (err) throw err
     
       arrayOfObjects = JSON.parse(data)
-    //   arrayOfObjects.savedRecipes.push(addRecipe);
+      arrayOfObjects.savedRecipes.push(addRecipe);
     })
-
-    console.log(arrayOfObjects)
 
     // fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
     //   if (err) throw err
