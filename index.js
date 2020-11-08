@@ -179,7 +179,11 @@ app.get('/my_recipes', (req , res, next) => {
   var context = {};
   var recipeBook = require('./myRecipes.json');
 
-  
+  if(req.query["recipe"])
+  {
+    var recipe = req.query["recipe"];
+    console.log(recipe);
+  }
 
   context["myRecipes"] = [];
   for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
@@ -189,8 +193,6 @@ app.get('/my_recipes', (req , res, next) => {
     recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
     context["myRecipes"].push(recipe_dict);
   }
-
-  console.log(context);
 
   res.render('my_recipes', context);
 });
