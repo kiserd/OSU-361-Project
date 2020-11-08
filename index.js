@@ -205,16 +205,26 @@ app.get('/my_recipes', (req , res, next) => {
       if (err) throw err
       console.log('Done!')
     })
-    
+
+    context["myRecipes"] = [];
+    for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
+      var recipe_dict = {};
+      recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
+      recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
+      recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
+      context["myRecipes"].push(recipe_dict);
+    }
   }
 
-  context["myRecipes"] = [];
-  for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
-    var recipe_dict = {};
-    recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
-    recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
-    recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
-    context["myRecipes"].push(recipe_dict);
+  else{
+    context["myRecipes"] = [];
+    for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
+      var recipe_dict = {};
+      recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
+      recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
+      recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
+      context["myRecipes"].push(recipe_dict);
+    }
   }
 
   res.render('my_recipes', context);
