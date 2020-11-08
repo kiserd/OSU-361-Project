@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
@@ -12,6 +13,17 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
+
+app.use(session({
+  secret:'secret',
+  resave:true,
+  saveUninitialized:true
+}))
+app.use(function(req, res, next){
+  res.locals.session = req.session;
+  console.log(res.locals.session)
+  next();
+})
 
 // main recipes 'database' :P
 var recipes = [
@@ -50,6 +62,9 @@ var ingredients = [
   {"type": "sauce", "name": "ketchup", "impact": 178},
   {"type": "sauce", "name": "tomato sauce", "impact": 285}
 ]
+
+var USERS = new Map();
+USERS.set("pollocco", "1234");
 
 function getImpactByRecipeIngredient(recipe) {
   var impacts = [];
@@ -194,6 +209,57 @@ app.get('/my_recipes', (req , res, next) => {
 
   res.render('my_recipes', context);
 });
+
+var register = async function(req, res){
+  var username = req.body.username;
+  var password = req.body.password;
+  if(USERS.get(username) != null){
+    res.send({
+      "code":409,
+      "failed":"Username already registered"
+    })
+  }else{
+    USERS.set(username, password);
+    req.session.loggedin = true;
+    req.session.username = username;
+    res.redirect('/');
+  }
+}
+
+var login = async function(req, res){
+  var username = req.body.username;
+  var password = req.body.password;
+  if(USERS.get(username) == null){
+    res.send({
+      "code":206,
+      "success":"Invalid E-mail"
+    }) 
+  } else if(USERS.get(username) != password){
+    res.send({
+      "code":204,
+      "success":"Bad Credentials, Please Try Again"
+    })
+  } else{
+    req.session.loggedin = true;
+    req.session.username = username;
+    res.redirect('/');
+  }
+}
+
+app.post('/register', register);
+app.post('/login', login);
+
+app.get('/logout', function(req, res, next){
+  if(req.session){
+    req.session.destroy(function(err){
+      if(err){
+        return next(err);
+      } else{
+        return res.redirect('/');
+      }
+    })
+  }
+})
 
 app.use(function(req,res){
   res.status(404);
