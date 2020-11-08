@@ -121,11 +121,11 @@ function getSubstitutesByIngredient(ingredient) {
   return substitutes;
 }
 
-app.get('/homepage', (req , res, next) => {
+app.get('/', (req , res, next) => {
   res.render('homepage');
 });
 
-app.get('/', (req , res, next) => {
+app.get('/choose_recipe', (req , res, next) => {
   var context = {};
   context['recipes'] = []
   for (var i = 0; i < recipes.length; i++) {
@@ -182,7 +182,7 @@ app.get('/my_recipes', (req , res, next) => {
   if(req.query["recipe"])
   {
     var recipe = req.query["recipe"];
-    console.log(recipe);
+    
   }
 
   context["myRecipes"] = [];
