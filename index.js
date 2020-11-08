@@ -192,10 +192,12 @@ app.get('/my_recipes', (req , res, next) => {
 
     var fs = require('fs')
 
+    var arrayOfObjects;
+
     fs.readFile('./myRecipes.json', 'utf-8', function(err, data) {
       if (err) throw err
     
-      var arrayOfObjects = JSON.parse(data)
+      arrayOfObjects = JSON.parse(data)
     //   arrayOfObjects.savedRecipes.push(addRecipe);
     })
 
