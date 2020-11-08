@@ -1,3 +1,9 @@
-[
-   {"name": "Example Recipe", "date": "Example Date", "impact": 0}
-]
+{
+   "savedRecipes":[
+      {
+         "name": "Example Name",
+         "date": "Example Date",
+         "impact": 0
+      }
+   ]
+}

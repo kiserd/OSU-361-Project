@@ -136,11 +136,11 @@ function getSubstitutesByIngredient(ingredient) {
   return substitutes;
 }
 
-app.get('/homepage', (req , res, next) => {
+app.get('/', (req , res, next) => {
   res.render('homepage');
 });
 
-app.get('/', (req , res, next) => {
+app.get('/choose_recipe', (req , res, next) => {
   var context = {};
   context['recipes'] = []
   for (var i = 0; i < recipes.length; i++) {
@@ -194,18 +194,55 @@ app.get('/my_recipes', (req , res, next) => {
   var context = {};
   var recipeBook = require('./myRecipes.json');
 
-  
+  if(req.query["recipe"])
+  {
+    var recipe = req.query["recipe"];
 
-  context["myRecipes"] = [];
-  for (var i = 0; i < recipeBook.length; i++) {
-    var recipe_dict = {};
-    recipe_dict["name"] = recipeBook[i]["name"];
-    recipe_dict["date"] = recipeBook[i]["date"];
-    recipe_dict["impact"] = recipeBook[i]["impact"];
-    context["myRecipes"].push(recipe_dict);
+    var addRecipe = {}
+    addRecipe.name = recipe;
+    var today = new Date();
+    var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+    addRecipe.date = date.toString();
+    addRecipe.impact = 0;
+
+    var fs = require('fs')
+
+    var arrayOfObjects;
+
+    fs.readFile('./myRecipes.json', 'utf-8', function(err, data) {
+      if (err) throw err
+    
+      arrayOfObjects = JSON.parse(data)
+      console.log(arrayOfObjects);
+      arrayOfObjects.savedRecipes.push(addRecipe);
+      console.log(arrayOfObjects);
+    })
+
+    // fs.writeFile('./myRecipes.json', JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
+    //   if (err) throw err
+    //   console.log('Done!')
+    // })
+
+    context["myRecipes"] = [];
+    for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
+      var recipe_dict = {};
+      recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
+      recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
+      recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
+      context["myRecipes"].push(recipe_dict);
+    }
   }
 
-  console.log(context);
+  else{
+    context["myRecipes"] = [];
+    for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
+      var recipe_dict = {};
+      recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
+      recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
+      recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
+      context["myRecipes"].push(recipe_dict);
+    }
+  }
 
   res.render('my_recipes', context);
 });
