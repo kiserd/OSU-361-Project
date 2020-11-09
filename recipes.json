@@ -1,4 +1,26 @@
 [
-
+    {"type": "breakfast", "userRecipe": false, "name": "Oatmeal", "ingredients": ["oats", "milk", "cranberries", "cinnamon", "sugar"]},
+    {"type": "breakfast", "userRecipe": false, "name": "Scrambled Eggs", "ingredients": ["egg", "cheese", "bell pepper"]},
+    {"type": "breakfast", "userRecipe": false, "name": "Breakfast Burrito", "ingredients": ["Tortilla", "Black Beans", "Eggs", "Onion", "Potato", "Sour Cream", "Salsa", "Avocado"]},
+    {"type": "breakfast", "userRecipe": false, "name": "Mushroom Leek Quiche", "ingredients": ["egg", "flour", "cheese", "palm oil", "mushroom", "leek", "white wine", "half and half"]},
+    {"type": "lunch", "userRecipe": false, "name": "Bean Burrito", "ingredients": ["beans", "cheese", "rice", "tortilla", "salsa"]},
+    {"type": "lunch", "userRecipe": false, "name": "Chicken Teriyaki", "ingredients": ["rice", "chicken", "teriyaki sauce"]},
+    {"type": "lunch", "userRecipe": false, "name": "Turkey Sandwich", "ingredients": ["turkey", "bread", "cheese", "mayonaise", "lettuce", "tomato"]},
+    {"type": "lunch", "userRecipe": false, "name": "Waldorf Salad", "ingredients": ["mayonaise", "apples", "celery", "walnuts", "grapes", "Lemon", "lettuce"]},
+    {"type": "lunch", "userRecipe": false, "name": "Pumpkin Soup", "ingredients": ["pumpkin", "olive oil", "onion", "vegetable broth", "coconut milk", "pumpkin seeds"]},
+    {"type": "lunch", "userRecipe": false, "name": "Chicken Caesar Wrap", "ingredients": ["tortilla", "chicken", "lettuce", "tomato", "cheese", "caesar dressing", "crouton"]},
+    {"type": "lunch", "userRecipe": false, "name": "Fish and Chips", "ingredients": ["flour", "cornstarch", "baking powder", "dark beer", "fish", "potato", "vegetable oil"]},
+    {"type": "lunch", "userRecipe": false, "name": "Bacon Pea Salad", "ingredients": ["pea", "bacon", "cheese", "onion", "mayonaise", "sour cream", "vinegar", "sugar"]},
+    {"type": "lunch", "userRecipe": false, "name": "Pineapple Fried Rice", "ingredients": ["pineapple", "rice", "eggs", "pea", "carrot", "soy sauce", "green onion", "sesame oil"]},
+    {"type": "lunch", "userRecipe": false, "name": "Tuna Salad Sandwich", "ingredients": ["tuna", "onion", "mayonaise", "bread", "relish", "vinegar", "sugar"]},
+    {"type": "lunch", "userRecipe": false, "name": "Egg Salad Sandwich", "ingredients": ["egg", "onion", "mayonaise", "bread", "relish", "vinegar", "sugar"]},
+    {"type": "lunch", "userRecipe": false, "name": "PB&J Sandwich", "ingredients": ["peanut butter", "jelly", "bread"]},
+    {"type": "dinner", "userRecipe": false, "name": "Pepperoni Pizza", "ingredients": ["pork", "flour", "cheese", "tomato sauce"]},
+    {"type": "dinner", "userRecipe": false, "name": "Cheese Pizza", "ingredients": ["flour", "cheese", "tomato sauce"]},
+    {"type": "dinner", "userRecipe": false, "name": "Hamburger", "ingredients": ["ground beef", "ketchup", "bread", "lettuce", "tomato"]},
+    {"type": "dinner", "userRecipe": false, "name": "Cheeseburger", "ingredients": ["ground beef", "ketchup", "bread", "lettuce", "tomato", "cheese"]},
+    {"type": "dinner", "userRecipe": false, "name": "Mac and Cheese", "ingredients": ["pasta", "milk", "butter", "cheese"]},
+    {"type": "dinner", "userRecipe": false, "name": "Spaghetti", "ingredients": ["pasta", "tomato sauce", "ground beef"]},
+    {"type": "dinner", "userRecipe": false, "name": "Mostaccioli", "ingredients": ["pasta", "cheese", "egg", "pork", "tomato sauce"]},
     {"type": "dinner", "userRecipe": false, "name": "Meatloaf", "ingredients": ["ground beef", "egg", "ketchup", "Worcestshire Sauce", "Dijon Mustard", "onion", "breadcrumbs", "brown sugar"]}
 ]
