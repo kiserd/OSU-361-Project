@@ -219,7 +219,8 @@ app.get('/make_substitution', (req, res, next) => {
   new_recipe["name"] = name;
   new_recipe["ingredients"] = ingredients;
   recipes.push(new_recipe);
-  res.render('choose_recipe', context);
+  context["new_recipe"] = name;
+  res.render('make_substitution', context);
 });
 
 app.get('/build_recipe', (req , res, next) => {
