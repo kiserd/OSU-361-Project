@@ -1,9 +1,10 @@
 [
     {"type": "breakfast", "userRecipe": false, "name": "Oatmeal", "ingredients": ["oats", "milk", "cranberries", "cinnamon", "sugar"]},
     {"type": "breakfast", "userRecipe": false, "name": "Scrambled Eggs", "ingredients": ["egg", "cheese", "bell pepper"]},
-    {"type": "breakfast", "userRecipe": false, "name": "Breakfast Burrito", "ingredients": ["Tortilla", "Black Beans", "egg", "Onion", "Potato", "Sour Cream", "Salsa", "Avocado"]},
+    {"type": "breakfast", "userRecipe": false, "name": "Breakfast Burrito", "ingredients": ["Tortilla", "Black Beans", "egg", "onion", "potato", "Sour Cream", "Salsa", "Avocado"]},
     {"type": "breakfast", "userRecipe": false, "name": "Mushroom Leek Quiche", "ingredients": ["egg", "flour", "cheese", "palm oil", "mushroom", "leek", "white wine", "half and half"]},
     {"type": "breakfast", "userRecipe": false, "name": "Bagel Sandwich", "ingredients": ["bagel", "butter", "spinnach", "egg", "onion", "tomato"]},
+    {"type": "breakfast", "userRecipe": false, "name": "Strawberry Banana Smoothie", "ingredients": ["strawberry", "banana", "oats", "protein powder", "peanut butter", "almond milk"]},
     {"type": "lunch", "userRecipe": false, "name": "Bean Burrito", "ingredients": ["beans", "cheese", "rice", "tortilla", "salsa"]},
     {"type": "lunch", "userRecipe": false, "name": "Chicken Teriyaki", "ingredients": ["rice", "chicken", "teriyaki sauce"]},
     {"type": "lunch", "userRecipe": false, "name": "Turkey Sandwich", "ingredients": ["turkey", "bread", "cheese", "mayonaise", "lettuce", "tomato"]},
