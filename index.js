@@ -251,27 +251,17 @@ app.get('/my_recipes', (req , res, next) => {
         throw err
       } 
     })
-
-    context["myRecipes"] = [];
-    for (var i = 0; i < recipeBook.length; i++) {
-      var recipe_dict = {};
-      recipe_dict["name"] = recipeBook[i]["name"];
-      recipe_dict["date"] = recipeBook[i]["date"];
-      recipe_dict["impact"] = recipeBook[i]["impact"];
-      context["myRecipes"].push(recipe_dict);
-    }
   }
 
-  else{
-    context["myRecipes"] = [];
-    for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
-      var recipe_dict = {};
-      recipe_dict["name"] = recipeBook[i]["name"];
-      recipe_dict["date"] = recipeBook[i]["date"];
-      recipe_dict["impact"] = recipeBook[i]["impact"];
-      context["myRecipes"].push(recipe_dict);
-    }
+  context["myRecipes"] = [];
+  for (var i = 0; i < recipeBook.length; i++) {
+    var recipe_dict = {};
+    recipe_dict["name"] = recipeBook[i]["name"];
+    recipe_dict["date"] = recipeBook[i]["date"];
+    recipe_dict["impact"] = recipeBook[i]["impact"];
+    context["myRecipes"].push(recipe_dict);
   }
+
 
   res.render('my_recipes', context);
 });
