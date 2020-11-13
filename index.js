@@ -14,6 +14,13 @@ const pool = new Pool({
   }
 });
 
+pool.query('SELECT * FROM ingredients', (err, res) => {
+  if (err) {
+    return console.error('Error executing query', err.stack);
+  }
+  console.log(res.rows[0]);
+})
+
 // var ingredients = require('./ingredients.json');
 // var recipes = require('./recipes.json');
 
