@@ -181,6 +181,7 @@ function get_rand_rgb(){
 }
 
 app.get('/', (req , res, next) => {
+  // Testing database 
   pool.query(`SELECT * FROM Ingredients;`, (err, res) => {
     if (err) {
         console.log("Error - Failed to select all from Ingredients");
