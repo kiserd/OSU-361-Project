@@ -6,6 +6,14 @@ const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
+const {Pool} = require('pg')
+const pool = new Pool({
+  connectionString: "postgres://qxtetfyciswbov:31134b5dcc9de86cf5f8f815858b9140d07cff36a764dfb7b90424c6804a5e38@ec2-3-211-176-230.compute-1.amazonaws.com:5432/d3u5cr9kigu0n5",
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
 // var ingredients = require('./ingredients.json');
 // var recipes = require('./recipes.json');
 
@@ -173,6 +181,15 @@ function get_rand_rgb(){
 }
 
 app.get('/', (req , res, next) => {
+  pool.query(`SELECT * FROM Ingredients;`, (err, res) => {
+    if (err) {
+        console.log("Error - Failed to select all from Ingredients");
+        console.log(err);
+    }
+    else{
+        console.log(res.rows);
+    }
+  });
   res.render('homepage');
 });
 
