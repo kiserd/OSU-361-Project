@@ -14,15 +14,18 @@ const pool = new Pool({
   }
 });
 
-pool.query('SELECT * FROM ingredients', (err, res) => {
+// Logan testing out some queries
+const selectAllRecipes =      'SELECT * FROM recipes';
+const selectAllIngredients =  'SELECT * FROM ingredients';
+const selectIngredientById =  'SELECT * FROM ingredients WHERE id = $1';
+const selectRecipeById =      'SELECT * FROM recipes WHERE id = $1';
+
+pool.query(selectRecipeById, [1], (err, res) => {
   if (err) {
     return console.error('Error executing query', err.stack);
   }
-  console.log(res.rows[0]);
+  console.log(res.rows);
 })
-
-// var ingredients = require('./ingredients.json');
-// var recipes = require('./recipes.json');
 
 
 app.engine('handlebars', handlebars.engine);
