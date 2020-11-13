@@ -1,3 +1,35 @@
+<div class="container-fluid">
+    <h3>Common Recipes</h3>
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">View Ingredients</th>
+                    <th scope="col">Save Recipe</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each recipes}}
+                <tr>
+                    <td>{{this.name}}</td>
+                    <td>
+                        <form action="/view_ingredients" method="get">
+                            <button class="btn btn-primary" name="recipe_id" value={{this.id}}>View Ingredients</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/my_recipes" method="get">
+                            <button class="btn btn-primary" name="recipe_id" value={{this.id}}>View Ingredients</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div class="containder-fluid">
     <h3>bunch of recipes here</h3>
     <div class="col-md-6>

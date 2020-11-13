@@ -15,10 +15,10 @@ const pool = new Pool({
 });
 
 // Logan testing out some queries
-const selectAllRecipes =      'SELECT * FROM recipes';
-const selectAllIngredients =  'SELECT * FROM ingredients';
-const selectIngredientById =  'SELECT * FROM ingredients WHERE id = $1';
-const selectRecipeById =      'SELECT * FROM recipes WHERE id = $1';
+const querySelectAllRecipes =      'SELECT * FROM recipes';
+const querySelectAllIngredients =  'SELECT * FROM ingredients';
+const querySelectIngredientById =  'SELECT * FROM ingredients WHERE id = $1';
+const querySelectRecipeById =      'SELECT * FROM recipes WHERE id = $1';
 
 pool.query(selectRecipeById, [1], (err, res) => {
   if (err) {
