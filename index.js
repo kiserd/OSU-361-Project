@@ -27,12 +27,12 @@ const querySelectIngredientsByRecipeId =  `SELECT i.*
                                            ON ri.ingredients_id = i.id
                                            WHERE r.id = $1`;
 
-pool.query(querySelectIngredientsByRecipeId, [1], (err, res) => {
-  if (err) {
-    return console.error('Error executing query', err.stack);
-  }
-  console.log(res.rows);
-})
+// pool.query(querySelectIngredientsByRecipeId, [1], (err, res) => {
+//   if (err) {
+//     return console.error('Error executing query', err.stack);
+//   }
+//   console.log(res.rows);
+// })
 
 
 app.engine('handlebars', handlebars.engine);
@@ -233,7 +233,7 @@ app.get('/view_ingredients', (req , res, next) => {
     // add ingredients/attributes to context to provide to user
     context["ingredients"] = result.rows;
     // get recipe info to provide to user
-    pool.query(querySelectRecipeById, recipe_id, (err, result) => {
+    pool.query(querySelectRecipeById, [recipe_id], (err, result) => {
       if (err) {
         return console.error('Error executing query', err.stack);
       }
