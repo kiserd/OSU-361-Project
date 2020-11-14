@@ -15,7 +15,7 @@ const pool = new Pool({
 });
 
 // Logan testing out some queries
-const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE userRecipe = false`;
+const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE user_recipe = false`;
 const querySelectIngredientById =         'SELECT * FROM ingredients WHERE id = $1';
 const querySelectRecipeById =             'SELECT * FROM recipes WHERE id = $1';
 const querySelectIngredientsByRecipeId =  `SELECT i.* 
@@ -25,14 +25,6 @@ const querySelectIngredientsByRecipeId =  `SELECT i.*
                                            LEFT JOIN ingredients AS i
                                            ON ri.ingredients_id = i.id
                                            WHERE r.id = $1`;
-
-// pool.query(querySelectIngredientsByRecipeId, [1], (err, res) => {
-//   if (err) {
-//     return console.error('Error executing query', err.stack);
-//   }
-//   console.log(res.rows);
-// })
-
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
