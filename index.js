@@ -15,8 +15,7 @@ const pool = new Pool({
 });
 
 // Logan testing out some queries
-const querySelectAllRecipes =             'SELECT * FROM recipes';
-const querySelectAllIngredients =         'SELECT * FROM ingredients';
+const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE userRecipe = false`;
 const querySelectIngredientById =         'SELECT * FROM ingredients WHERE id = $1';
 const querySelectRecipeById =             'SELECT * FROM recipes WHERE id = $1';
 const querySelectIngredientsByRecipeId =  `SELECT i.* 
@@ -213,7 +212,7 @@ app.get('/', (req , res, next) => {
 
 app.get('/choose_recipe', (req , res, next) => {
   var context = {};
-  pool.query(querySelectAllRecipes, (err, results) => {
+  pool.query(querySelectAllSystemRecipes, (err, results) => {
     if (err) {
       return console.error('Error executing query', err.stack);
     }
@@ -230,7 +229,6 @@ app.get('/view_ingredients', (req , res, next) => {
     if (err) {
       return console.error('Error executing query', err.stack);
     }
-    // add ingredients/attributes to context to provide to user
     context["ingredients"] = result.rows;
     // get recipe info to provide to user
     pool.query(querySelectRecipeById, [recipe_id], (err, result) => {
