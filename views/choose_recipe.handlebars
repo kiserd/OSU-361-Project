@@ -29,23 +29,3 @@
         </table>
     </div>
 </div>
-
-<div class="containder-fluid">
-    <h3>bunch of recipes here</h3>
-    <div class="col-md-6>
-        <ul class="list-group">
-            {{#each recipes}}
-                <li class="list-group-item">{{this}}
-                    <div class="input-group">
-                        <form action="/view_ingredients" method="get">
-                            <button class="btn btn-primary" name="recipe" value="{{this}}">View Ingredient</button>
-                        </form>
-                        <form action="/my_recipes" method="get">
-                            <button class="btn btn-primary" name="recipe" value="{{this}}">Save Recipe</button>
-                        </form>
-                    </div>
-                </li>
-            {{/each}}
-        </ul>
-    </div>
-</div>
