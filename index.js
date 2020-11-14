@@ -206,11 +206,11 @@ app.get('/', (req , res, next) => {
 
 app.get('/choose_recipe', (req , res, next) => {
   var context = {};
-  pool.query(querySelectAllRecipes, (err, res) => {
+  pool.query(querySelectAllRecipes, (err, results) => {
     if (err) {
       return console.error('Error executing query', err.stack);
     }
-    context["recipes"] =  res.rows;
+    context["recipes"] =  results.rows;
     res.render('choose_recipe', context);
   });
 });
