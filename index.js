@@ -237,7 +237,7 @@ app.get('/view_ingredients', (req , res, next) => {
       if (err) {
         return console.error('Error executing query', err.stack);
       }
-      context["recipe"] = result.rows;
+      context["recipe"] = result.rows[0];
       res.render('view_ingredients', context);
     });
   });
