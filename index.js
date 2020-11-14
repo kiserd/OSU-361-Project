@@ -20,12 +20,12 @@ const querySelectAllIngredients =  'SELECT * FROM ingredients';
 const querySelectIngredientById =  'SELECT * FROM ingredients WHERE id = $1';
 const querySelectRecipeById =      'SELECT * FROM recipes WHERE id = $1';
 
-pool.query(selectRecipeById, [1], (err, res) => {
-  if (err) {
-    return console.error('Error executing query', err.stack);
-  }
-  console.log(res.rows);
-})
+// pool.query(querySelectAllRecipes, (err, res) => {
+//   if (err) {
+//     return console.error('Error executing query', err.stack);
+//   }
+//   console.log(res.rows);
+// })
 
 
 app.engine('handlebars', handlebars.engine);
@@ -206,12 +206,13 @@ app.get('/', (req , res, next) => {
 
 app.get('/choose_recipe', (req , res, next) => {
   var context = {};
-  context['recipes'] = []
-  for (var i = 0; i < recipes.length; i++) {
-    context['recipes'].push(recipes[i]["name"]);
-  }
-  console.log(context);
-  res.render('choose_recipe', context);
+  pool.query(querySelectAllRecipes, (err, res) => {
+    if (err) {
+      return console.error('Error executing query', err.stack);
+    }
+    context["recipes"] =  res.rows;
+    res.render('choose_recipe', context);
+  });
 });
 
 app.get('/view_ingredients', (req , res, next) => {
