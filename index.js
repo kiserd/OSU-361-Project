@@ -15,17 +15,24 @@ const pool = new Pool({
 });
 
 // Logan testing out some queries
-const querySelectAllRecipes =      'SELECT * FROM recipes';
-const querySelectAllIngredients =  'SELECT * FROM ingredients';
-const querySelectIngredientById =  'SELECT * FROM ingredients WHERE id = $1';
-const querySelectRecipeById =      'SELECT * FROM recipes WHERE id = $1';
+const querySelectAllRecipes =             'SELECT * FROM recipes';
+const querySelectAllIngredients =         'SELECT * FROM ingredients';
+const querySelectIngredientById =         'SELECT * FROM ingredients WHERE id = $1';
+const querySelectRecipeById =             'SELECT * FROM recipes WHERE id = $1';
+const querySelectIngredientsByRecipeId =  `SELECT i.* 
+                                           FROM recipes AS r
+                                           LEFT JOIN recipes_ingredients AS ri
+                                           ON (r.id = ri.recipes_id)
+                                           LEFT JOIN ingredients AS i
+                                           ON ri.ingredients_id = i.id
+                                           WHERE r.id = $1`;
 
-// pool.query(querySelectAllRecipes, (err, res) => {
-//   if (err) {
-//     return console.error('Error executing query', err.stack);
-//   }
-//   console.log(res.rows);
-// })
+pool.query(querySelectIngredientsByRecipeId, [1], (err, res) => {
+  if (err) {
+    return console.error('Error executing query', err.stack);
+  }
+  console.log(res.rows);
+})
 
 
 app.engine('handlebars', handlebars.engine);
@@ -217,10 +224,23 @@ app.get('/choose_recipe', (req , res, next) => {
 
 app.get('/view_ingredients', (req , res, next) => {
   var context = {};
-  var recipe = req.query["recipe"];
-  context["recipe"] = recipe;
-  context["ingredients"] = getImpactByRecipeIngredient(recipe);
-  res.render('view_ingredients', context);
+  var recipe_id = req.query["recipe_id"];
+  // get ingredients associated with recipe
+  pool.query(querySelectIngredientsByRecipeId, [recipe_id], (err, result) => {
+    if (err) {
+      return console.error('Error executing query', err.stack);
+    }
+    // add ingredients/attributes to context to provide to user
+    context["ingredients"] = result.rows;
+    // get recipe info to provide to user
+    pool.query(querySelectRecipeById, recipe_id, (err, result) => {
+      if (err) {
+        return console.error('Error executing query', err.stack);
+      }
+      context["recipe"] = result.rows;
+      res.render('view_ingredients', context);
+    });
+  });
 });
 
 app.get('/view_substitutes', (req, res, next) => {
