@@ -296,6 +296,23 @@ app.get('/my_recipes', (req , res, next) => {
           })
         }
       })
+    } else if(req.query["delete_id"]){
+      var deleteRecipeQuery = {
+        text: `DELETE FROM users_recipes WHERE recipes_id=$1`,
+        values: [req.query["delete_id"]]
+      }
+      pool.query(deleteRecipeQuery, (err, result)=>{
+        if(err) console.log(err)
+        else{
+          pool.query(getRecipesQuery, (err, {rows})=>{
+            if(err) console.log(err)
+            else{
+              context["myRecipes"] = makeRecipesObject(rows);
+              res.render("my_recipes", context);
+            }
+          })
+        }
+      })
     } else {
       pool.query(getRecipesQuery, (err, {rows})=>{
         if(err) console.log(err)
@@ -331,6 +348,11 @@ function makeRecipesObject(rows){
       return impact_color
     }(recipes[i].impact)
     recipes[i].id = rows[i].recipes_id;
+    if(rows[i].hasOwnProperty("type")){
+      recipes[i].type = rows[i].type;
+    } else{
+      recipes[i].type = ""
+    }
   }
   return recipes
 }

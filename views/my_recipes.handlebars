@@ -4,8 +4,8 @@
             <div class="col-sm-12">
                 <h1>Recipe Book</h1>
                 <p>This is a list of your saved recipes.</p>
-                <p>Want to add a new recipe? <a href="/choose_recipe"> You can do that here.</a></p>
-                <p>Want to build your own recipe? <a href="/build_recipe"> You can do that here.</a></p>
+                <p>Want to add a recipe from our collection? <a href="/choose_recipe"> Browse Recipes.</a></p>
+                <p>Want to build your own recipe? <a href="/build_recipe"> Build Recipe.</a></p>
             </div>
         </div>
         <div class="row">
@@ -25,7 +25,11 @@
                     <tbody>
                         {{#each myRecipes}}
                         <tr>
-                            <td>{{this.name}}</td>
+                            <td>
+                                <b>{{this.name}}</b>
+                                <br/>
+                                <small>{{this.type}}</small>
+                            </td>
                             <td>{{this.date}}</td>
                             <td ><span class="badge badge-{{this.impact_color}}">{{this.impact}}</span></td>
                             <td>
@@ -36,7 +40,11 @@
                                 </form>
                             </td>
                             <td>
-                                <a href= #><button type="button" class="btn btn-danger">Delete</button></a>
+                                <form method="get">
+                                    <div class="form-group">
+                                        <button type="submit" name="delete_id" value="{{this.id}}" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </form>
                             </td>
                         </tr>
                         {{/each}}
