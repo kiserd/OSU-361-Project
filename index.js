@@ -1,7 +1,6 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const users = require('./users.json') 
 const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
@@ -196,7 +195,7 @@ app.get('/', (req , res, next) => {
         console.log(err);
     }
     else{
-        console.log(res.rows);
+        //console.log(res.rows);
     }
   });
   res.render('homepage');
@@ -268,83 +267,128 @@ app.get('/build_recipe', (req , res, next) => {
 
 app.get('/my_recipes', (req , res, next) => {
   var context = {};
-  var recipeBook = require('./myRecipes.json')
-  
-  if(req.query["recipe"])
-  {
-    var recipe = req.query["recipe"];
-
-    var addRecipe = {}
-    addRecipe.name = recipe;
-
-    var today = new Date();
-    var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
-    addRecipe.date = date.toString();
-    
-    addRecipe.impact = 0;
-
-    recipeBook["savedRecipes"].push(addRecipe);
-
-    fs.writeFile('./myRecipes.json', JSON.stringify(recipeBook), 'utf-8', function(err) {
-      if (err){
-        throw err
-      } 
+  if(req.session["user"] == null){
+    res.send("Error! Please log-in!")
+  }
+  var getRecipesQuery = {
+    text: 'SELECT * FROM users_recipes JOIN recipes ON recipes_id=id WHERE users_id=$1',
+    values: [req.session.user.id]
+  }
+  if(req.query["recipe_id"]){
+    var addRecipeQuery = {
+      text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
+            ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
+      values: [req.session.user.id, req.query["recipe_id"]]
+    }
+    pool.query(addRecipeQuery, (err, result)=>{
+      if(err) console.log(err)
+      else{
+        pool.query(getRecipesQuery, (err, {rows})=>{
+          if(err) console.log(err)
+          else{
+            var recipes = []
+            for(i=0; i < rows.length; i++){
+              recipes[i] = {};
+              recipes[i].name = rows[i].name;
+              recipes[i].date = rows[i].date.toLocaleString();
+              recipes[i].impact = 0;
+            }
+            context["myRecipes"] = recipes;
+            res.render("my_recipes", context);
+          }
+        })
+      }
+    })
+  } else {
+    pool.query(getRecipesQuery, (err, {rows})=>{
+      if(err) console.log(err)
+      else{
+        var recipes = []
+        for(i=0; i < rows.length; i++){
+          recipes[i] = {};
+          recipes[i].name = rows[i].name;
+          recipes[i].date = rows[i].date.toLocaleString();
+          recipes[i].impact = 0;
+        }
+        context["myRecipes"] = recipes;
+        res.render("my_recipes", context);
+      }
     })
   }
-
-  context["myRecipes"] = [];
-  for (var i = 0; i < recipeBook["savedRecipes"].length; i++) {
-    var recipe_dict = {};
-    recipe_dict["name"] = recipeBook["savedRecipes"][i]["name"];
-    recipe_dict["date"] = recipeBook["savedRecipes"][i]["date"];
-    recipe_dict["impact"] = recipeBook["savedRecipes"][i]["impact"];
-    context["myRecipes"].push(recipe_dict);
-  }
-
-
-  res.render('my_recipes', context);
 });
 
 var register = async function(req, res){
   var username = req.body.username;
   var password = req.body.password;
-  if(users[username] != null){
-    res.send({
-      "code":409,
-      "failed":"Username already registered"
-    })
-  }else{
-    users[username] = {"username":username, "password":password, "color":get_rand_rgb()};
-    fs.writeFile('./users.json', JSON.stringify(users), err=>{
-      if(err){
-        throw err;
-      } else {
-        req.session.loggedin = true;
-        req.session.user = users[username];
-        res.redirect('/');
+  var checkUser = {text:'SELECT * FROM users WHERE username=$1', values:[username]};
+  var registerUser = {
+    text:'INSERT INTO users (username, password, color) VALUES ($1, $2, $3)',
+    values:[username, password, get_rand_rgb()]
+  };
+  pool.query(checkUser, (err, {rows})=>{
+    if(err) console.log(err)
+    else{
+      if(rows.length > 0){
+        res.send({
+          "code":409,
+          "failed":"Username already registered"
+        })
+      } else{
+        pool.query(registerUser, (err)=>{
+          if(err) console.log(err)
+          else{
+            pool.query(checkUser, (err, {rows})=>{
+              if(err) console.log(err)
+              else{
+                console.log(rows)
+                if(rows[0].username == username){
+                  req.session.loggedin = true;
+                  req.session.user = {
+                    username: rows[0].username, 
+                    color: rows[0].color,
+                    id: rows[0].id
+                  };
+                  res.redirect('/');
+                }
+              }
+            }) 
+          }
+        })
       }
-    }) 
-  }
+    }
+  })
 }
 
 var login = async function(req, res){
   var username = req.body.username;
   var password = req.body.password;
-  if(users[username] == null){
-    res.send({
-      "code":206,
-      "success":"Invalid E-mail"
-    }) 
-  } else if(users[username].password != password){
-    res.send({
-      "code":204,
-      "success":"Bad Credentials, Please Try Again"
-    })
-  } else{
-    req.session.loggedin = true;
-    req.session.user = users[username];
-    res.redirect('/');
-  }
+  pool.query({text:"SELECT * FROM USERS WHERE username=$1", values:[username]}, (err, {rows})=>{
+    if(err){
+      console.log(err)
+    } else{
+      if(rows.length == 0){
+        res.send({
+          "code":206,
+          "success":"Invalid E-mail"
+        }) 
+      } else{
+        if(rows[0].password != password){
+          res.send({
+            "code":204,
+            "success":"Bad Credentials, Please Try Again"
+          })
+        } else{
+          req.session.loggedin = true;
+          req.session.user = {
+            username: rows[0].username,
+            color: rows[0].color,
+            id: rows[0].id
+          };
+          res.redirect('/');
+        }
+      }
+    }
+  })
 }
 
 app.post('/register', register);
@@ -363,12 +407,6 @@ app.get('/logout', function(req, res, next){
 })
 
 app.get('/new_user', function(req, res, next){
-  pool.query("SELECT * FROM users", function(error, result){
-    if(error){ console.log(error)}
-    else{
-      console.log(result)
-    }
-  })
   res.render('new_user')
 })
 
