@@ -38,7 +38,6 @@ app.use(session({
 }))
 app.use(function(req, res, next){
   res.locals.session = req.session;
-  console.log(res.locals.session)
   next();
 })
 
@@ -269,53 +268,72 @@ app.get('/my_recipes', (req , res, next) => {
   var context = {};
   if(req.session["user"] == null){
     res.send("Error! Please log-in!")
-  }
-  var getRecipesQuery = {
-    text: 'SELECT * FROM users_recipes JOIN recipes ON recipes_id=id WHERE users_id=$1',
-    values: [req.session.user.id]
-  }
-  if(req.query["recipe_id"]){
-    var addRecipeQuery = {
-      text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
-            ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
-      values: [req.session.user.id, req.query["recipe_id"]]
+  } else{
+    var getRecipesQuery = {
+      text: 'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
+            'JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id '+
+            'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
+            'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
+            'WHERE users_recipes.users_id=$1 '+
+            'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id ',
+      values: [req.session.user.id]
     }
-    pool.query(addRecipeQuery, (err, result)=>{
-      if(err) console.log(err)
-      else{
-        pool.query(getRecipesQuery, (err, {rows})=>{
-          if(err) console.log(err)
-          else{
-            var recipes = []
-            for(i=0; i < rows.length; i++){
-              recipes[i] = {};
-              recipes[i].name = rows[i].name;
-              recipes[i].date = rows[i].date.toLocaleString();
-              recipes[i].impact = 0;
+    if(req.query["recipe_id"]){
+      var addRecipeQuery = {
+        text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
+              ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
+        values: [req.session.user.id, req.query["recipe_id"]]
+      }
+      pool.query(addRecipeQuery, (err, result)=>{
+        if(err) console.log(err)
+        else{
+          pool.query(getRecipesQuery, (err, {rows})=>{
+            if(err) console.log(err)
+            else{
+              context["myRecipes"] = makeRecipesObject(rows);
+              res.render("my_recipes", context);
             }
-            context["myRecipes"] = recipes;
-            res.render("my_recipes", context);
-          }
-        })
-      }
-    })
-  } else {
-    pool.query(getRecipesQuery, (err, {rows})=>{
-      if(err) console.log(err)
-      else{
-        var recipes = []
-        for(i=0; i < rows.length; i++){
-          recipes[i] = {};
-          recipes[i].name = rows[i].name;
-          recipes[i].date = rows[i].date.toLocaleString();
-          recipes[i].impact = 0;
+          })
         }
-        context["myRecipes"] = recipes;
-        res.render("my_recipes", context);
-      }
-    })
+      })
+    } else {
+      pool.query(getRecipesQuery, (err, {rows})=>{
+        if(err) console.log(err)
+        else{
+          context["myRecipes"] = makeRecipesObject(rows);
+          res.render("my_recipes", context);
+        }
+      })
+    }
   }
 });
+
+function makeRecipesObject(rows){
+  var recipes = [];
+  for(i=0; i < rows.length; i++){
+    recipes[i] = {};
+    recipes[i].name = rows[i].name;
+    recipes[i].date = rows[i].date.toLocaleString();
+    recipes[i].impact = rows[i].recipes_impact;
+    recipes[i].impact_color = function(impact){
+      var impact_color = ''
+      if(impact == null){
+        impact_color = 'secondary'
+      } else {
+        if(impact > 8000){
+          impact_color = 'danger'
+        } else if (impact < 8000 && impact > 3000){
+          impact_color = 'warning'
+        } else if (impact < 3000){
+          impact_color = 'success'
+        }
+      }
+      return impact_color
+    }(recipes[i].impact)
+    recipes[i].id = rows[i].recipes_id;
+  }
+  return recipes
+}
 
 var register = async function(req, res){
   var username = req.body.username;

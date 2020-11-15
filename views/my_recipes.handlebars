@@ -27,11 +27,11 @@
                         <tr>
                             <td>{{this.name}}</td>
                             <td>{{this.date}}</td>
-                            <td>{{this.impact}}</td>
+                            <td ><span class="badge badge-{{this.impact_color}}">{{this.impact}}</span></td>
                             <td>
-                                <form action=# method="get">
+                                <form action='/view_ingredients' method="get">
                                     <div class="form-group">
-                                        <input type="submit" name="update" value="View/Edit" class="btn btn-primary" />
+                                        <button type="submit" name="recipe_id" value="{{this.id}}" class="btn btn-primary">View/Edit</button>
                                     </div>
                                 </form>
                             </td>
