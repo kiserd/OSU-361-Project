@@ -1,7 +1,6 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const mysql = require('dbcon.js');
 const users = require('./users.json') 
 const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
@@ -364,6 +363,12 @@ app.get('/logout', function(req, res, next){
 })
 
 app.get('/new_user', function(req, res, next){
+  pool.query("SELECT * FROM users", function(error, result){
+    if(error){ console.log(error)}
+    else{
+      console.log(result)
+    }
+  })
   res.render('new_user')
 })
 
