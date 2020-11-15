@@ -232,6 +232,18 @@ app.get('/choose_recipe', (req , res, next) => {
   });
 });
 
+app.get('/get_ingredients', (req, res, next)=>{
+  var context = {};
+  if(req.query["recipes_id"]){
+    pool.query('SELECT * FROM ingredients WHERE id IN (SELECT ingredients_id FROM recipes_ingredients WHERE recipes_id=$1)',[req.query["recipes_id"]], (err, {rows})=>{
+      if(err) console.log(err)
+      context.recipes_id = req.query["recipes_id"];
+      context.ingredients = rows
+      res.send(context);
+    })
+  }
+})
+
 function makeRecipeArray(RECIPES_TO_SEND){
   return Array.from(RECIPES_TO_SEND.values()).sort(inRecipeBookCompare);
 }
@@ -241,7 +253,7 @@ function inRecipeBookCompare(book1, book2){
 }
 
 app.get('/add_recipe', (req, res, next)=>{
-  if(req.query["recipe_id"]){
+  if(req.query["recipe_id"] && req.session.loggedin){
     var addRecipeQuery = {
       text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
             ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
@@ -265,6 +277,8 @@ app.get('/add_recipe', (req, res, next)=>{
         })
       }
     })
+  }else{
+    res.send(false);
   }
 })
 

@@ -1,8 +1,14 @@
-<div class="container-fluid">
-
-    <div class="container-fluid">
-            <h3>Common Recipes</h3>
-        <table class="table">
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Choose Recipe</h1>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-9">
+                <h2>Common Recipes</h2>
+                <table class="table table-hover table-striped">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -13,24 +19,56 @@
             <tbody>
                 {{#each recipes}}
                 <tr>
-                    <td>{{this.name}}</td>
                     <td>
-                        <form action="/view_ingredients" method="get">
-                            <button class="btn btn-primary" name="recipe_id" value={{this.id}}>View Ingredients</button>
-                        </form>
+                        <span id="recipe_name_{{this.id}}">{{this.name}}</span>
+                        <div class="collapse" id="collapse_{{this.id}}" >
+                                <div class="card card-body" id="collapse_text_{{this.id}}"></div>
+                            </div>
+                    </td>
+                    <td>
+
+                            <button class="btn btn-outline-info view_recipe_button" name="recipe_id" href="#collapse_{{this.id}}" data-toggle="modal" data-target="#ingredientsModal" aria-expanded="false" aria-controls="collapse_{{this.id}}" value={{this.id}} id="view_{{this.id}}">View Ingredients</button>
+                            
+
                     </td>
                     <td>
                         {{#if this.in_book}}
                              <a href="/my_recipes"><button class="btn btn-light">View in Recipe Book</button></a>
                         {{else}}
-                             <button class="btn btn-primary save_recipe_button" name="recipe_id" id={{this.id}} value={{this.id}} data-container="body" data-toggle="popover" data-placement="right" data-html="true" data-content="<a href='/my_recipes'>Go to Recipe Book</a><br/><a href='/view_ingredients?recipe_id={{this.id}}'>Go to {{this.name}}"><span id="save_loader_{{this.id}}" role="status" aria-hidden="true"></span><span id="save_text_{{this.id}}">Save Recipe</span></button>
+                             <button class="btn btn-light save_recipe_button" style="color:blue" name="recipe_id" id={{this.id}} value={{this.id}} data-container="body" data-toggle="popover" data-placement="right" data-html="true" data-content="<a href='/my_recipes'>Go to Recipe Book</a><br/><a href='/view_ingredients?recipe_id={{this.id}}'>Go to {{this.name}}"><span id="save_loader_{{this.id}}" role="status" aria-hidden="true"></span><span id="save_text_{{this.id}}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bookmark-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+</svg> Save</span></button>
                         {{/if}}    
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+        <div class="modal fade" id="ingredientsModal" tabindex="-1" aria-labelledby="ingredientsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ingredientsModalLabel">Recipe Name</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <p>Ingredients</p>
+        <div id="modal-body-content">
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="" id="view_full_link"><button type="button" class="btn btn-primary">View Full</button></a>
+      </div>
     </div>
-        
+  </div>
+</div>
+    </div>
+        </div>
     <script src="choose_recipe.js"></script>
 </div>
