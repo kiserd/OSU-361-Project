@@ -1,6 +1,7 @@
 <div class="container-fluid">
-    <h3>Common Recipes</h3>
+
     <div class="container-fluid">
+            <h3>Common Recipes</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -19,13 +20,17 @@
                         </form>
                     </td>
                     <td>
-                        <form action="/my_recipes" method="get">
-                            <button class="btn btn-primary" name="recipe_id" value={{this.id}}>Save Recipe</button>
-                        </form>
+                        {{#if this.in_book}}
+                             <a href="/my_recipes"><button class="btn btn-light">View in Recipe Book</button></a>
+                        {{else}}
+                             <button class="btn btn-primary save_recipe_button" name="recipe_id" id={{this.id}} value={{this.id}} data-container="body" data-toggle="popover" data-placement="right" data-html="true" data-content="<a href='/my_recipes'>Go to Recipe Book</a><br/><a href='/view_ingredients?recipe_id={{this.id}}'>Go to {{this.name}}"><span id="save_loader_{{this.id}}" role="status" aria-hidden="true"></span><span id="save_text_{{this.id}}">Save Recipe</span></button>
+                        {{/if}}    
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
+        
+    <script src="choose_recipe.js"></script>
 </div>

@@ -202,14 +202,86 @@ app.get('/', (req , res, next) => {
 
 app.get('/choose_recipe', (req , res, next) => {
   var context = {};
-  pool.query(querySelectAllSystemRecipes, (err, results) => {
+  pool.query(querySelectAllSystemRecipes, (err, {rows}) => {
     if (err) {
       return console.error('Error executing query', err.stack);
     }
-    context["recipes"] =  results.rows;
-    res.render('choose_recipe', context);
+    RECIPES_TO_SEND = new Map()
+    for(let row of rows){
+      row.in_book = false;
+      RECIPES_TO_SEND.set(row.id, row);
+    }
+    if(req.session.loggedin){
+      pool.query('SELECT recipes_id FROM users_recipes WHERE users_id=$1', [req.session.user.id], (err, {rows})=>{
+        if(err) {
+          console.log(err)
+          res.send(false);
+        }
+        for(let row of rows){
+          let recipe = RECIPES_TO_SEND.get(row.recipes_id);
+          recipe.in_book = true;
+          RECIPES_TO_SEND.set(row.recipes_id, recipe);
+        }
+        context["recipes"] = makeRecipeArray(RECIPES_TO_SEND);
+        res.render('choose_recipe', context)
+      })
+    } else{
+      context["recipes"] = makeRecipeArray(RECIPES_TO_SEND);
+      res.render('choose_recipe', context)
+    }
   });
 });
+
+function makeRecipeArray(RECIPES_TO_SEND){
+  return Array.from(RECIPES_TO_SEND.values()).sort(inRecipeBookCompare);
+}
+
+function inRecipeBookCompare(book1, book2){
+  return book1.in_book - book2.in_book
+}
+
+app.get('/add_recipe', (req, res, next)=>{
+  if(req.query["recipe_id"]){
+    var addRecipeQuery = {
+      text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
+            ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
+      values: [req.session.user.id, req.query["recipe_id"]]
+    }
+    pool.query(addRecipeQuery, (err, result)=>{
+      if(err){
+        console.log(err)
+        res.send(false);
+      } 
+      else{
+        var getRecipeQuery = {
+          text: `SELECT * FROM recipes WHERE id=$1`,
+          values: [req.query["recipe_id"]]
+        }
+        pool.query(getRecipeQuery, (err, {rows})=>{
+          if(err) console.log(err)
+          else{
+            res.send(rows[0]);
+          }
+        })
+      }
+    })
+  }
+})
+
+app.get('/get_user_recipes', (req, res, next)=>{
+  if(req.session["user"] == null){
+    res.send(false);
+  }else{
+    pool.query('SELECT recipes_id FROM users_recipes WHERE users_id=$1', [req.session.user.id], (err, {rows})=>{
+      if(err) {
+        console.log(err)
+        res.send(false);
+      }
+      res.send(rows);
+    })
+  }
+  
+})
 
 app.get('/view_ingredients', (req , res, next) => {
   var context = {};
