@@ -1,1 +1,20 @@
-{"pollocco":{"username":"pollocco","password":"1234","color":"rgba(147, 13, 13,1)"},"testuser1":{"username":"testuser1","password":"1234w","color":"rgba(253,94,238, 1)"}}
+{
+    "pollocco": {
+        "username": "pollocco",
+        "password": "1234",
+        "color": "rgba(147, 13, 13,1)",
+        "savedRecipes":{
+            "example":{
+               "name": "Example Name",
+               "date": "Example Date",
+               "impact": 0
+            }
+        }
+    },
+    "testuser1": {
+        "username": "testuser1",
+        "password": "1234w",
+        "color": "rgba(253,94,238, 1)",
+        "savedRecipes":[]
+    }
+}
