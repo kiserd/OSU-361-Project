@@ -5,7 +5,8 @@ const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
-const {Pool} = require('pg')
+const {Pool} = require('pg');
+const { resolve } = require('path');
 const pool = new Pool({
   connectionString: "postgres://qxtetfyciswbov:31134b5dcc9de86cf5f8f815858b9140d07cff36a764dfb7b90424c6804a5e38@ec2-3-211-176-230.compute-1.amazonaws.com:5432/d3u5cr9kigu0n5",
   ssl: {
@@ -200,56 +201,69 @@ app.get('/', (req , res, next) => {
   res.render('homepage');
 });
 
-app.get('/choose_recipe', (req , res, next) => {
+app.get('/choose_recipe', async (req , res, next) => {
+  var all_recipes = await makeQuery(querySelectAllSystemRecipes, true).catch(err=>console.error(err));
+  var RECIPES_MAP = await getUserRecipeMap(req, all_recipes).catch(err=>console.error(err));
   var context = {};
-  pool.query(querySelectAllSystemRecipes, (err, {rows}) => {
-    if (err) {
-      return console.error('Error executing query', err.stack);
-    }
-    RECIPES_TO_SEND = new Map()
-    for(let row of rows){
-      row.in_book = false;
-      RECIPES_TO_SEND.set(row.id, row);
-    }
-    if(req.session.loggedin){
-      pool.query('SELECT recipes_id FROM users_recipes WHERE users_id=$1', [req.session.user.id], (err, {rows})=>{
-        if(err) {
-          console.log(err)
-          res.send(false);
-        }
-        for(let row of rows){
-          let recipe = RECIPES_TO_SEND.get(row.recipes_id);
-          recipe.in_book = true;
-          RECIPES_TO_SEND.set(row.recipes_id, recipe);
-        }
-        context["recipes"] = makeRecipeArray(RECIPES_TO_SEND);
-        res.render('choose_recipe', context)
-      })
-    } else{
-      context["recipes"] = makeRecipeArray(RECIPES_TO_SEND);
-      res.render('choose_recipe', context)
-    }
-  });
+  context["recipes"] = makeRecipeArray(RECIPES_MAP);
+  res.render('choose_recipe', context);
 });
+
+async function getUserRecipeMap(req, all_recipes){
+  RECIPES_TO_SEND = makeRecipeMap(all_recipes);
+  if(req.session.loggedin){
+    var querySelectUserRecipesByUserId = {
+      text: 'SELECT recipes_id FROM users_recipes WHERE users_id=$1',
+      values: [req.session.user.id]
+    };
+    const rows_1 = await makeQuery(querySelectUserRecipesByUserId, true).catch(err=>{return Promise.reject(err)});
+    var RECIPES_TO_SEND_FILTERED = filterRecipeMap(rows_1, RECIPES_TO_SEND);
+    return Promise.resolve(RECIPES_TO_SEND_FILTERED);
+  } else {
+    return Promise.resolve(RECIPES_TO_SEND);
+  }
+};
+
+function filterRecipeMap(rows, RECIPES_TO_SEND){
+  var RECIPES_TO_SEND_FILTERED = new Map(RECIPES_TO_SEND);
+  for(let row of rows){
+    let recipe = RECIPES_TO_SEND_FILTERED.get(row.recipes_id);
+    recipe.in_book = true;
+    RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
+  }
+  return RECIPES_TO_SEND_FILTERED;
+};
+
+function makeRecipeMap(rows){
+  RECIPES_TO_SEND = new Map();
+  for(let row of rows){
+    row.in_book = false;
+    RECIPES_TO_SEND.set(row.id, row);
+  };
+  return RECIPES_TO_SEND;
+}
 
 app.get('/get_ingredients', (req, res, next)=>{
   var context = {};
   if(req.query["recipes_id"]){
-    pool.query('SELECT * FROM ingredients WHERE id IN (SELECT ingredients_id FROM recipes_ingredients WHERE recipes_id=$1)',[req.query["recipes_id"]], (err, {rows})=>{
-      if(err) console.log(err)
+    var getIngredientsQuery = {
+      text:'SELECT * FROM ingredients WHERE id IN (SELECT ingredients_id FROM recipes_ingredients WHERE recipes_id=$1)',
+      values:[req.query["recipes_id"]]
+    }
+    makeQuery(getIngredientsQuery, true).then(rows=>{
       context.recipes_id = req.query["recipes_id"];
-      context.ingredients = rows
+      context.ingredients = rows;
       res.send(context);
-    })
-  }
-})
+    }).catch(err=>console.error(err))
+  };
+});
 
 function makeRecipeArray(RECIPES_TO_SEND){
   return Array.from(RECIPES_TO_SEND.values()).sort(inRecipeBookCompare);
 }
 
 function inRecipeBookCompare(book1, book2){
-  return book1.in_book - book2.in_book
+  return book1.in_book - book2.in_book;
 }
 
 app.get('/add_recipe', (req, res, next)=>{
@@ -258,29 +272,18 @@ app.get('/add_recipe', (req, res, next)=>{
       text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
             ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
       values: [req.session.user.id, req.query["recipe_id"]]
-    }
-    pool.query(addRecipeQuery, (err, result)=>{
-      if(err){
-        console.log(err)
-        res.send(false);
-      } 
-      else{
-        var getRecipeQuery = {
-          text: `SELECT * FROM recipes WHERE id=$1`,
-          values: [req.query["recipe_id"]]
-        }
-        pool.query(getRecipeQuery, (err, {rows})=>{
-          if(err) console.log(err)
-          else{
-            res.send(rows[0]);
-          }
-        })
-      }
-    })
-  }else{
+    };
+    var getRecipeQuery = {
+      text: `SELECT * FROM recipes WHERE id=$1`,
+      values: [req.query["recipe_id"]]
+    };
+    makeQuery(addRecipeQuery, false).then(()=>makeQuery(getRecipeQuery, true)).then(rows=>{
+      res.send(rows[0]);
+    }).catch(err=>console.error(err))
+  } else {
     res.send(false);
-  }
-})
+  };
+});
 
 app.get('/get_user_recipes', (req, res, next)=>{
   if(req.session["user"] == null){
@@ -351,7 +354,6 @@ app.get('/build_recipe', (req , res, next) => {
 });
 
 app.get('/my_recipes', (req , res, next) => {
-  var context = {};
   if(req.session["user"] == null){
     res.send("Error! Please log-in!")
   } else{
@@ -370,46 +372,46 @@ app.get('/my_recipes', (req , res, next) => {
               ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
         values: [req.session.user.id, req.query["recipe_id"]]
       }
-      pool.query(addRecipeQuery, (err, result)=>{
-        if(err) console.log(err)
-        else{
-          pool.query(getRecipesQuery, (err, {rows})=>{
-            if(err) console.log(err)
-            else{
-              context["myRecipes"] = makeRecipesObject(rows);
-              res.render("my_recipes", context);
-            }
-          })
-        }
-      })
+      makeQuery(addRecipeQuery, false).then(()=>makeQuery(getRecipesQuery, true)).then(rows=>{
+        renderMyRecipes(res, rows);
+      }).catch(err=>{console.error(err)})
+      
     } else if(req.query["delete_id"]){
       var deleteRecipeQuery = {
         text: `DELETE FROM users_recipes WHERE recipes_id=$1`,
         values: [req.query["delete_id"]]
       }
-      pool.query(deleteRecipeQuery, (err, result)=>{
-        if(err) console.log(err)
-        else{
-          pool.query(getRecipesQuery, (err, {rows})=>{
-            if(err) console.log(err)
-            else{
-              context["myRecipes"] = makeRecipesObject(rows);
-              res.render("my_recipes", context);
-            }
-          })
-        }
-      })
+      makeQuery(deleteRecipeQuery, false).then(()=>makeQuery(getRecipesQuery, true)).then(rows=>{
+        renderMyRecipes(res, rows);
+      }).catch(err=>{console.error(err)})
     } else {
-      pool.query(getRecipesQuery, (err, {rows})=>{
-        if(err) console.log(err)
-        else{
-          context["myRecipes"] = makeRecipesObject(rows);
-          res.render("my_recipes", context);
-        }
-      })
+      makeQuery(getRecipesQuery, true).then(rows=>{
+        renderMyRecipes(res, rows);
+      }).catch(err=>{console.error(err)})
     }
   }
 });
+
+function renderMyRecipes(res, rows){
+  context = {};
+  context["myRecipes"] = makeRecipesObject(rows);
+  res.render("my_recipes", context);
+};
+
+function makeQuery(query, returnRows){
+  return new Promise((resolve, reject)=>{
+    pool.query(query, (err, result)=>{
+      if(err) reject(err)
+      else{
+        if(returnRows){
+          resolve(result.rows);
+        } else{
+          resolve(true);
+        }
+      }
+    })
+  })
+}
 
 function makeRecipesObject(rows){
   var recipes = [];
@@ -460,26 +462,18 @@ var register = async function(req, res){
           "failed":"Username already registered"
         })
       } else{
-        pool.query(registerUser, (err)=>{
-          if(err) console.log(err)
-          else{
-            pool.query(checkUser, (err, {rows})=>{
-              if(err) console.log(err)
-              else{
-                console.log(rows)
-                if(rows[0].username == username){
-                  req.session.loggedin = true;
-                  req.session.user = {
-                    username: rows[0].username, 
-                    color: rows[0].color,
-                    id: rows[0].id
-                  };
-                  res.redirect('/');
-                }
-              }
-            }) 
+        makeQuery(registerUser, false).then(()=>makeQuery(checkUser, true)).then(rows=>{
+          console.log(rows)
+          if(rows[0].username == username){
+            req.session.loggedin = true;
+            req.session.user = {
+              username: rows[0].username, 
+              color: rows[0].color,
+              id: rows[0].id
+            };
+            res.redirect('/');
           }
-        })
+        }).catch(err=>console.error(err))
       }
     }
   })

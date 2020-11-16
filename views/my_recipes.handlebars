@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
                         {{#each myRecipes}}
-                        <tr>
+                        <tr id="{{this.id}}">
                             <td>
                                 <b>{{this.name}}</b>
                                 <br/>
@@ -52,4 +52,25 @@
                 </table>
             </div>
         </div>
+        <style>
+            /* https://stackoverflow.com/questions/16344354/how-to-make-blinking-flashing-text-with-css-3 */
+            .blinky {
+            animation: blinker 1s linear infinite;
+            }
+
+            @keyframes blinker {
+            50% {
+                opacity: 0;
+                background-color: rgb(162, 252, 255);
+            }
+            }
+        </style>
+        <script>
+            // Blinks hash-linked table row for two seconds upon page-load.
+            var hash = window.location.hash.substr(1);
+            if(hash != ""){
+                document.getElementById(hash).classList.add("blinky")
+                setTimeout(()=>{document.getElementById(hash).classList.remove("blinky")}, 2000)
+            }
+        </script>
     </div> 
