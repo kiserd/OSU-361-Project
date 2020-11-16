@@ -188,60 +188,54 @@ function get_rand_rgb(){
 }
 
 app.get('/', (req , res, next) => {
-  // Testing database 
-  pool.query(`SELECT * FROM Ingredients;`, (err, res) => {
-    if (err) {
-        console.log("Error - Failed to select all from Ingredients");
-        console.log(err);
-    }
-    else{
-        //console.log(res.rows);
-    }
-  });
   res.render('homepage');
 });
 
+class ChooseRecipeMap extends Map{
+  constructor(rows=Array){
+    super();
+    for(let row of rows){
+      row.in_book = false;
+      this.set(row.id, row)
+    }
+  }
+  async checkUserRecipes(req){
+    if(req.session.loggedin){
+      var querySelectUserRecipesByUserId = {
+        text: 'SELECT recipes_id FROM users_recipes WHERE users_id=$1',
+        values: [req.session.user.id]
+      };
+      const rows_1 = await makeQuery(querySelectUserRecipesByUserId, true).catch(err=>{return Promise.reject(err)});
+      var RECIPES_TO_SEND_FILTERED = this._setUserRecipes(rows_1);
+      return Promise.resolve(RECIPES_TO_SEND_FILTERED);
+    } else {
+      return Promise.resolve(this);
+    }
+  }
+  toSortedArray(){
+    return Array.from(this.values()).sort(this._inRecipeBookCompare);
+  }
+  _setUserRecipes(user_recipe_rows){
+    var RECIPES_TO_SEND_FILTERED = this;
+    for(let row of user_recipe_rows){
+      let recipe = RECIPES_TO_SEND_FILTERED.get(row.recipes_id);
+      recipe.in_book = true;
+      RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
+    }
+    return RECIPES_TO_SEND_FILTERED;
+  }
+  _inRecipeBookCompare(book1, book2){
+    return book1.in_book - book2.in_book;
+  }
+}
+
 app.get('/choose_recipe', async (req , res, next) => {
-  var all_recipes = await makeQuery(querySelectAllSystemRecipes, true).catch(err=>console.error(err));
-  var RECIPES_MAP = await getUserRecipeMap(req, all_recipes).catch(err=>console.error(err));
   var context = {};
-  context["recipes"] = makeRecipeArray(RECIPES_MAP);
+  var all_recipes = await makeQuery(querySelectAllSystemRecipes, true).catch(err=>console.error(err));
+  var RECIPES_MAP = await new ChooseRecipeMap(all_recipes).checkUserRecipes(req).catch(err=>console.error(err));
+  context["recipes"] = RECIPES_MAP.toSortedArray();
   res.render('choose_recipe', context);
 });
-
-async function getUserRecipeMap(req, all_recipes){
-  RECIPES_TO_SEND = makeRecipeMap(all_recipes);
-  if(req.session.loggedin){
-    var querySelectUserRecipesByUserId = {
-      text: 'SELECT recipes_id FROM users_recipes WHERE users_id=$1',
-      values: [req.session.user.id]
-    };
-    const rows_1 = await makeQuery(querySelectUserRecipesByUserId, true).catch(err=>{return Promise.reject(err)});
-    var RECIPES_TO_SEND_FILTERED = filterRecipeMap(rows_1, RECIPES_TO_SEND);
-    return Promise.resolve(RECIPES_TO_SEND_FILTERED);
-  } else {
-    return Promise.resolve(RECIPES_TO_SEND);
-  }
-};
-
-function filterRecipeMap(rows, RECIPES_TO_SEND){
-  var RECIPES_TO_SEND_FILTERED = new Map(RECIPES_TO_SEND);
-  for(let row of rows){
-    let recipe = RECIPES_TO_SEND_FILTERED.get(row.recipes_id);
-    recipe.in_book = true;
-    RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
-  }
-  return RECIPES_TO_SEND_FILTERED;
-};
-
-function makeRecipeMap(rows){
-  RECIPES_TO_SEND = new Map();
-  for(let row of rows){
-    row.in_book = false;
-    RECIPES_TO_SEND.set(row.id, row);
-  };
-  return RECIPES_TO_SEND;
-}
 
 app.get('/get_ingredients', (req, res, next)=>{
   var context = {};
@@ -257,14 +251,6 @@ app.get('/get_ingredients', (req, res, next)=>{
     }).catch(err=>console.error(err))
   };
 });
-
-function makeRecipeArray(RECIPES_TO_SEND){
-  return Array.from(RECIPES_TO_SEND.values()).sort(inRecipeBookCompare);
-}
-
-function inRecipeBookCompare(book1, book2){
-  return book1.in_book - book2.in_book;
-}
 
 app.get('/add_recipe', (req, res, next)=>{
   if(req.query["recipe_id"] && req.session.loggedin){
@@ -411,7 +397,7 @@ function makeQuery(query, returnRows){
       }
     })
   })
-}
+};
 
 function makeRecipesObject(rows){
   var recipes = [];
@@ -544,3 +530,22 @@ app.use(function(err, req, res, next){
 app.listen(PORT, function(){
   console.log(`Listening on: ${ PORT }; press Ctrl-C to terminate.`);
 });
+
+/* function filterRecipeMap(user_recipe_rows, RECIPES_TO_SEND){
+  var RECIPES_TO_SEND_FILTERED = new Map(RECIPES_TO_SEND);
+  for(let row of user_recipe_rows){
+    let recipe = RECIPES_TO_SEND_FILTERED.get(row.recipes_id);
+    recipe.in_book = true;
+    RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
+  }
+  return RECIPES_TO_SEND_FILTERED;
+};
+
+function makeRecipeMap(rows){
+  RECIPES_TO_SEND = new Map();
+  for(let row of rows){
+    row.in_book = false;
+    RECIPES_TO_SEND.set(row.id, row);
+  };
+  return RECIPES_TO_SEND;
+} */
