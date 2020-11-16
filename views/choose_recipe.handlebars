@@ -20,10 +20,9 @@
           {{#each recipes}}
           <tr>
             <td>
-              <span id="recipe_name_{{this.id}}">{{this.name}}</span>
-              <div class="collapse" id="collapse_{{this.id}}">
-                <div class="card card-body" id="collapse_text_{{this.id}}"></div>
-              </div>
+              <span id="recipe_name_{{this.id}}"><b>{{this.name}}</b></span>
+              <br/>
+              <small>{{this.type}}</small>
             </td>
             <td>
 
