@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const {Pool} = require('pg');
 const { resolve } = require('path');
+const { query } = require('express');
 const pool = new Pool({
   connectionString: "postgres://qxtetfyciswbov:31134b5dcc9de86cf5f8f815858b9140d07cff36a764dfb7b90424c6804a5e38@ec2-3-211-176-230.compute-1.amazonaws.com:5432/d3u5cr9kigu0n5",
   ssl: {
@@ -312,9 +313,44 @@ app.get('/view_substitutes', (req, res, next) => {
   var recipe = req.query["recipe"];
   context["recipe"] = recipe;
   context["ingredient"] = ingredient;
-  context["substitutes"] = getSubstitutesByIngredient(ingredient);
-  res.render('view_substitutes', context);
+  //context["substitutes"] = getSubstitutesByIngredient(ingredient);
+  var queryCurrIngredient = {
+    text: 'SELECT * FROM ingredients WHERE id=$1',
+    values: [ingredient]
+  };
+
+  makeQuery(queryCurrIngredient, true).then(rows=>{getSubstitutes(rows)}).then(rows=>{
+    renderSubstitutes(res, rows);
+    }).catch(err=>{console.error(err)})
+
 });
+
+function getSubstitutes(rows)
+{
+  return new Promise((resolve, reject)=>{
+    var query = {
+      text: 'SELECT * FROM ingredients WHERE type=$1 AND impact<$2',
+      values: [rows[0].type, rows[0].impact]
+    }
+    pool.query(query, (err, result)=>{
+      if(err) reject(err)
+      else resolve(result.rows);
+    })
+  })
+};
+
+function renderSubstitutes(res,rows)
+{
+  context = {}
+  var substitutes = [];
+  for(i=0; i < rows.length; i++){
+    substitutes[i] = {};
+    substitutes[i].name = rows[i].name;
+    substitutes[i].impact = rows[i].impact;
+  }
+  context["substitutes"] = substitutes;
+  res.render('view_substitutes', context);
+}
 
 app.get('/make_substitution', (req, res, next) => {
   var context = {};
