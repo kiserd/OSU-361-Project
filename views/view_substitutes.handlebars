@@ -1,6 +1,11 @@
 <div class="container-fluid">
     <h3>Recipe: {{recipe}}</h3>
     <h3>Ingredient: {{ingredient}}</h3>
+    {{#if message}}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    {{/if}}
     <table class="table">
         <thead>
             <tr>
