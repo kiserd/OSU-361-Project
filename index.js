@@ -394,7 +394,7 @@ app.get('/view_substitutes', (req, res, next) => {
 
   makeQuery(queryCurrIngredient, true)
     .then(rows => getSubstitutes(rows))
-    .then(rows => {renderSubstitutes(res, rows, recipe.name, ingredient.name);
+    .then(rows => {renderSubstitutes(res, rows, recipe, ingredient);
     }).catch(err => {console.error(err)})
 });
 
@@ -415,8 +415,8 @@ function getSubstitutes(rows)
 function renderSubstitutes(res, rows, recipe, ingredient)
 {
   context = {};
-  context['recipe.name'] = recipe;
-  context['ingredient.name'] = ingredient;
+  context["recipe"] = recipe.name;
+  context["ingredient"] = ingredient.name;
   if(rows){
     var substitutes = [];
     for(i=0; i < rows.length; i++){
