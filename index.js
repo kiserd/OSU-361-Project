@@ -163,27 +163,6 @@ function getTypeByRecipe(recipe) {
   return type;
 }
 
-function getSubstitutesByIngredient(ingredient) {
-  var type = null;
-  var impact = null;
-  for (var i = 0; i < ingredients.length; i++) {
-    if (ingredients[i]["name"] == ingredient) {
-      type = ingredients[i]["type"];
-      impact = ingredients[i]["impact"];
-    }
-  }
-  var substitutes = [];
-  for (var i = 0; i < ingredients.length; i++) {
-    if (ingredients[i]["type"] == type && ingredients[i]["impact"] < impact) {
-      var temp_dict = {};
-      temp_dict["name"] = ingredients[i]["name"];
-      temp_dict["impact"] = ingredients[i]["impact"];
-      substitutes.push(temp_dict);
-    }
-  }
-  return substitutes;
-}
-
 function get_rand_rgb(){
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   const r = randomBetween(0, 255);
@@ -385,7 +364,6 @@ app.get('/view_substitutes', (req, res, next) => {
   recipe.id = req.query["recipe"]
   recipe.name = req.query["recipeName"];
   var ingredient;
-  //context["substitutes"] = getSubstitutesByIngredient(ingredient);
 
   var queryCurrIngredient = {
     text: 'SELECT * FROM ingredients WHERE id=$1',
