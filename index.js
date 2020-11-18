@@ -1,10 +1,14 @@
 const express = require('express');
 const session = require('express-session');
+
 const path = require('path');
 const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 const {Pool} = require('pg');
 const { resolve } = require('path');
 const { query } = require('express');
@@ -17,6 +21,7 @@ const pool = new Pool({
 
 // Logan testing out some queries
 const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE user_recipe = false`;
+const querySelectAllCustomRecipes =       `SELECT * FROM recipes WHERE user_recipe = true`;
 const querySelectIngredientById =         'SELECT * FROM ingredients WHERE id = $1';
 const querySelectRecipeById =             'SELECT * FROM recipes WHERE id = $1';
 const querySelectIngredientsByRecipeId =  `SELECT i.* 
@@ -250,7 +255,20 @@ app.get('/get_ingredients', (req, res, next)=>{
       context.ingredients = rows;
       res.send(context);
     }).catch(err=>console.error(err))
-  };
+  } else {
+    var queryGetAllIngredients = {
+      text: 'SELECT * FROM ingredients'
+    };
+    makeQuery(queryGetAllIngredients, true).then(rows=>{
+      
+      for(let row of rows){
+        row.color = getImpactColor(row.impact);
+      };
+      context.ingredients = rows;
+      console.log(rows)
+      res.send(context);
+    }).catch(err=>console.error(err));
+  }
 });
 
 app.get('/add_recipe', (req, res, next)=>{
@@ -271,6 +289,58 @@ app.get('/add_recipe', (req, res, next)=>{
     res.send(false);
   };
 });
+
+app.post('/add_to_recipes_global', (req, res, next)=>{
+  var queryRecipeByName = {
+    text:`SELECT * FROM recipes WHERE name=$1`,
+    values:[req.body["userRecipeName"]]
+  };
+  var addUserRecipeGlobal = {
+    text:`INSERT INTO recipes (name, type, user_recipe) VALUES ($1, $2, $3)`,
+    values:[req.body["userRecipeName"], req.body["userRecipeType"], true]
+  };
+  makeQuery(queryRecipeByName, true).then(rows=>{
+    console.log(rows)
+    if(rows.length > 0){
+      res.send({"error":"Recipe name taken!"})
+    } else {
+      Promise.resolve()
+    }
+  }).then(()=>{makeQuery(addUserRecipeGlobal, false)}).then(()=>makeQuery(queryRecipeByName, true)).then(rows=>{
+    var ingredients = [];
+    var queries = [];
+    console.log(rows)
+    for(let ingredient of req.body["ingredients"]){
+      ingredients.push(parseInt(ingredient[0]));
+    }
+    for(let ingredient of ingredients){
+      queries.push(
+        new Promise((resolve,reject)=>{
+          return makeQuery({
+            text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2) RETURNING *',
+            values: [rows[0].id, ingredient]
+          },true).then((rows)=>resolve(rows))
+        })
+      )
+    }
+    queries.push(new Promise((resolve,reject)=>{
+      return makeQuery({
+        text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0})) RETURNING *`,
+        values: [req.session.user.id, rows[0].id]
+      },true).then((rows)=>resolve(rows))
+    }))
+    console.log(queries)
+    return Promise.all(queries).catch(err=>console.error(err));
+  })
+  .then(()=>{
+
+
+    return makeQuery(queryRecipeByName, true)
+  }
+    ).then(rows=>{
+      res.send(rows[0]);
+    }).catch(err=>console.error(err))
+})
 
 app.get('/get_user_recipes', (req, res, next)=>{
   if(req.session["user"] == null){
@@ -384,6 +454,7 @@ app.get('/make_substitution', (req, res, next) => {
 });
 
 app.get('/build_recipe', (req , res, next) => {
+
   res.render('build_recipe');
 });
 
@@ -439,7 +510,8 @@ function makeQuery(query, returnRows){
       else{
         if(returnRows){
           resolve(result.rows);
-        } else{
+        }
+        else{
           resolve(true);
         }
       }
@@ -447,28 +519,32 @@ function makeQuery(query, returnRows){
   })
 };
 
+function getImpactColor(impact){
+  var impact_color = ''
+  if(impact == null){
+    impact_color = 'secondary'
+  } else {
+    if(impact > 8000){
+      impact_color = 'danger'
+    } else if (impact < 8000 && impact > 3000){
+      impact_color = 'warning'
+    } else if (impact < 3000){
+      impact_color = 'success'
+    }
+  }
+  return impact_color
+}
+
 function makeRecipesObject(rows){
   var recipes = [];
   for(i=0; i < rows.length; i++){
     recipes[i] = {};
     recipes[i].name = rows[i].name;
-    recipes[i].date = rows[i].date.toLocaleString();
+    if(recipes[i].hasOwnProperty("date") && recipes[i].date != null){
+      recipes[i].date = rows[i].date.toLocaleString();
+    }
     recipes[i].impact = rows[i].recipes_impact;
-    recipes[i].impact_color = function(impact){
-      var impact_color = ''
-      if(impact == null){
-        impact_color = 'secondary'
-      } else {
-        if(impact > 8000){
-          impact_color = 'danger'
-        } else if (impact < 8000 && impact > 3000){
-          impact_color = 'warning'
-        } else if (impact < 3000){
-          impact_color = 'success'
-        }
-      }
-      return impact_color
-    }(recipes[i].impact)
+    recipes[i].impact_color = getImpactColor(recipes[i].impact);
     recipes[i].id = rows[i].recipes_id;
     if(rows[i].hasOwnProperty("type")){
       recipes[i].type = rows[i].type;

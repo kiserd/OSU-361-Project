@@ -4,28 +4,48 @@ var bread_dataUrl = getBreadUrl();
 
 var meat_dataUrl = getMeatUrl();
 
+var RECIPE_STATE = new Map();
+
 var recipeTable = document.createElement("table");
 recipeTable.classList.add("table");
-//recipeTable.classList.add("table-dark");
 recipeTable.style.backgroundColor = "white";
 var recipeListhtml = document.getElementById("recipeList");
 recipeListhtml.appendChild(recipeTable);
 
-var testJSON = [
-    { "type": "meat", "name": "ground beef", "impact": 13021 },
-    { "type": "meat", "name": "chicken", "impact": 2868 },
-    { "type": "meat", "name": "pork", "impact": 5736 },
-    { "type": "bread", "name": "pasta", "impact": 616 },
-    { "type": "bread", "name": "bread", "impact": 536 },
-    { "type": "bread", "name": "rice", "impact": 832 },
-    { "type": "vegetable", "name": "lettuce", "impact": 133 },
-    { "type": "vegetable", "name": "tomato", "impact": 108 },
-    { "type": "dairy", "name": "cheese", "impact": 3153 },
-    { "type": "dairy", "name": "butter", "impact": 7193 },
-    { "type": "dairy", "name": "egg", "impact": 2017 },
-    { "type": "sauce", "name": "ketchup", "impact": 178 },
-    { "type": "sauce", "name": "tomato sauce", "impact": 285 }
-];
+async function goFetch(url, toSend) {
+    if(toSend){
+        console.log(toSend)
+        const response = await fetch(url, {
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            }, 
+            body:JSON.stringify(toSend)
+        })
+        return response.json();
+    } else{
+        const response = await fetch(url);
+        return response.json();
+    }
+
+}
+
+var sendRecipeButton = document.getElementById("sendRecipeButton");
+sendRecipeButton.addEventListener("click", function(){
+    var ingredients = Array.from(RECIPE_STATE);
+    var userRecipeName = document.getElementById("userRecipeName").value;
+    console.log(userRecipeName)
+    if(userRecipeName == ""){
+        alert("Please name your recipe!");
+        return
+    } else {
+        var toSend = {"userRecipeName":userRecipeName, "userRecipeType":"Test Type", "ingredients":ingredients};
+        var url = "/add_to_recipes_global";
+        goFetch(url, toSend).then(data=>{
+            window.open(`/my_recipes#${data.id}`, "_self");
+        })
+    }
+})
 
 var div = document.getElementById("ingredientList");
 
@@ -36,7 +56,7 @@ recipeTitle.style.textAlign = "center";
 
 var recipeListDiv = document.getElementById("recipeList");
 
-function generateIngredientDiv(ingredient, type, impact) {
+function generateIngredientDiv(ingredient, type, impact, id, color) {
     var ingredientDiv = document.createElement("div");
     ingredientDiv.style.borderWidth = "2px";
     ingredientDiv.className = "card shadow fade ingredientDiv";
@@ -62,6 +82,8 @@ function generateIngredientDiv(ingredient, type, impact) {
     ingredientDivCardBody.className = "card-body";
     ingredientDivCardBody.classList.add("ingredientDivCardBody");
 
+    ingredientDiv.id = id;
+
     var ingredientDivGrid1 = document.createElement("div");
     
 
@@ -76,8 +98,9 @@ function generateIngredientDiv(ingredient, type, impact) {
     ingredientType.classList.add("ingredientType")
 
     var ingredientImpact = document.createElement("span");
-    ingredientImpact.className = "badge badge-secondary ingredientImpact";
+    ingredientImpact.className = `badge badge-${color} ingredientImpact`;
     
+    ingredientDiv.impactColor = color;
 
     name.appendChild(document.createElement("span").appendChild(document.createTextNode(ingredient[0].toUpperCase() + ingredient.slice(1))));
     ingredientType.innerHTML = type;
@@ -105,57 +128,86 @@ function generateIngredientDiv(ingredient, type, impact) {
     ingredientDivCardBody.addEventListener("click", function () {
         var recipeListhtml = document.getElementById("recipeList");
         var ingredientToAddClone = ingredientDiv.cloneNode(true);
+        if(RECIPE_STATE.get(ingredientToAddClone.id) != null){
+            var thisRow = document.getElementById(`r_${ingredientToAddClone.id}`);
 
-        var recipeRow = document.createElement("tr");
+            thisRow.classList.add("blinky");
+            console.log(thisRow)
+            setTimeout(function(){thisRow.classList.remove("blinky")}, 500);
+            return
+        }
+        let recipeRow = document.createElement("tr");
+        recipeRow.id = `r_${ingredientToAddClone.id}`;
         recipeRow.classList.add("fade");
+
         let recipeIngredientTitleCell = recipeRow.insertCell();
         let recipeIngredientTitle = ingredientToAddClone.firstChild.firstChild.firstChild.textContent;
         let recipeIngredientTitleSpan = document.createElement("span");
+
         recipeIngredientTitleSpan.appendChild(document.createTextNode(recipeIngredientTitle));
         recipeIngredientTitleSpan.style.fontWeight = "bolder";
         recipeIngredientTitleCell.appendChild(recipeIngredientTitleSpan);
+
         let recipeIngredientImpactCell = recipeRow.insertCell();
-        let recipeIngredientImpactValue = ingredientToAddClone.firstChild.childNodes[1].childNodes[1].textContent;
-        recipeIngredientImpactCell.appendChild(document.createTextNode(recipeIngredientImpactValue));
+        let recipeIngredientImpactBadge = document.createElement("span");
+        
+        let recipeIngredientImpactValue = ingredientToAddClone.firstChild.childNodes[1].childNodes[1].cloneNode(true);
+
+        recipeIngredientImpactCell.appendChild(recipeIngredientImpactValue);
+
         let deleteButtonCell = recipeRow.insertCell();
         let deleteButton1 = document.createElement("button");
         deleteButton1.textContent = "Delete";
+        deleteButton1.for = ingredientToAddClone.id;
         deleteButton1.style.float = "right";
         deleteButton1.className = "btn btn-danger btn-sm";
-        deleteButtonCell.appendChild(deleteButton1);
-        //recipeRow.classList.add("recipeRow");
-        ingredientToAddClone.replaceChild(recipeRow, ingredientToAddClone.firstChild);
-/*         ingredientToAddClone.firstChild.firstChild.removeChild(ingredientToAddClone.firstChild.firstChild.childNodes[1])
-        ingredientToAddClone.firstChild.firstChild.removeChild(ingredientToAddClone.firstChild.firstChild.childNodes[1])
-        ingredientToAddClone.firstChild.firstChild.firstChild.appendChild(document.createElement("button"));
-        ingredientToAddClone.firstChild.firstChild.firstChild.classList.add("recipeCardBody")
-        ingredientToAddClone.firstChild.firstChild.firstChild.childNodes[2].className = "btn btn-danger";
-        ingredientToAddClone.firstChild.firstChild.firstChild.childNodes[2].textContent = "Delete";
-        ingredientToAddClone.firstChild.firstChild.firstChild.childNodes[1].style.width = "20%";
-        ingredientToAddClone.firstChild.firstChild.firstChild.childNodes[1].className = "";
-        ingredientToAddClone.firstChild.firstChild.firstChild.childNodes[2].style.width = "20%";
-        ingredientToAddClone.className = "card shadow fade";
-        ingredientToAddClone.classList.add("recipeCardFull") */
-        ingredientToAddClone.firstChild.classList.remove("ingredientDivCardBody");
-        //ingredientToAddClone.firstChild.classList.add("recipeDivCardBody");
-        // when "delete" button clicked, remove item from recipe list
         deleteButton1.addEventListener("click", () => {
             recipeTable.removeChild(deleteButton1.parentElement.parentElement);
+            RECIPE_STATE.delete(deleteButton1.for);
+            var placeholderText = document.getElementById("recipePlaceholder")
+            if(Array.from(RECIPE_STATE).length == 0 && placeholderText.style.display == "none"){
+                placeholderText.style.display = "";
+                sendRecipeButton.disabled = true;
+            }
         });
 
+        deleteButtonCell.appendChild(deleteButton1);
+
+
+        RECIPE_STATE.set(ingredientToAddClone.id, {"id":ingredientToAddClone.id, "name":recipeIngredientTitle})
+
+        console.log(Array.from(RECIPE_STATE))
+        var placeholderText = document.getElementById("recipePlaceholder");
+        
+        if(placeholderText.style.display != "none"){
+            sendRecipeButton.disabled = false;
+            placeholderText.style.display = "none";
+        }
         recipeTable.appendChild(recipeRow);
-        setTimeout(()=>{recipeRow.classList.add("show")}, 100);
+
+        setTimeout(()=>{
+            
+
+            recipeRow.classList.add("show")
+        }, 100);
     });
     
+    
+
     return ingredientDiv;
 }
 
-for (var i = 0; i < testJSON.length; i++) {
-    var ingredientList = document.getElementById("ingredientList");
-    let newDiv = generateIngredientDiv(testJSON[i].name, testJSON[i].type, testJSON[i].impact.toString())
-    ingredientList.appendChild(newDiv);
-    setTimeout(()=>{newDiv.classList.add("show")}, 200);
-}
+var url = '/get_ingredients';
+goFetch(url).then(data=>{
+    for (let ingredient of data.ingredients) {
+        var ingredientList = document.getElementById("ingredientList");
+        let newDiv = generateIngredientDiv(ingredient.name, ingredient.type, ingredient.impact, ingredient.id, ingredient.color);
+        ingredientList.appendChild(newDiv);
+        setTimeout(()=>{newDiv.classList.add("show")}, 200);
+    }
+})
+
+
 
 
 function get_rand_color() {

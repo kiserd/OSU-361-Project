@@ -96,7 +96,11 @@ for (let button of view_buttons) {
     })
 }
 
-async function goFetch(url) {
+async function goFetch(url, toSend) {
+    if(toSend){
+        const response = await fetch({method:"POST", body:toSend, url:url})
+        return response.json();
+    }
     const response = await fetch(url);
     return response.json();
 }

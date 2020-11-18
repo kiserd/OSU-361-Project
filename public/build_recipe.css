@@ -1,5 +1,5 @@
 /* https://codepen.io/danichk/pen/ojpRyg */
-#recipeList {
+#recipeListContainer {
     background: white;
     background-image: linear-gradient(90deg, rgba(200,0,0,.2) 50%, transparent 0),
       linear-gradient(rgba(200,0,0,.5) 50%, transparent 0);
@@ -9,6 +9,22 @@
 #ingredientList{
   display: grid;
   grid-template-columns: auto auto auto;
+}
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  text-align: center;  
+}
+
+:-ms-input-placeholder {  
+  text-align: center; 
 }
 
 .recipeCardBody{
@@ -41,6 +57,21 @@
   grid-template-rows: auto auto;
   padding: 0.75rem !important;
   width:250px;
+}
+
+.blinky {
+  animation: blinker 0.4s ease;
+  }
+
+  @keyframes blinker {
+  50% {
+      transform: scale(1.1);
+  }
+  }
+
+#sendRecipeButton{
+  margin: auto;
+  display:block;
 }
 
 .ingredientDiv{

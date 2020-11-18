@@ -11,13 +11,18 @@
 
             </div>
         </div>
-        <div class="col-sm-6" id="recipeList">
+        <div class="col-sm-6" id="recipeListContainer">
+        <div id="recipeList">
             <div id="recipeListTitleDiv">
                 <br/>
-            <h3 id="recipeListTitle">My Recipe</h3>
+            <h3 id="recipeListTitle"><input type="text" id="userRecipeName" placeholder="My Recipe"></input></h3>
             </div>
             <div id="recipeListTable">
+                <div class="card shadow" id="recipePlaceholder"><div class="card card-body">Add an ingredient to get started.</div></div>
             </div>
+            
+        </div>
+        <button id="sendRecipeButton" class="btn btn-success" disabled>Add Recipe</button>
         </div>
     </div>
 </div>
