@@ -428,7 +428,8 @@ function renderSubstitutes(res, rows, recipe, ingredient)
   }
 
   else{
-    context["message"] = "No substitutions available!";
+    console.log("In else statement");
+    context["message"] = 'No substitutions available!';
   }
   res.render('view_substitutes', context);
 }
