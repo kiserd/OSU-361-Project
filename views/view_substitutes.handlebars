@@ -10,6 +10,12 @@
             <h3>Recipe: {{recipe.name}}</h3>
             <h3>Ingredient: {{ingredient.name}}</h3>
 
+            {{#if message}}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+            {{/if}}
+
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
