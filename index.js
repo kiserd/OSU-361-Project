@@ -321,8 +321,8 @@ app.get('/view_substitutes', (req, res, next) => {
 
   makeQuery(queryCurrIngredient, true)
     .then(rows => getSubstitutes(rows))
-    .then(rows => {renderSubstitutes(res, rows);
-    }).catch(err=>{console.error(err)})
+    .then(rows => {renderSubstitutes(res, rows, recipe, ingredient);
+    }).catch(err => {console.error(err)})
 });
 
 function getSubstitutes(rows)
@@ -339,10 +339,11 @@ function getSubstitutes(rows)
   })
 };
 
-function renderSubstitutes(res,rows)
+function renderSubstitutes(res, rows, recipe, ingredient)
 {
-  console.log(rows);
   context = {};
+  context['recipe'] = recipe;
+  context['ingredient'] = ingredient;
   if(rows){
     var substitutes = [];
     for(i=0; i < rows.length; i++){
@@ -355,6 +356,7 @@ function renderSubstitutes(res,rows)
 
   else{
     context.message = "No substitutions available!";
+    console.log(context.message);
   }
   res.render('view_substitutes', context);
 }
