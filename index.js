@@ -331,7 +331,7 @@ app.get('/view_substitutes', (req, res, next) => {
 
   var queryCurrIngredient = {
     text: 'SELECT * FROM ingredients WHERE id=$1',
-    values: [ingredient]
+    values: [ingredient_id]
   };
 
   makeQuery(queryCurrIngredient, true)
