@@ -309,11 +309,26 @@ app.get('/view_ingredients', (req , res, next) => {
 
 app.get('/view_substitutes', (req, res, next) => {
   var context = {};
-  var ingredient = req.query["ingredient"];
-  var recipe = req.query["recipe"];
-  context["recipe"] = recipe;
-  context["ingredient"] = ingredient;
+  var ingredient_id = req.query["ingredient"];
+  var recipe_id = req.query["recipe"];
+  var recipe;
+  var ingredient;
   //context["substitutes"] = getSubstitutesByIngredient(ingredient);
+
+  pool.query('SELECT recipes.name FROM recipes WHERE id=$1', [recipe_id], (err, result) => {
+    if (err) {
+      return console.error('Error executing query', err.stack);
+    }
+    recipe = result.rows[0];
+  });
+
+  pool.query('SELECT ingredients.name FROM ingredients WHERE id=$1', [ingredient_id], (err, result) =>{
+    if(err) {
+      return console.error('Error executing query', err.stack);
+    }
+    ingredient = result.rows[0];
+  })
+
   var queryCurrIngredient = {
     text: 'SELECT * FROM ingredients WHERE id=$1',
     values: [ingredient]
@@ -412,7 +427,7 @@ app.get('/my_recipes', (req , res, next) => {
         text: `DELETE FROM users_recipes WHERE recipes_id=$1`,
         values: [req.query["delete_id"]]
       }
-      makeQuery(deleteRecipeQuery, false).then(()=>makeQuery(getRecipesQuery, true)).then(rows=>{
+      make(deleteRecipeQuery, false).then(()=>makeQuery(getRecipesQuery, true)).then(rows=>{
         renderMyRecipes(res, rows);
       }).catch(err=>{console.error(err)})
     } else {
