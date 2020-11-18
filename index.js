@@ -319,16 +319,14 @@ app.get('/view_substitutes', (req, res, next) => {
     values: [ingredient]
   };
 
-  makeQuery(queryCurrIngredient, true).then(rows=>{getSubstitutes(rows)}).then(rows=>{
-    renderSubstitutes(res, rows);
+  makeQuery(queryCurrIngredient, true)
+    .then(rows => getSubstitutes(rows))
+    .then(rows => {renderSubstitutes(res, rows);
     }).catch(err=>{console.error(err)})
-
 });
 
 function getSubstitutes(rows)
 {
-  console.log(rows[0].type);
-  console.log(rows[0].impact);
   return new Promise((resolve, reject)=>{
     var query = {
       text: 'SELECT * FROM ingredients WHERE type=$1 AND impact<$2',
@@ -344,8 +342,8 @@ function getSubstitutes(rows)
 function renderSubstitutes(res,rows)
 {
   console.log(rows);
+  context = {};
   if(rows){
-    context = {}
     var substitutes = [];
     for(i=0; i < rows.length; i++){
       substitutes[i] = {};
