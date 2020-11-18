@@ -415,8 +415,8 @@ function getSubstitutes(rows)
 function renderSubstitutes(res, rows, recipe, ingredient)
 {
   context = {};
-  context["recipe"] = recipe.name;
-  context["ingredient"] = ingredient.name;
+  context["recipe"] = recipe;
+  context["ingredient"] = ingredient;
   if(rows){
     var substitutes = [];
     for(i=0; i < rows.length; i++){
