@@ -11,19 +11,19 @@
   grid-template-columns: auto auto auto;
 }
 
-::-webkit-input-placeholder {
+#userRecipeName::-webkit-input-placeholder {
   text-align: center;
 }
 
-:-moz-placeholder { /* Firefox 18- */
+#userRecipeName:-moz-placeholder { /* Firefox 18- */
   text-align: center;  
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
+#userRecipeName::-moz-placeholder {  /* Firefox 19+ */
   text-align: center;  
 }
 
-:-ms-input-placeholder {  
+#userRecipeName:-ms-input-placeholder {  
   text-align: center; 
 }
 

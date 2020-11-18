@@ -61,7 +61,7 @@
 					</form>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/new_user">New around here? Sign up</a>
-					<a class="dropdown-item" href="#">Forgot password?</a>
+					<a class="dropdown-item" href="#" onclick="makeFunOfThem()">Forgot password?</a>
 					</div>
 					{{/if}}
 		</div>
@@ -72,6 +72,10 @@
     	{{{body}}}
 
     	<!-- Bootstrap and local JS -->
-    
+    <script>
+		function makeFunOfThem(){
+			alert("That sucks!")
+		}
+	</script>
 	</body>
 </html>
