@@ -327,7 +327,6 @@ app.get('/view_substitutes', (req, res, next) => {
 
 function getSubstitutes(rows)
 {
-  console.log(rows);
   return new Promise((resolve, reject)=>{
     var query = {
       text: 'SELECT * FROM ingredients WHERE type=$1 AND impact<$2',
@@ -342,6 +341,7 @@ function getSubstitutes(rows)
 
 function renderSubstitutes(res,rows)
 {
+  console.log(rows);
   if(rows.length > 0){
     context = {}
     var substitutes = [];
