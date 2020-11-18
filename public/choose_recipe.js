@@ -76,6 +76,7 @@ for (let button of view_buttons) {
             goFetch(url).then(data => {
                 console.log(data);
                 let ingredientsList = document.createElement("ul");
+                ingredientsList.style.display = "inline";
                 ingredientsList.id = "modal-body-content"
                 ingredientsList.classList.add("list-group-flush");
                 for (let ingredient of data.ingredients) {

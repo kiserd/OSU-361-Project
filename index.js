@@ -308,16 +308,18 @@ app.get('/view_ingredients', (req , res, next) => {
 });
 
 app.get('/view_substitutes', (req, res, next) => {
-  var context = {};
-  var ingredient_id = req.query["ingredient"];
-  var recipe_id = req.query["recipe"];
-  var recipe;
+  var ingredient = {};
+  ingredient.id = req.query["ingredient"];
+  ingredient.name = req.query["ingredientName"];
+  var recipe = {}
+  recipe.id = req.query["recipe"]
+  recipe.name = req.query["recipeName"];
   var ingredient;
   //context["substitutes"] = getSubstitutesByIngredient(ingredient);
 
   var queryCurrIngredient = {
     text: 'SELECT * FROM ingredients WHERE id=$1',
-    values: [ingredient_id]
+    values: [ingredient.id]
   };
 
   makeQuery(queryCurrIngredient, true)

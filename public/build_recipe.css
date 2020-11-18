@@ -6,7 +6,101 @@
     background-size: 30px 30px;
   }
 
+#ingredientList{
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.recipeCardBody{
+  display: flex;
+  margin: auto;
+  grid-template-columns: auto auto auto;
+  
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.recipeCardFull{
+  margin-top:0.5rem;
+}
+
+.recipeRow{
+  display:grid;
+  grid-template-columns:auto auto auto;
+  flex:content;
+}
+
+.recipeDivCardBody{
+
+  padding: 0.75rem !important;
+}
+
+.ingredientDivCardBody{
+  display:grid;
+  grid-template-rows: auto auto;
+  padding: 0.75rem !important;
+  width:250px;
+}
+
+.ingredientDiv{
+  flex-direction: row !important;
+  cursor:pointer;
+}
+
+.ingredientDiv:hover{
+  transform: scale(1.05);
+  z-index: 999;
+  border-width:0px;
+  transition:0.1s ease;
+  border: 2px solid black !important;
+  
+}
+
+.ingredientDivCardBody:hover{
+  background:
+    linear-gradient(rgb(255, 255, 255),#fff),
+    linear-gradient(#fff,#fff),
+    rgba(43, 43, 43, 0.452);
+  color: white;
+  background-position:center;
+  background-size: 35% 8px,8px 50%; /*thickness = 2px, length = 50% (25px)*/
+  background-repeat:no-repeat;
+
+}
+
+.ingredientColor{
+  height:45px;
+  width:45px;
+  margin:auto;
+}
+
+.ingredientImpact{
+  line-height: 1.5 !important;
+  float:right;
+}
+
+.ingredientType{
+  line-height: 1.5 !important;
+  float:left;
+}
+
+.ingredientIcon{
+  width:34px;
+  height:34px;
+  display:block;
+  margin:auto;
+  margin-top:0.4rem;
+}
+
 #recipeListTitleDiv{
-    background:white;
-    height: 3rem;
+    background:#c4daf0;
+    height: 5rem;
+    border-radius: 10px;
+}
+
+#ingredientListTitleDiv{
+  background:#f9e6ff;
+  height: 5rem;
+  border-radius: 10px;
 }

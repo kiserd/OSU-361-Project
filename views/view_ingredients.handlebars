@@ -1,26 +1,39 @@
-<div class="container-fluid">
-    <h3>Recipe: {{recipe.name}}</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Ingredient</th>
-                <th scope="col">Ethical Impact</th>
-                <th scope="col">View Substitutes</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each ingredients}}
-            <tr>
-                <td>{{this.name}}</td>
-                <td>{{this.impact}}</td>
-                <td>
-                    <form action="/view_substitutes" method="get">
-                            <input type="hidden" name="recipe" value="{{../recipe.id}}">
-                            <button class="btn btn-primary" name="ingredient" value="{{this.id}}">View Substitutes</button>
-                    </form>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>View Ingredients</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Recipe: {{recipe.name}}</h3>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Ingredient</th>
+                        <th scope="col">Ethical Impact</th>
+                        <th scope="col">View Substitutes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each ingredients}}
+                    <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{this.impact}}</td>
+                        <td>
+                            <form action="/view_substitutes" method="get">
+                                <input type="hidden" name="recipe" value="{{../recipe.id}}">
+                                <input type="hidden" name="recipeName" value="{{../recipe.name}}">
+                                <input type="hidden" name="ingredientName" value="{{this.name}}">
+                                <button class="btn btn-primary" name="ingredient" value="{{this.id}}">
+                                    View Substitutes</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
