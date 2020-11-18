@@ -315,20 +315,6 @@ app.get('/view_substitutes', (req, res, next) => {
   var ingredient;
   //context["substitutes"] = getSubstitutesByIngredient(ingredient);
 
-  pool.query('SELECT recipes.name FROM recipes WHERE id=$1', [recipe_id], (err, result) => {
-    if (err) {
-      return console.error('Error executing query', err.stack);
-    }
-    recipe = result.rows[0];
-  });
-
-  pool.query('SELECT ingredients.name FROM ingredients WHERE id=$1', [ingredient_id], (err, result) =>{
-    if(err) {
-      return console.error('Error executing query', err.stack);
-    }
-    ingredient = result.rows[0];
-  })
-
   var queryCurrIngredient = {
     text: 'SELECT * FROM ingredients WHERE id=$1',
     values: [ingredient_id]
