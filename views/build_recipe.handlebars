@@ -2,27 +2,46 @@
 <link href="build_recipe.css" rel="stylesheet">
 <div class="container">
     <div class="row">
-        <div class="col-sm-6" >
+        <div class="col-sm-6">
             <div id="ingredientListTitleDiv">
-            </br>
-            <h3 id="ingredientListTitle">Ingredients</h3>
+                </br>
+                <h3 id="ingredientListTitle">Ingredients</h3>
             </div>
             <div id="ingredientList">
 
             </div>
         </div>
         <div class="col-sm-6" id="recipeListContainer">
-        <div id="recipeList">
-            <div id="recipeListTitleDiv">
-                <br/>
-            <h3 id="recipeListTitle"><input type="text" id="userRecipeName" placeholder="My Recipe"></input></h3>
+            <div id="recipeList">
+
+                <div id="recipeListTitleDiv">
+                    <br />
+                    <div id="recipeListTitle">
+                        <h3><input type="text" id="userRecipeName" placeholder="My Recipe"></input></h3>
+                            <form>
+                            <div class="form-group">
+
+                                <select class="custom-select form-control col-sm-12 col-md-6" style="margin:auto; text-align:center;margin-bottom:1rem;" id="mealType">
+                                    <option selected value="">Select Meal Type</option>
+                                    <option value="Breakfast">Breakfast</option>
+                                    <option value="Lunch">Lunch</option>
+                                    <option value="Dinner">Dinner</option>
+                                    <option value="Appetizer">Appetizer</option>
+                                    <option value="Snack">Snack</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div id="recipeListTable" class="accordion">
+                    <div class="card shadow" id="recipePlaceholder">
+                        <div class="card card-body">Add an ingredient to get started.</div>
+                    </div>
+                </div>
+
             </div>
-            <div id="recipeListTable" class="accordion" >
-                <div class="card shadow" id="recipePlaceholder"><div class="card card-body">Add an ingredient to get started.</div></div>
-            </div>
-            
-        </div>
-        <button id="sendRecipeButton" class="btn btn-success" disabled>Add Recipe</button>
+            <button id="sendRecipeButton" class="btn btn-success" disabled>Add Recipe</button>
         </div>
     </div>
 </div>

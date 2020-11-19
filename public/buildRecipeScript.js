@@ -50,14 +50,17 @@ sendRecipeButton.addEventListener("click", function () {
         ingredient[1].prep = document.getElementById(`prep_${id}`).value;
     }
     var userRecipeName = document.getElementById("userRecipeName").value;
-    console.log(userRecipeName)
+    var mealType = document.getElementById("mealType").value;
     if (userRecipeName == "") {
         alert("Please name your recipe!");
         return
-    } else {
+    } else if(mealType == ""){
+        alert("Please select a meal type!");
+        return
+    }else {
         var toSend = { 
             "userRecipeName": userRecipeName, 
-            "userRecipeType": "Test Type", 
+            "userRecipeType": mealType, 
             "ingredients": ingredients 
         };
         var url = "/add_to_recipes_global";

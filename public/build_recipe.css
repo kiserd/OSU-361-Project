@@ -31,6 +31,7 @@
   text-align: center; 
 }
 
+
 .recipeCardBody{
   display: flex;
   margin: auto;
@@ -150,7 +151,7 @@ text-decoration: underline;
 
 #recipeListTitleDiv{
     background:#c4daf0;
-    height: 5rem;
+    height: auto;
     border-radius: 10px;
 }
 
