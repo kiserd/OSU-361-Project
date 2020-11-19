@@ -18,6 +18,9 @@ var recipeTable = document.createElement("table");
 recipeTable.classList.add("table");
 recipeTable.style.backgroundColor = "white";
 var recipeListhtml = document.getElementById("recipeList");
+
+var firstIngredient = true;
+
 recipeListhtml.appendChild(recipeTable);
 
 async function goFetch(url, toSend) {
@@ -178,6 +181,29 @@ function generateIngredientDiv(ingredient, type, impact, id, color) {
         let recipeIngredientTitle = ingredientToAddClone.firstChild.firstChild.firstChild.textContent;
         let recipeIngredientTitleSpan = document.createElement("button");
         recipeIngredientTitleSpan.className = "btn btn-link btn-block text-left collapsed";
+        if(firstIngredient){
+            recipeIngredientTitleCell.setAttribute("data-toggle", "tooltip");
+            recipeIngredientTitleCell.setAttribute("data-placement", "left");
+            recipeIngredientTitleCell.title = "Click ingredient names to add amounts/prep notes."
+            recipeIngredientTitleSpan.classList.add("btn-focus-hover");
+            
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip('show')
+              })
+            setTimeout(()=>{
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip('hide')
+                    recipeIngredientTitleSpan.classList.remove("btn-focus-hover");
+                  })
+            }, 3000)
+            setTimeout(()=>{
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip('dispose')
+                  })
+            }, 3500)
+            firstIngredient = false;
+        }
+
         recipeIngredientTitleSpan.type = "button";
         recipeIngredientTitleSpan.setAttribute("data-toggle", "collapse");
         recipeIngredientTitleSpan.setAttribute("data-target", `#i_${ingredientToAddClone.id}_collapse`);

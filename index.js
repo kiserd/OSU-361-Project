@@ -202,8 +202,12 @@ class ChooseRecipeMap extends Map{
     var RECIPES_TO_SEND_FILTERED = this;
     for(let row of user_recipe_rows){
       let recipe = RECIPES_TO_SEND_FILTERED.get(row.recipes_id);
-      recipe.in_book = true;
-      RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
+      if(recipe != null){
+        recipe.in_book = true;
+        RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
+      }
+      
+      
     }
     return RECIPES_TO_SEND_FILTERED;
   }
@@ -215,9 +219,13 @@ class ChooseRecipeMap extends Map{
 app.get('/choose_recipe', async (req , res, next) => {
   var context = {};
   var all_recipes = await makeQuery(querySelectAllSystemRecipes, true).catch(err=>console.error(err));
-  var RECIPES_MAP = await new ChooseRecipeMap(all_recipes).checkUserRecipes(req).catch(err=>console.error(err));
-  context["recipes"] = RECIPES_MAP.toSortedArray();
-  res.render('choose_recipe', context);
+  console.log(all_recipes)
+  var RECIPES_MAP = new ChooseRecipeMap(all_recipes);
+  RECIPES_MAP.checkUserRecipes(req).then((FILTERED)=>{
+    context["recipes"] = FILTERED.toSortedArray();
+    res.render('choose_recipe', context);
+  }).catch(err=>console.error(err));
+
 });
 
 app.get('/get_ingredients', (req, res, next)=>{
