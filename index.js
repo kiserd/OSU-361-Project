@@ -24,13 +24,11 @@ const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE user_reci
 const querySelectAllCustomRecipes =       `SELECT * FROM recipes WHERE user_recipe = true`;
 const querySelectIngredientById =         'SELECT * FROM ingredients WHERE id = $1';
 const querySelectRecipeById =             'SELECT * FROM recipes WHERE id = $1';
-const querySelectIngredientsByRecipeId =  `SELECT i.* 
-                                           FROM recipes AS r
-                                           LEFT JOIN recipes_ingredients AS ri
-                                           ON (r.id = ri.recipes_id)
-                                           LEFT JOIN ingredients AS i
-                                           ON ri.ingredients_id = i.id
-                                           WHERE r.id = $1`;
+const querySelectIngredientsByRecipeId =  `
+SELECT * FROM recipes_ingredients 
+LEFT JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id 
+WHERE recipes_ingredients.recipes_id=$1 
+                                           `;
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -311,14 +309,18 @@ app.post('/add_to_recipes_global', (req, res, next)=>{
     var queries = [];
     console.log(rows)
     for(let ingredient of req.body["ingredients"]){
-      ingredients.push(parseInt(ingredient[0]));
+      ingredients.push({
+        "id":parseInt(ingredient[0]),
+        "amount":ingredient[1].amount,
+        "prep":ingredient[1].prep
+      });
     }
     for(let ingredient of ingredients){
       queries.push(
         new Promise((resolve,reject)=>{
           return makeQuery({
-            text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2) RETURNING *',
-            values: [rows[0].id, ingredient]
+            text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id, amount, prep) VALUES ($1, $2, $3, $4) RETURNING *',
+            values: [rows[0].id, ingredient.id, ingredient.amount, ingredient.prep]
           },true).then((rows)=>resolve(rows))
         })
       )

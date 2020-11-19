@@ -11,7 +11,10 @@
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
+                        
                         <th scope="col">Ingredient</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Prep</th>
                         <th scope="col">Ethical Impact</th>
                         <th scope="col">View Substitutes</th>
                     </tr>
@@ -19,7 +22,10 @@
                 <tbody>
                     {{#each ingredients}}
                     <tr>
+                        
                         <td>{{this.name}}</td>
+                        <td>{{this.amount}}</td>
+                        <td>{{this.prep}}</td>
                         <td>{{this.impact}}</td>
                         <td>
                             <form action="/view_substitutes" method="get">

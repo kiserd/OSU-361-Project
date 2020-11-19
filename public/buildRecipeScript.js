@@ -41,13 +41,22 @@ async function goFetch(url, toSend) {
 var sendRecipeButton = document.getElementById("sendRecipeButton");
 sendRecipeButton.addEventListener("click", function () {
     var ingredients = Array.from(RECIPE_STATE);
+    for(let ingredient of ingredients){
+        let id = ingredient[1].id
+        ingredient[1].amount = document.getElementById(`amount_${id}`).value;
+        ingredient[1].prep = document.getElementById(`prep_${id}`).value;
+    }
     var userRecipeName = document.getElementById("userRecipeName").value;
     console.log(userRecipeName)
     if (userRecipeName == "") {
         alert("Please name your recipe!");
         return
     } else {
-        var toSend = { "userRecipeName": userRecipeName, "userRecipeType": "Test Type", "ingredients": ingredients };
+        var toSend = { 
+            "userRecipeName": userRecipeName, 
+            "userRecipeType": "Test Type", 
+            "ingredients": ingredients 
+        };
         var url = "/add_to_recipes_global";
         goFetch(url, toSend).then(data => {
             window.open(`/my_recipes#${data.id}`, "_self");
@@ -153,33 +162,47 @@ function generateIngredientDiv(ingredient, type, impact, id, color) {
             setTimeout(function () { thisRow.classList.remove("blinky") }, 500);
             return
         }
-        let recipeRow = document.createElement("tr");
+        let recipeRowDiv = document.createElement("div");
+        recipeRowDiv.classList.add("card")
+        recipeRowDiv.style.display = "table-row-group";
+        
+        let recipeRow = document.createElement("div");
         recipeRow.id = `r_${ingredientToAddClone.id}`;
         recipeRow.classList.add("fade");
+        recipeRow.classList.add("row");
+        recipeRow.classList.add("table-sm");
+        recipeRow.classList.add("card-header");
 
-        let recipeIngredientTitleCell = recipeRow.insertCell();
+        let recipeIngredientTitleCell = document.createElement("div");
+        recipeIngredientTitleCell.classList.add("col-sm");
         let recipeIngredientTitle = ingredientToAddClone.firstChild.firstChild.firstChild.textContent;
-        let recipeIngredientTitleSpan = document.createElement("span");
+        let recipeIngredientTitleSpan = document.createElement("button");
+        recipeIngredientTitleSpan.className = "btn btn-link btn-block text-left collapsed";
+        recipeIngredientTitleSpan.type = "button";
+        recipeIngredientTitleSpan.setAttribute("data-toggle", "collapse");
+        recipeIngredientTitleSpan.setAttribute("data-target", `#i_${ingredientToAddClone.id}_collapse`);
 
         recipeIngredientTitleSpan.appendChild(document.createTextNode(recipeIngredientTitle));
         recipeIngredientTitleSpan.style.fontWeight = "bolder";
         recipeIngredientTitleCell.appendChild(recipeIngredientTitleSpan);
-
-        let recipeIngredientImpactCell = recipeRow.insertCell();
+        let recipeIngredientImpactCell = document.createElement("div");
+        recipeIngredientImpactCell.classList.add("col-sm");
         let recipeIngredientImpactBadge = document.createElement("span");
 
         let recipeIngredientImpactValue = ingredientToAddClone.firstChild.childNodes[1].childNodes[1].cloneNode(true);
-
+        recipeIngredientImpactValue.classList.remove("ingredientImpact");
+        recipeIngredientImpactValue.classList.add("recipeImpact");
         recipeIngredientImpactCell.appendChild(recipeIngredientImpactValue);
 
-        let deleteButtonCell = recipeRow.insertCell();
+        let deleteButtonCell = document.createElement("div");
+        deleteButtonCell.classList.add("col-sm");
         let deleteButton1 = document.createElement("button");
         deleteButton1.textContent = "Delete";
         deleteButton1.for = ingredientToAddClone.id;
         deleteButton1.style.float = "right";
         deleteButton1.className = "btn btn-danger btn-sm";
         deleteButton1.addEventListener("click", () => {
-            recipeTable.removeChild(deleteButton1.parentElement.parentElement);
+            recipeTable.removeChild(deleteButton1.parentElement.parentElement.parentElement);
             RECIPE_STATE.delete(deleteButton1.for);
             var placeholderText = document.getElementById("recipePlaceholder")
             if (Array.from(RECIPE_STATE).length == 0 && placeholderText.style.display == "none") {
@@ -190,8 +213,74 @@ function generateIngredientDiv(ingredient, type, impact, id, color) {
 
         deleteButtonCell.appendChild(deleteButton1);
 
+        recipeRow.appendChild(recipeIngredientTitleCell)
+        recipeRow.appendChild(recipeIngredientImpactCell)
+        recipeRow.appendChild(deleteButtonCell)
 
         RECIPE_STATE.set(ingredientToAddClone.id, { "id": ingredientToAddClone.id, "name": recipeIngredientTitle })
+
+        let recipeCollapseInput = document.createElement("div");
+        recipeCollapseInput.className = "collapse table-active row ";
+        //recipeCollapseInput.style.padding = "0.5rem"
+        recipeCollapseInput.setAttribute("data-parent", "#recipeListTable");
+        recipeCollapseInput.id = `i_${ingredientToAddClone.id}_collapse`;
+        //let recipeCollapseInputBody = document.createElement("td");
+        //recipeCollapseInputBody.setAttribute("colspan", 3);
+        //recipeCollapseInputBody.className = "card card-body";
+        let arrowIndentCell = document.createElement("div");
+        arrowIndentCell.classList.add("col-sm-3")
+        arrowIndentCell.classList.add("pointFivePad")
+        
+        arrowIndentCell.innerHTML = `
+        <svg width="1em" height="1em" viewBox="0 0 16 16" style="display:ruby-text-container; margin:auto;" class="bi bi-arrow-return-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+        </svg>
+        `
+        arrowIndentCell.style.fontSize = "1.3rem";
+        recipeCollapseInput.appendChild(arrowIndentCell)
+        let amountInputCell = document.createElement("div");
+        amountInputCell.classList.add("col-sm");
+        amountInputCell.classList.add("form-group-sm");
+        amountInputCell.classList.add("row");
+        amountInputCell.classList.add("pointFivePad");
+        let amountInput = document.createElement("input");
+        amountInput.type = "text";
+        amountInput.rows = "1";
+        amountInput.style.resize = "none";
+        amountInput.className = "form-control form-control-sm";
+        amountInput.placeholder = "Enter amount";
+        amountInput.id = `amount_${ingredientToAddClone.id}`;
+
+        let amountInputLabel = document.createElement("small");
+        amountInputLabel.className = "form-text text-muted"
+        amountInputLabel.textContent = "Amount (e.g. 2 cups)"
+        
+        amountInputCell.appendChild(amountInput);
+        amountInputCell.appendChild(amountInputLabel)
+        //amountInputCell.colSpan = "1";
+
+        let prepInputCell = document.createElement("div");
+        prepInputCell.classList.add("col-sm");
+        prepInputCell.classList.add("form-group-sm");
+        prepInputCell.classList.add("pointFivePad");
+        prepInputCell.style.marginRight = "1rem"
+        let prepInput = document.createElement("input");
+        prepInput.className = "form-control form-control-sm ";
+        prepInput.placeholder = "Enter prep notes";
+        
+        prepInput.rows = "1";
+
+        let prepInputLabel = document.createElement("small");
+        prepInputLabel.className = "form-text text-muted"
+        prepInputLabel.textContent = "Prep (e.g. finely chopped)"
+        prepInputCell.appendChild(prepInput);
+        prepInputCell.appendChild(prepInputLabel)
+        prepInput.style.width = "100%";
+        //prepInputCell.colSpan = "2";
+        prepInput.id = `prep_${ingredientToAddClone.id}`;
+
+        recipeCollapseInput.appendChild(amountInputCell);
+        recipeCollapseInput.appendChild(prepInputCell);
 
         console.log(Array.from(RECIPE_STATE))
         var placeholderText = document.getElementById("recipePlaceholder");
@@ -200,12 +289,17 @@ function generateIngredientDiv(ingredient, type, impact, id, color) {
             sendRecipeButton.disabled = false;
             placeholderText.style.display = "none";
         }
-        recipeTable.appendChild(recipeRow);
 
+        recipeRowDiv.appendChild(recipeRow);
+
+        recipeRowDiv.appendChild(recipeCollapseInput);
+
+        recipeTable.appendChild(recipeRowDiv);
+        
         setTimeout(() => {
 
 
-            recipeRow.classList.add("show")
+            recipeRow.classList.add("show");
         }, 100);
     });
 

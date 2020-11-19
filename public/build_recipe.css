@@ -27,10 +27,13 @@
   text-align: center; 
 }
 
+#userRecipeName {  
+  text-align: center; 
+}
+
 .recipeCardBody{
   display: flex;
   margin: auto;
-  grid-template-columns: auto auto auto;
   
   align-items: center;
   text-align: center;
@@ -100,16 +103,30 @@
 
 }
 
+.pointFivePad{
+  padding-top: 0.5rem;
+}
+
 .ingredientColor{
   height:45px;
   width:45px;
   margin:auto;
 }
 
+.form-group-sm{
+  padding-bottom:0.5rem;
+}
+
 .ingredientImpact{
   line-height: 1.5 !important;
   float:right;
 }
+
+.recipeImpact{
+  line-height: 2 !important;
+  float:right;
+}
+
 
 .ingredientType{
   line-height: 1.5 !important;
