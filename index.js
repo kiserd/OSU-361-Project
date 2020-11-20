@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-
+const ingredientIcons = require('./ingredientIcons')
 const path = require('path');
 const fs = require('fs')
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
@@ -130,6 +130,25 @@ function getImpactByRecipeIngredient(recipe) {
   }
   return impacts
 }
+
+function getIngredientImage(type){
+    if (type == "Meat") {
+        return ingredientIcons.getMeatUrl();
+    } else if (type == "Bread") {
+        return ingredientIcons.getBreadUrl();
+    } else if (type == "Vegetable") {
+        return ingredientIcons.getCarrotUrl();
+    } else if (type == "Milk") {
+        return ingredientIcons.getMilkUrl();
+    } else if (type == "Dairy") {
+        return ingredientIcons.getCheeseUrl();
+    } else if (type == "Sauce") {
+        return ingredientIcons.getSauceUrl();
+    }
+    else {
+        return ingredientIcons.getForkUrl();
+    }
+};
 
 function subIngredient(ingredients, ingredient, substitute) {
   for (var i = 0; i < ingredients.length; i++) {
@@ -285,7 +304,6 @@ app.post('/add_to_recipes_global', (req, res, next)=>{
     values:[req.body["userRecipeName"], req.body["userRecipeType"], true]
   };
   makeQuery(queryRecipeByName, true).then(rows=>{
-    console.log(rows)
     if(rows.length > 0){
       res.send({"error":"Recipe name taken!"})
     } else {
@@ -294,7 +312,6 @@ app.post('/add_to_recipes_global', (req, res, next)=>{
   }).then(()=>{makeQuery(addUserRecipeGlobal, false)}).then(()=>makeQuery(queryRecipeByName, true)).then(rows=>{
     var ingredients = [];
     var queries = [];
-    console.log(rows)
     for(let ingredient of req.body["ingredients"]){
       ingredients.push({
         "id":parseInt(ingredient[0]),
@@ -318,12 +335,9 @@ app.post('/add_to_recipes_global', (req, res, next)=>{
         values: [req.session.user.id, rows[0].id]
       },true).then((rows)=>resolve(rows))
     }))
-    console.log(queries)
     return Promise.all(queries).catch(err=>console.error(err));
   })
   .then(()=>{
-
-
     return makeQuery(queryRecipeByName, true)
   }
     ).then(rows=>{
@@ -421,6 +435,15 @@ function renderSubstitutes(res, rows, recipe, ingredient)
   res.render('view_substitutes', context);
 }
 
+function getRandIconColor(){
+    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    const rgb = `rgba(${r},${g},${b}, 0.35)`; // Collect all to a css color string
+    return rgb
+};
+
 app.get('/make_substitution', (req, res, next) => {
   var context = {};
   var substitute = req.query["substitute"];
@@ -440,9 +463,20 @@ app.get('/make_substitution', (req, res, next) => {
   res.render('make_substitution', context);
 });
 
-app.get('/build_recipe', (req , res, next) => {
-
-  res.render('build_recipe');
+app.get('/build_recipe', async (req , res, next) => {
+  var context = {};
+  var ingredients = await makeQuery('SELECT * FROM ingredients', true);
+  console.log(ingredients)
+  for(let ingredient of ingredients){
+    // Uppercase first letter of ingredient type:
+    ingredient.type = ingredient.type[0].toUpperCase() + ingredient.type.slice(1);
+    ingredient.name = ingredient.name[0].toUpperCase() + ingredient.name.slice(1);
+    ingredient.iconColor = getRandIconColor();
+    ingredient.icon = getIngredientImage(ingredient.type);
+    ingredient.color = getImpactColor(ingredient.impact);
+  }
+  context["ingredients"] = ingredients;
+  res.render('build_recipe', context);
 });
 
 app.get('/my_recipes', (req , res, next) => {

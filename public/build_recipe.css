@@ -63,7 +63,11 @@
   width:250px;
 }
 
-.blinky {
+#recipeListTable{
+  background-color: white;
+}
+
+.pulse {
   animation: blinker 0.4s ease;
   }
 
@@ -78,9 +82,18 @@
   display:block;
 }
 
+#ingredientListTitle{
+  text-align: center;
+}
+
+#recipeListTitle{
+  text-align: center;
+}
+
 .ingredientDiv{
   flex-direction: row !important;
   cursor:pointer;
+  border-width: 2px;
 }
 
 .ingredientDiv:hover{
@@ -159,4 +172,8 @@ text-decoration: underline;
   background:#f9e6ff;
   height: 5rem;
   border-radius: 10px;
+}
+
+.no-show{
+  display: none;
 }
