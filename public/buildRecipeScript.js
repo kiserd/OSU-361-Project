@@ -19,7 +19,6 @@ async function goFetch(url, toSend) {
         const response = await fetch(url);
         return response.json();
     }
-
 }
 
 var sendRecipeButton = document.getElementById("sendRecipeButton");
@@ -81,7 +80,6 @@ function setDeleteButton(deleteButton, ingredientId){
         recipeListDiv.removeChild(document.getElementById(`rrow_${deleteButton.for}`));
         CURRENT_RECIPE_INGREDIENTS.delete(deleteButton.for);
 
-        
         if (Array.from(CURRENT_RECIPE_INGREDIENTS).length == 0) {
             showPlaceholderText();
             sendRecipeButton.disabled = true;
@@ -131,7 +129,6 @@ function showPlaceholderText(){
 function hidePlaceholderText(){
     var placeholderText = document.getElementById("recipePlaceholder");
     if (placeholderText.style.display != "none") {
-        
         placeholderText.style.display = "none";
     }
 };
@@ -192,6 +189,4 @@ function makeRecipeRow(ingredientId){
         topHalfRecipeRow.classList.add("show");
     }, 100);
 };
-
-
 
