@@ -46,72 +46,8 @@ app.use(function(req, res, next){
   next();
 })
 
-// main recipes 'database' :P
-var recipes = [
-    {"type": "breakfast", "userRecipe": false, "name": "Oatmeal", "ingredients": ["oat", "milk", "cranberry", "cinnamon", "sugar"]},
-    {"type": "breakfast", "userRecipe": false, "name": "Scrambled Eggs", "ingredients": ["egg", "cheese", "bell pepper"]},
-    {"type": "breakfast", "userRecipe": false, "name": "Breakfast Burrito", "ingredients": ["tortilla", "bean", "egg", "onion", "potato", "sour cream", "salsa", "avocado"]},
-    {"type": "lunch", "userRecipe": false, "name": "Bean Burrito", "ingredients": ["beans", "cheese", "rice", "tortilla", "salsa"]},
-    {"type": "lunch", "userRecipe": false, "name": "Chicken Teriyaki", "ingredients": ["rice", "chicken", "teriyaki sauce"]},
-    {"type": "lunch", "userRecipe": false, "name": "Turkey Sandwich", "ingredients": ["turkey", "bread", "cheese", "mayonaise", "lettuce", "tomato"]},
-    {"type": "lunch", "userRecipe": false, "name": "Waldorf Salad", "ingredients": ["mayonaise", "apple", "celery", "walnut", "grapes", "Lemon", "lettuce"]},
-    {"type": "lunch", "userRecipe": false, "name": "Pumpkin Soup", "ingredients": ["pumpkin", "olive oil", "onion", "vegetable broth", "coconut milk", "pumpkin seed"]},
-    {"type": "lunch", "userRecipe": false, "name": "Chicken Caesar Wrap", "ingredients": ["tortilla", "chicken", "lettuce", "tomato", "cheese", "caesar dressing", "crouton"]},
-    {"type": "dinner", "userRecipe": false, "name": "Pepperoni Pizza", "ingredients": ["pork", "flour", "cheese", "tomato sauce"]},
-    {"type": "dinner", "userRecipe": false, "name": "Cheese Pizza", "ingredients": ["flour", "cheese", "tomato sauce"]},
-    {"type": "dinner", "userRecipe": false, "name": "Hamburger", "ingredients": ["ground beef", "ketchup", "bread", "lettuce", "tomato"]},
-    {"type": "dinner", "userRecipe": false, "name": "Cheeseburger", "ingredients": ["ground beef", "ketchup", "bread", "lettuce", "tomato", "cheese"]},
-    {"type": "dinner", "userRecipe": false, "name": "Mac and Cheese", "ingredients": ["pasta", "milk", "butter", "cheese"]},
-    {"type": "dinner", "userRecipe": false, "name": "Spaghetti", "ingredients": ["pasta", "tomato sauce", "ground beef"]},
-    {"type": "dinner", "userRecipe": false, "name": "Mostaccioli", "ingredients": ["pasta", "cheese", "egg", "pork", "tomato sauce"]},
-    {"type": "dinner", "userRecipe": false, "name": "Meatloaf", "ingredients": ["ground beef", "egg", "ketchup", "worcestshire wauce", "mustard", "onion", "bread", "brown sugar"]}
-]
 
-// main ingredients 'database' :P
-var ingredients = [
-  {"type": "meat", "name": "ground beef", "impact": 13021},
-  {"type": "meat", "name": "chicken", "impact": 2868},
-  {"type": "meat", "name": "pork", "impact": 5736},
-  {"type": "bread", "name": "pasta", "impact": 616},
-  {"type": "bread", "name": "bread", "impact": 536},
-  // logan found article showing tortilla as significantly higher than bread
-  {"type": "bread", "name": "tortilla", "impact": 2500},
-  {"type": "bread", "name": "rice", "impact": 832},
-  {"type": "vegetable", "name": "lettuce", "impact": 133},
-  {"type": "vegetable", "name": "tomato", "impact": 108},
-  {"type": "vegetable", "name": "avocado", "impact": 2623},
-  {"type": "vegetable", "name": "corn", "impact": 1611},
-  {"type": "vegetable", "name": "green bean", "impact": 741},
-  {"type": "vegetable", "name": "broccoli", "impact": 381},
-  {"type": "vegetable", "name": "carrot", "impact": 261},
-  {"type": "vegetable", "name": "potato", "impact": 381},
-  {"type": "vegetable", "name": "pumpkin", "impact": 441},
-  {"type": "vegetable", "name": "onion", "impact": 780},
-  {"type": "vegetable", "name": "bell pepper", "impact": 379},
-  // logan made these seasonings up... educated guess
-  {"type": "seasoning", "name": "cinnamon", "impact": 5},
-  {"type": "seasoning", "name": "sugar", "impact": 10},
-  {"type": "dairy", "name": "cheese", "impact": 3153},
-  {"type": "dairy", "name": "butter", "impact": 7193},
-  {"type": "dairy", "name": "egg", "impact": 2017},
-  {"type": "milk", "name": "milk", "impact": 120},
-  {"type": "milk", "name": "rice milk", "impact": 75},
-  {"type": "milk", "name": "soy milk", "impact": 5},
-  {"type": "milk", "name": "oat milk", "impact": 10},
-  {"type": "milk", "name": "almond milk", "impact": 80},
-  {"type": "sauce", "name": "ketchup", "impact": 178},
-  {"type": "sauce", "name": "tomato sauce", "impact": 285},
-  {"type": "sauce", "name": "mayonaise", "impact": 535},
-  {"type": "fruit", "name": "apricot", "impact": 1701},
-  {"type": "fruit", "name": "blueberry", "impact": 641},
-  {"type": "fruit", "name": "cranberry", "impact": 209},
-  {"type": "fruit", "name": "apple", "impact": 1172},
-  {"type": "grain", "name": "oat", "impact": 846},
-  {"type": "nut", "name": "almond", "impact": 21284},
-  {"type": "nut", "name": "walnut", "impact": 12273},
-  {"type": "bean", "name": "soy bean", "impact": 2834}
-]
-
+// Logan Kiser: Probably need to delete this
 function getImpactByRecipeIngredient(recipe) {
   var impacts = [];
   for (var i = 0; i < recipes.length; i++) {
@@ -150,6 +86,7 @@ function getIngredientImage(type){
     }
 };
 
+// Logan Kiser: prob need to delete this..
 function subIngredient(ingredients, ingredient, substitute) {
   for (var i = 0; i < ingredients.length; i++) {
     if (ingredients[i] == ingredient) {
@@ -158,6 +95,7 @@ function subIngredient(ingredients, ingredient, substitute) {
   }
 }
 
+// Logan Kiser: prob need to delete this..
 function getIngredientsByRecipe(recipe) {
   var ingredients = [];
   for (var i = 0; i < recipes.length; i++) {
@@ -170,6 +108,7 @@ function getIngredientsByRecipe(recipe) {
   return ingredients;
 }
 
+// Logan Kiser: prob need to delete this..
 function getTypeByRecipe(recipe) {
   var type = null;
   for (var i = 0; i < recipes.length; i++) {
@@ -357,27 +296,37 @@ app.get('/get_user_recipes', (req, res, next)=>{
       res.send(rows);
     })
   }
-  
 })
 
 app.get('/view_ingredients', (req , res, next) => {
-  var context = {};
+  // assign request header to convenient variable
   var recipe_id = req.query["recipe_id"];
+
+  // get recipe info associated
+  var queryRecipeById = {
+    text: 'SELECT * FROM recipes WHERE id=$1',
+    values: [recipe_id]
+  }
+  var recipes = await makeQuery(queryRecipeById, true);
+
   // get ingredients associated with recipe
-  pool.query(querySelectIngredientsByRecipeId, [recipe_id], (err, result) => {
-    if (err) {
-      return console.error('Error executing query', err.stack);
-    }
-    context["ingredients"] = result.rows;
-    // get recipe info to provide to user
-    pool.query(querySelectRecipeById, [recipe_id], (err, result) => {
-      if (err) {
-        return console.error('Error executing query', err.stack);
-      }
-      context["recipe"] = result.rows[0];
-      res.render('view_ingredients', context);
-    });
-  });
+  var queryIngredientsByRecipe = {
+    text: 'SELECT i.*' +
+           'recipes AS r' +
+           'LEFT JOIN recipes_ingredients AS ri' +
+           'ON r.id = ri.recipes_id' +
+           'LEFT JOIN ingredients AS i' +
+           'ON ri.recipes_id = i.id' +
+           'WHERE r.id = $1',
+    values: [recipe_id]
+   }
+   var ingredients = await makeQuery(queryIngredientsByRecipe, true);
+  
+  // assign data to context and render page
+  context = {}
+  context["ingredients"] = ingredients;
+  context["recipe"] = recipes[0];
+  res.render('view_ingredients', context);
 });
 
 app.get('/view_substitutes', (req, res, next) => {
