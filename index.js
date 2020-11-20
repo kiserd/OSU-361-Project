@@ -310,21 +310,21 @@ app.get('/view_ingredients', async (req , res, next) => {
   var recipes = await makeQuery(queryRecipeById, true);
 
   // get ingredients associated with recipe
-  // var queryIngredientsByRecipe = {
-  //   text: 'SELECT i.*' +
-  //          'recipes AS r' +
-  //          'LEFT JOIN recipes_ingredients AS ri' +
-  //          'ON r.id = ri.recipes_id' +
-  //          'LEFT JOIN ingredients AS i' +
-  //          'ON ri.recipes_id = i.id' +
-  //          'WHERE r.id = $1',
-  //   values: [recipe_id]
-  //  }
-  //  var ingredients = await makeQuery(queryIngredientsByRecipe, true);
+  var queryIngredientsByRecipe = {
+    text: 'SELECT i.* ' +
+           'recipes AS r ' +
+           'LEFT JOIN recipes_ingredients AS ri ' +
+           'ON r.id = ri.recipes_id ' +
+           'LEFT JOIN ingredients AS i ' +
+           'ON ri.recipes_id = i.id ' +
+           'WHERE r.id = $1',
+    values: [recipe_id]
+   }
+   var ingredients = await makeQuery(queryIngredientsByRecipe, true);
   
   // assign data to context and render page
   context = {}
-  // context["ingredients"] = ingredients;
+  context["ingredients"] = ingredients;
   context["recipe"] = recipes[0];
   res.render('view_ingredients', context);
 });
