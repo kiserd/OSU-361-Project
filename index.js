@@ -1,8 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const ingredientIcons = require('./ingredientIcons')
-const path = require('path');
-const fs = require('fs')
+const ingredientIcons = require('./ingredientIcons');
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -10,8 +8,6 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 const {Pool} = require('pg');
-const { resolve } = require('path');
-const { query } = require('express');
 const pool = new Pool({
   connectionString: "postgres://qxtetfyciswbov:31134b5dcc9de86cf5f8f815858b9140d07cff36a764dfb7b90424c6804a5e38@ec2-3-211-176-230.compute-1.amazonaws.com:5432/d3u5cr9kigu0n5",
   ssl: {
@@ -177,7 +173,6 @@ class ChooseRecipeMap extends Map{
 app.get('/choose_recipe', async (req , res, next) => {
   var context = {};
   var all_recipes = await makeQuery(querySelectAllSystemRecipes, true).catch(err=>console.error(err));
-  console.log(all_recipes)
   var RECIPES_MAP = new ChooseRecipeMap(all_recipes);
   RECIPES_MAP.checkUserRecipes(req).then((FILTERED)=>{
     context["recipes"] = FILTERED.toSortedArray();
@@ -208,7 +203,6 @@ app.get('/get_ingredients', (req, res, next)=>{
         row.color = getImpactColor(row.impact);
       };
       context.ingredients = rows;
-      console.log(rows)
       res.send(context);
     }).catch(err=>console.error(err));
   }
@@ -290,7 +284,7 @@ app.get('/get_user_recipes', (req, res, next)=>{
   }else{
     pool.query('SELECT recipes_id FROM users_recipes WHERE users_id=$1', [req.session.user.id], (err, {rows})=>{
       if(err) {
-        console.log(err)
+        console.error(err)
         res.send(false);
       }
       res.send(rows);
@@ -308,21 +302,19 @@ app.get('/view_ingredients', async (req , res, next) => {
     values: [recipe_id]
   }
   var recipes = await makeQuery(queryRecipeById, true);
-  console.log(recipes);
 
   // get ingredients associated with recipe
   var queryIngredientsByRecipe = {
-    text: 'SELECT i.* ' +
-          'FROM recipes AS r ' +
-          'LEFT JOIN recipes_ingredients AS ri ' +
-          'ON (r.id = ri.recipes_id) ' +
-          'LEFT JOIN ingredients AS i ' +
-          'ON (ri.ingredients_id = i.id) ' +
-          'WHERE r.id = $1',
+    text: `SELECT i.*, ri.amount, ri.prep 
+          FROM recipes AS r 
+          LEFT JOIN recipes_ingredients AS ri 
+          ON (r.id = ri.recipes_id) 
+          LEFT JOIN ingredients AS i 
+          ON (ri.ingredients_id = i.id) 
+          WHERE r.id = $1`,
     values: [recipe_id]
    }
    var ingredients = await makeQuery(queryIngredientsByRecipe, true);
-   console.log(ingredients);
   
   // assign data to context and render page
   context = {};
@@ -417,7 +409,6 @@ app.get('/make_substitution', (req, res, next) => {
 app.get('/build_recipe', async (req , res, next) => {
   var context = {};
   var ingredients = await makeQuery('SELECT * FROM ingredients', true);
-  console.log(ingredients)
   for(let ingredient of ingredients){
     // Uppercase first letter of ingredient type:
     ingredient.type = ingredient.type[0].toUpperCase() + ingredient.type.slice(1);
@@ -536,7 +527,7 @@ var register = async function(req, res){
     values:[username, password, get_rand_rgb()]
   };
   pool.query(checkUser, (err, {rows})=>{
-    if(err) console.log(err)
+    if(err) console.error(err)
     else{
       if(rows.length > 0){
         res.send({
@@ -545,7 +536,6 @@ var register = async function(req, res){
         })
       } else{
         makeQuery(registerUser, false).then(()=>makeQuery(checkUser, true)).then(rows=>{
-          console.log(rows)
           if(rows[0].username == username){
             req.session.loggedin = true;
             req.session.user = {
@@ -566,13 +556,13 @@ var login = async function(req, res){
   var password = req.body.password;
   pool.query({text:"SELECT * FROM USERS WHERE username=$1", values:[username]}, (err, {rows})=>{
     if(err){
-      console.log(err)
+      console.error(err)
     } else{
       if(rows.length == 0){
         res.send({
           "code":206,
           "success":"Invalid E-mail"
-        }) 
+        }); 
       } else{
         if(rows[0].password != password){
           res.send({
@@ -587,11 +577,11 @@ var login = async function(req, res){
             id: rows[0].id
           };
           res.redirect('/');
-        }
-      }
-    }
-  })
-}
+        };
+      };
+    };
+  });
+};
 
 app.post('/register', register);
 app.post('/login', login);
@@ -626,22 +616,3 @@ app.use(function(err, req, res, next){
 app.listen(PORT, function(){
   console.log(`Listening on: ${ PORT }; press Ctrl-C to terminate.`);
 });
-
-/* function filterRecipeMap(user_recipe_rows, RECIPES_TO_SEND){
-  var RECIPES_TO_SEND_FILTERED = new Map(RECIPES_TO_SEND);
-  for(let row of user_recipe_rows){
-    let recipe = RECIPES_TO_SEND_FILTERED.get(row.recipes_id);
-    recipe.in_book = true;
-    RECIPES_TO_SEND_FILTERED.set(row.recipes_id, recipe);
-  }
-  return RECIPES_TO_SEND_FILTERED;
-};
-
-function makeRecipeMap(rows){
-  RECIPES_TO_SEND = new Map();
-  for(let row of rows){
-    row.in_book = false;
-    RECIPES_TO_SEND.set(row.id, row);
-  };
-  return RECIPES_TO_SEND;
-} */
