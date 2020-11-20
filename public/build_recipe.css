@@ -80,6 +80,7 @@
 #sendRecipeButton{
   margin: auto;
   display:block;
+  margin-top: 1rem;
 }
 
 #ingredientListTitle{

@@ -50,9 +50,10 @@ sendRecipeButton.addEventListener("click", function () {
     }
 });
 
-function setRecipeButton(button, ingredientId, title){
-    button.setAttribute("data-target", `#i_${ingredientId}_collapse`);
-    button.textContent = title;
+function setRecipeButton(r){
+    let button = r.recipeIngredientButton;
+    button.setAttribute("data-target", `#i_${r.ingredientId}_collapse`);
+    button.textContent = r.ingredientTitle;
 
     if(isFirstIngredient){
         handleTooltips(button.parentElement, button);
@@ -64,21 +65,20 @@ function makeRecipeImpactBadge(ingredientId){
     let recipeIngredientImpactBadge = document.getElementById(`ingredientImpact_${ingredientId}`).cloneNode(true);
     recipeIngredientImpactBadge.classList.remove("ingredientImpact");
     recipeIngredientImpactBadge.classList.add("recipeImpact");
-
     return recipeIngredientImpactBadge
     
 }
 
-function setDeleteButton(deleteButton, ingredientId){
-    deleteButton.for = ingredientId;
-    deleteButton.addEventListener("click", () => {
+function setDeleteButton(r){;
+    r.deleteButton.for = r.ingredientId;
+    r.deleteButton.addEventListener("click", () => {
         if(document.getElementsByClassName("tooltip") != null){
             for(let tooltip of document.getElementsByClassName("tooltip")){
                 tooltip.style.display = "none";
             }
         }
-        recipeListDiv.removeChild(document.getElementById(`rrow_${deleteButton.for}`));
-        CURRENT_RECIPE_INGREDIENTS.delete(deleteButton.for);
+        recipeListDiv.removeChild(document.getElementById(`rrow_${r.deleteButton.for}`));
+        CURRENT_RECIPE_INGREDIENTS.delete(r.deleteButton.for);
 
         if (Array.from(CURRENT_RECIPE_INGREDIENTS).length == 0) {
             showPlaceholderText();
@@ -87,36 +87,30 @@ function setDeleteButton(deleteButton, ingredientId){
     });
 };
 
-function setTopHalfRecipeRow(topHalfRecipeRow, ingredientId){
-    topHalfRecipeRow.id = `r_${ingredientId}`;
-    let recipeIngredientTitleCell = topHalfRecipeRow.firstElementChild;
+function setTopHalfRecipeRow(r){
+    var topHalfRecipeRow = r.recipeRow;
+    topHalfRecipeRow.id = `r_${r.ingredientId}`;
+    CURRENT_RECIPE_INGREDIENTS.set(r.ingredientId, { "id": r.ingredientId, "name": r.ingredientTitle });
 
-    let recipeIngredientTitle = document.getElementById(`ingredientName_${ingredientId}`).textContent;
-    CURRENT_RECIPE_INGREDIENTS.set(ingredientId, { "id": ingredientId, "name": recipeIngredientTitle });
+    setRecipeButton(r);
 
-    let recipeIngredientButton = recipeIngredientTitleCell.firstElementChild;
-
-    setRecipeButton(recipeIngredientButton, ingredientId, recipeIngredientTitle);
-
-    let recipeIngredientImpactCell = recipeIngredientTitleCell.nextElementSibling;
-    let recipeIngredientImpactBadge = makeRecipeImpactBadge(ingredientId);
-    recipeIngredientImpactCell.appendChild(recipeIngredientImpactBadge);
-
-    let deleteButton = recipeIngredientImpactCell.nextElementSibling.firstElementChild;
-    setDeleteButton(deleteButton, ingredientId);
+    let recipeIngredientImpactBadge = makeRecipeImpactBadge(r.ingredientId);
+    r.recipeIngredientImpactDiv.appendChild(recipeIngredientImpactBadge);
+    setDeleteButton(r);
 };
 
-function setBottomHalfRecipeRow(bottomHalfRecipeRow, ingredientId){
-    bottomHalfRecipeRow.id = `i_${ingredientId}_collapse`;
+function setBottomHalfRecipeRow(r){
+    var bottomHalfRecipeRow = r.collapsedDiv;
+    bottomHalfRecipeRow.id = `i_${r.ingredientId}_collapse`;
 
     let arrowIndentCell = bottomHalfRecipeRow.firstElementChild;
     let amountInputCell = arrowIndentCell.nextElementSibling;
     let amountInput = amountInputCell.firstElementChild;
-    amountInput.id = `amount_${ingredientId}`;
+    amountInput.id = `amount_${r.ingredientId}`;
 
     let prepInputCell = amountInputCell.nextElementSibling;
     let prepInput = prepInputCell.firstElementChild;
-    prepInput.id = `prep_${ingredientId}`;
+    prepInput.id = `prep_${r.ingredientId}`;
 };
 
 function showPlaceholderText(){
@@ -163,30 +157,43 @@ function handleTooltips(divForTooltip, button){
     }, 3500);
 };
 
+function initRowObjectProperties(r, ingredientId){
+    r.recipeRowDiv = r.querySelector("#recipeRowDiv");
+    r.recipeRowDiv.id = `rrow_${ingredientId}`;
+    r.recipeRow = r.querySelector("#recipeRow");
+    console.log(r.recipeRow)
+    r.recipeIngredientTitleDiv = r.querySelector("#recipeIngredientTitleDiv") ;
+    r.recipeIngredientButton = r.querySelector("#recipeIngredientButton") ;
+    r.recipeIngredientImpactDiv = r.querySelector("#recipeIngredientImpactDiv") ;
+    r.deleteButtonDiv = r.querySelector("#deleteButtonDiv") ;
+    r.deleteButton = r.querySelector("#deleteButton") ;
+    r.collapsedDiv = r.querySelector("#collapsedDiv") ;
+    r.arrowIndentDiv = r.querySelector("#arrowIndentDiv") ;
+    r.amountInputDiv = r.querySelector("#amountInputDiv") ;
+    r.prepInputDiv = r.querySelector("#prepInputDiv") ;
+    r.ingredientTitle = document.getElementById(`ingredientName_${ingredientId}`).textContent;
+    r.ingredientId = ingredientId;
+    
+};
+
 function makeRecipeRow(ingredientId){
     if (CURRENT_RECIPE_INGREDIENTS.get(ingredientId) != null) {
         pulseIngredient(ingredientId);
         return
     };
-
-    let recipeRowDiv = document.getElementById("recipeRowDiv").cloneNode(true);
-    recipeRowDiv.id = `rrow_${ingredientId}`;
-
-    let topHalfRecipeRow = recipeRowDiv.firstElementChild;
-    setTopHalfRecipeRow(topHalfRecipeRow, ingredientId);
-
-    let bottomHalfRecipeRow = topHalfRecipeRow.nextElementSibling;
-    setBottomHalfRecipeRow(bottomHalfRecipeRow, ingredientId);
-
+    let recipeRowTemplate = document.getElementById("recipe-row-template")
+    let r = recipeRowTemplate.content.cloneNode(true);
+    initRowObjectProperties(r, ingredientId);
+    setTopHalfRecipeRow(r);
+    setBottomHalfRecipeRow(r);
     hidePlaceholderText();
 
     sendRecipeButton.disabled = false;
 
-    recipeRowDiv.classList.remove("no-show");
-    recipeListDiv.appendChild(recipeRowDiv);
+    recipeListDiv.appendChild(r);
     
     setTimeout(() => {
-        topHalfRecipeRow.classList.add("show");
+        r.recipeRow.classList.add("show");
     }, 100);
 };
 
