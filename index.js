@@ -308,6 +308,7 @@ app.get('/view_ingredients', async (req , res, next) => {
     values: [recipe_id]
   }
   var recipes = await makeQuery(queryRecipeById, true);
+  console.log(recipes);
 
   // get ingredients associated with recipe
   var queryIngredientsByRecipe = {
@@ -321,6 +322,7 @@ app.get('/view_ingredients', async (req , res, next) => {
     values: [recipe_id]
    }
    var ingredients = await makeQuery(queryIngredientsByRecipe, true);
+   console.log(ingredients);
   
   // assign data to context and render page
   context = {}
