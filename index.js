@@ -328,7 +328,7 @@ app.get('/view_ingredients', async (req , res, next) => {
   context = {}
   context["ingredients"] = ingredients;
   context["recipe"] = recipes[0];
-  res.render('view_ingredients', context, recipes, ingredients);
+  res.render('view_ingredients', context);
 });
 
 app.get('/view_substitutes', (req, res, next) => {
