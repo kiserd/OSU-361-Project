@@ -315,9 +315,9 @@ app.get('/view_ingredients', async (req , res, next) => {
     text: 'SELECT i.* ' +
           'FROM recipes AS r ' +
           'LEFT JOIN recipes_ingredients AS ri ' +
-          'ON r.id = ri.recipes_id ' +
+          'ON (r.id = ri.recipes_id) ' +
           'LEFT JOIN ingredients AS i ' +
-          'ON ri.recipes_id = i.id ' +
+          'ON (ri.ingredients_id = i.id) ' +
           'WHERE r.id = $1',
     values: [recipe_id]
    }
