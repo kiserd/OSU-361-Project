@@ -298,7 +298,7 @@ app.get('/get_user_recipes', (req, res, next)=>{
   }
 })
 
-app.get('/view_ingredients', (req , res, next) => {
+app.get('/view_ingredients', async (req , res, next) => {
   // assign request header to convenient variable
   var recipe_id = req.query["recipe_id"];
 
