@@ -325,10 +325,10 @@ app.get('/view_ingredients', async (req , res, next) => {
    console.log(ingredients);
   
   // assign data to context and render page
-  renderIngredients();
+  renderIngredients(res, recipes, ingredients);
 });
 
-function renderIngredients(recipes, ingredients) {
+function renderIngredients(res, recipes, ingredients) {
   context = {};
   context["ingredients"] = ingredients;
   context["recipe"] = recipes[0];
