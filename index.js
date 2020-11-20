@@ -312,12 +312,12 @@ app.get('/view_ingredients', async (req , res, next) => {
   // get ingredients associated with recipe
   var queryIngredientsByRecipe = {
     text: 'SELECT i.* ' +
-           'recipes AS r ' +
-           'LEFT JOIN recipes_ingredients AS ri ' +
-           'ON r.id = ri.recipes_id ' +
-           'LEFT JOIN ingredients AS i ' +
-           'ON ri.recipes_id = i.id ' +
-           'WHERE r.id = $1',
+          'FROM recipes AS r ' +
+          'LEFT JOIN recipes_ingredients AS ri ' +
+          'ON r.id = ri.recipes_id ' +
+          'LEFT JOIN ingredients AS i ' +
+          'ON ri.recipes_id = i.id ' +
+          'WHERE r.id = $1',
     values: [recipe_id]
    }
    var ingredients = await makeQuery(queryIngredientsByRecipe, true);
