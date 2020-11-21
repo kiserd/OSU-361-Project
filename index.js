@@ -363,11 +363,11 @@ app.get('/make_substitution', async (req, res, next) => {
     await makeQuery(addUserRecipeGlobal, false)
 
     // get id of new recipe
-    var queryRecipeByName = {
+    var queryRecipeIdByName = {
       text: 'SELECT id FROM recipes WHERE name = $1',
-      values: new_name
+      values: [new_name]
     };
-    new_recipe_id = await makeQuery(queryRecipeByName, true);
+    new_recipe_id = await makeQuery(queryRecipeIdByName, true);
 
     // update recipes_ingredients table to link new recipe to ingredients
     for (let ing of ingredients) {
