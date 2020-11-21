@@ -1,7 +1,12 @@
 <br/>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-9">
+                {{#if isModified}}
+                <div class="alert alert-{{modifyColor}}" role="alert">
+                    <h5 class="alert-heading"><b>{{modifyName}}</b> has been {{modifyAction}} your Recipe Book. <a class="alert-link" href="/my_recipes?{{undoUrl}}={{modifyId}}&n={{modifyName}}">Undo?</a></h5>
+                </div>
+                {{/if}}
                 <h1>Recipe Book</h1>
                 <p>This is a list of your saved recipes.</p>
                 <p>Want to add a recipe from our collection? <a href="/choose_recipe"> Browse Recipes.</a></p>
@@ -24,7 +29,7 @@
                     </thead>
                     <tbody>
                         {{#each myRecipes}}
-                        <tr id="{{this.id}}">
+                        <tr id="{{this.id}}" value="{{this.name}}">
                             <td>
                                 <b>{{this.name}}</b>
                                 <br/>
@@ -40,10 +45,12 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="get">
+                                <form action="/my_recipes" method="get">
                                     <div class="form-group">
+                                        <input type="hidden" name="n" value="{{this.name}}">
                                         <button type="submit" name="delete_id" value="{{this.id}}" class="btn btn-outline-danger">Delete</button>
                                     </div>
+                                    
                                 </form>
                             </td>
                         </tr>

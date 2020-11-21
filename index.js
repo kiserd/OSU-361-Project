@@ -223,7 +223,12 @@ app.get('/add_recipe', (req, res, next)=>{
       res.send(rows[0]);
     }).catch(err=>console.error(err))
   } else {
-    res.send(false);
+    if(req.query["recipe_id"]){
+      req.session.tempRecipe = req.query["recipe_id"];
+      res.send({"error":"not logged-in", "name":req.query["recipe_name"]});
+    }else{
+      res.send({"error":"not logged-in"});
+    }
   };
 });
 
@@ -262,18 +267,17 @@ app.post('/add_to_recipes_global', (req, res, next)=>{
         })
       )
     }
-    queries.push(new Promise((resolve,reject)=>{
+/*     queries.push(new Promise((resolve,reject)=>{
       return makeQuery({
         text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0})) RETURNING *`,
         values: [req.session.user.id, rows[0].id]
       },true).then((rows)=>resolve(rows))
-    }))
+    })) */
     return Promise.all(queries).catch(err=>console.error(err));
   })
   .then(()=>{
     return makeQuery(queryRecipeByName, true)
-  }
-    ).then(rows=>{
+  }).then(rows=>{
       res.send(rows[0]);
     }).catch(err=>console.error(err))
 })
@@ -421,9 +425,20 @@ app.get('/build_recipe', async (req , res, next) => {
   res.render('build_recipe', context);
 });
 
-app.get('/my_recipes', (req , res, next) => {
+app.get('/my_recipes', async (req , res, next) => {
+  var context = {};
   if(req.session["user"] == null){
-    res.send("Error! Please log-in!")
+    if(req.query["recipe_id"]){
+      req.session.tempRecipe = req.query["recipe_id"];
+      var queryRows = await makeQuery({text:`SELECT name FROM recipes WHERE id=$1`, values:[req.query["recipe_id"]]}, true);
+      context.triedToSaveRecipe = true;
+      context.n = queryRows[0];
+      res.render("new_user", context);
+    }else{
+      context.triedToViewMyRecipes = true;
+      res.render("new_user", context);
+    }
+
   } else{
     var getRecipesQuery = {
       text: 'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
@@ -436,21 +451,40 @@ app.get('/my_recipes', (req , res, next) => {
     }
     if(req.query["recipe_id"]){
       var addRecipeQuery = {
-        text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))
-              ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date;`,
+        text: `WITH add_recipe as (INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0})) 
+              ON CONFLICT ON CONSTRAINT users_recipes_pkey DO UPDATE SET date = EXCLUDED.date RETURNING *) 
+              SELECT * FROM add_recipe 
+              LEFT JOIN recipes ON add_recipe.recipes_id=recipes.id`,
         values: [req.session.user.id, req.query["recipe_id"]]
       }
-      makeQuery(addRecipeQuery, false).then(()=>makeQuery(getRecipesQuery, true)).then(rows=>{
-        renderMyRecipes(res, rows);
+      var rObject = {};
+      makeQuery(addRecipeQuery, true).then((r)=>{
+        rObject.rName = r[0].name;
+        rObject.rId = r[0].id;
+        return makeQuery(getRecipesQuery, true)}).then(rows=>{
+        renderMyRecipes(res, rows, {id:rObject.rId, name:rObject.rName, action:"added to", color:"success", undoUrl:"delete_id"});
       }).catch(err=>{console.error(err)})
       
     } else if(req.query["delete_id"]){
       var deleteRecipeQuery = {
-        text: `DELETE FROM users_recipes WHERE recipes_id=$1`,
-        values: [req.query["delete_id"]]
+        text: `WITH delete_recipe as (DELETE FROM users_recipes WHERE recipes_id=$1 AND users_id=$2 RETURNING *)
+        SELECT * FROM delete_recipe LEFT JOIN recipes ON delete_recipe.recipes_id=recipes.id`,
+        values: [req.query["delete_id"], req.session.user.id]
       }
-      make(deleteRecipeQuery, false).then(()=>makeQuery(getRecipesQuery, true)).then(rows=>{
-        renderMyRecipes(res, rows);
+      var rObject = {};
+      makeQuery(deleteRecipeQuery, true).then((r)=>{
+        if(r[0] == null){
+          rObject = false;
+        }else{
+          rObject["name"] = r[0].name;
+          rObject["id"] = r[0].id;
+          rObject["action"] = "deleted from";
+          rObject["color"] = "dark";
+          rObject["undoUrl"] = "recipe_id";
+        }
+
+        return makeQuery(getRecipesQuery, true)}).then(rows=>{
+        renderMyRecipes(res, rows, rObject);
       }).catch(err=>{console.error(err)})
     } else {
       makeQuery(getRecipesQuery, true).then(rows=>{
@@ -460,9 +494,17 @@ app.get('/my_recipes', (req , res, next) => {
   }
 });
 
-function renderMyRecipes(res, rows){
+function renderMyRecipes(res, rows, ifModify){
   context = {};
   context["myRecipes"] = makeRecipesObject(rows);
+  if(ifModify){
+    context.isModified = true;
+    context["modifyId"] = ifModify["id"];
+    context["modifyName"] = ifModify["name"];
+    context["modifyAction"] = ifModify["action"];
+    context["modifyColor"] = ifModify["color"];
+    context["undoUrl"] = ifModify["undoUrl"];
+  }
   res.render("my_recipes", context);
 };
 
@@ -503,7 +545,7 @@ function makeRecipesObject(rows){
   for(i=0; i < rows.length; i++){
     recipes[i] = {};
     recipes[i].name = rows[i].name;
-    if(recipes[i].hasOwnProperty("date") && recipes[i].date != null){
+    if(rows[i].hasOwnProperty("date") && rows[i].date != null){
       recipes[i].date = rows[i].date.toLocaleString();
     }
     recipes[i].impact = rows[i].recipes_impact;
@@ -530,10 +572,11 @@ var register = async function(req, res){
     if(err) console.error(err)
     else{
       if(rows.length > 0){
-        res.send({
-          "code":409,
-          "failed":"Username already registered"
-        })
+        context = {};
+        context.alreadyRegistered = true;
+        context.bcMessage = "An account with the username " + req.body.username + " already exists.";
+        context.username = req.body.username;
+        res.render("new_user", context);
       } else{
         makeQuery(registerUser, false).then(()=>makeQuery(checkUser, true)).then(rows=>{
           if(rows[0].username == username){
@@ -543,7 +586,13 @@ var register = async function(req, res){
               color: rows[0].color,
               id: rows[0].id
             };
-            res.redirect('/');
+            if(req.session.tempRecipe){
+              res.redirect(`/my_recipes?recipe_id=${req.session.tempRecipe}#${req.session.tempRecipe}`);
+              req.session.tempRecipe = null;
+            } else{
+              res.redirect('/');
+            }
+
           }
         }).catch(err=>console.error(err))
       }
@@ -559,16 +608,16 @@ var login = async function(req, res){
       console.error(err)
     } else{
       if(rows.length == 0){
-        res.send({
-          "code":206,
-          "success":"Invalid E-mail"
-        }); 
+        context = {};
+        context.badCredentials = true;
+        context.bcMessage = "There's no account with the username " + req.body.username + ".";
+        res.render("new_user", context);
       } else{
         if(rows[0].password != password){
-          res.send({
-            "code":204,
-            "success":"Bad Credentials, Please Try Again"
-          })
+          context = {};
+          context.badCredentials = true;
+          context.bcMessage = "The password you've entered for " + rows[0].username + " is incorrect.";
+          res.render("new_user", context);
         } else{
           req.session.loggedin = true;
           req.session.user = {
@@ -576,7 +625,13 @@ var login = async function(req, res){
             color: rows[0].color,
             id: rows[0].id
           };
-          res.redirect('/');
+          if(req.session.tempRecipe){
+            res.redirect(`/my_recipes?recipe_id=${req.session.tempRecipe}#${req.session.tempRecipe}`);
+            req.session.tempRecipe = null;
+          } else{
+            res.redirect('/');
+          }
+          
         };
       };
     };
@@ -599,7 +654,17 @@ app.get('/logout', function(req, res, next){
 })
 
 app.get('/new_user', function(req, res, next){
-  res.render('new_user')
+  if(req.query["triedSave"]){
+    context = {};
+    context.triedToSaveRecipe = true;
+    if(req.query["n"]){
+      context.n = req.query["n"];
+    }
+    res.render('new_user', context);
+  } else{
+    res.render('new_user');
+  }
+
 })
 
 app.use(function(req,res){

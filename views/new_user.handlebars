@@ -1,64 +1,121 @@
 <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>Register New Account</h1>
-                <p>Get ethical with us!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {{#if triedToSaveRecipe}}
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">You need an account to save recipes.</h4>
+                <p></p>
+                <hr>
+                <p class="mb-0">We'll add {{#if n}} <b>{{n}}</b> {{else}} the recipe you wanted to save {{/if}}to your Recipe Book once you've taken care of that.</p>
             </div>
+            {{/if}}
+            {{#if triedToViewMyRecipes}}
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">My Recipes? You can't have recipes if you don't have an account!</h4>
+                <p></p>
+                <hr>
+                <p class="mb-0">Please log-in or register to start your Recipe Book!</p>
+            </div>
+            {{/if}}
+            {{#if badCredentials}}
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">{{bcMessage}}</h4>
+                <p></p>
+                <hr>
+                <p class="mb-0">Please try again or register a new account.</p>
+            </div>
+            {{/if}}
+            {{#if alreadyRegistered}}
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">{{bcMessage}}</h4>
+                <p></p>
+                <hr>
+                <p class="mb-0">Are you {{username}}? If so, please log-in. Otherwise, pick another username.</p>
+            </div>
+            {{/if}}
+            <h1>Log-in or Register</h1>
+            <p>Get ethical with us!</p>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <form action="/register" method="POST" class="needs-validation" novalidate>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Register New Account</h2>
+            <form action="/register" method="POST" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input pattern="[0-9a-zA-Z]{4,16}" type="text" class="form-control" id="username" name="username" aria-describedby="userHelp" placeholder="Enter a username" required>
-                    <small id="userHelp" class="form-text text-muted">Must be between 4-16 characters, letters and numbers only.</small>
+                    <input pattern="[0-9a-zA-Z]{4,16}" type="text" class="form-control" id="username" name="username"
+                        aria-describedby="userHelp" placeholder="Enter a username" required>
+                    <small id="userHelp" class="form-text text-muted">Must be between 4-16 characters, letters and
+                        numbers only.</small>
                     <div class="invalid-feedback">
                         Please provide a valid username.
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" aria-describedby="passHelp" placeholder="Password"
+                    <input type="password" class="form-control" id="password" name="password"
+                        aria-describedby="passHelp" placeholder="Password"
                         pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$" required>
-                    <small id="userHelp" class="form-text text-muted">Must be at least 4 characters and contain a letter and a number.</small>
+                    <small id="userHelp" class="form-text text-muted">Must be at least 4 characters and contain a letter
+                        and a number.</small>
                     <div class="invalid-feedback">
                         Please provide a valid password.
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-group">
-                    <label for="disabledSelect">How ethical would you say you are?</label>
-                    <select id="disabledSelect" class="form-control" disabled>
-                        <option>I'm a monster and I love it</option>
-                    </select>
-                    <small class="form-text text-muted">We'll be telling your parents.</small>
+                        <label for="disabledSelect">How ethical would you say you are?</label>
+                        <select id="disabledSelect" class="form-control" disabled>
+                            <option>I'm a monster and I love it</option>
+                        </select>
+                        <small class="form-text text-muted">We'll be telling your parents.</small>
                     </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign-Up</button>
-                </form>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary">Sign-Up</button>
+            </form>
         </div>
-    </div> 
-
-    <script>
-// Adapted from example at https://getbootstrap.com/docs/4.0/components/forms/#custom-styles
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
+        <div class="col-md-6" id="loginForm">
+            <h2>Log-In</h2>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="userHelp"
+                        placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        aria-describedby="passHelp" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Log-In</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<style>
+    #loginForm{
+        border-left: 2px solid #dee2e6;
+    }
+</style>
+<script>
+    // Adapted from example at https://getbootstrap.com/docs/4.0/components/forms/#custom-styles
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>

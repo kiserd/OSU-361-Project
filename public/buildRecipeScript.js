@@ -45,7 +45,17 @@ sendRecipeButton.addEventListener("click", function () {
         };
         var url = "/add_to_recipes_global";
         goFetch(url, toSend).then(data => {
-            window.open(`/my_recipes#${data.id}`, "_self");
+            userRecipe = {"name":data.name, "id":data.id};
+            var addRecipeToUserUrl = `/add_recipe?recipe_id=${userRecipe.id}&recipe_name=${userRecipe.name}`;
+            return goFetch(addRecipeToUserUrl)
+            
+        }).then(res=>{
+            if(res["error"]){
+                window.open(`/new_user?triedSave=true&n=${res["name"]}`, "_self")
+                
+            } else{
+                window.open(`/my_recipes#${res.id}`, "_self");
+            }
         })
     }
 });

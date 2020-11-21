@@ -36,7 +36,7 @@
               {{#if this.in_book}}
               <a href="/my_recipes#{{this.id}}"><button class="btn btn-light">View in Recipe Book</button></a>
               {{else}}
-              <button class="btn btn-light save_recipe_button" style="color:blue" name="recipe_id" id={{this.id}}
+              <button class="btn btn-light save_recipe_button" style="color:blue" id={{this.id}} name="{{this.name}}"
                 value={{this.id}} data-container="body" data-toggle="popover" data-placement="right" data-html="true"
                 data-content="<a href='/my_recipes#{{this.id}}'>Go to Recipe Book</a><br/><a href='/view_ingredients?recipe_id={{this.id}}'>Go to {{this.name}}"><span
                   id="save_loader_{{this.id}}" role="status" aria-hidden="true"></span><span

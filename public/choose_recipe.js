@@ -12,10 +12,18 @@ for (let button of buttons) {
         if (!save_text.classList.contains("sr-only")) {
             save_text.classList.add("sr-only")
         }
-        var url = `/add_recipe?recipe_id=${button.id}`
+        var url = `/add_recipe?recipe_id=${button.id}&recipe_name=${button.name}`
         goFetch(url).then(data => {
-            if (data == false) {
-                window.open('/new_user', "_self");
+            if (data["error"]) {
+                if (save_loader.classList.contains("spinner-border")) {
+                    save_loader.classList.remove("spinner-border");
+                    save_loader.classList.remove("spinner-border-sm");
+                }
+                if (save_text.classList.contains("sr-only")) {
+                    save_text.classList.remove("sr-only")
+                }
+                let recipe_name = data["name"];
+                window.open(`/new_user?triedSave=true&n=${recipe_name}`, "_self");
                 return;
             }
             save_loader = document.getElementById(`save_loader_${data.id}`);
