@@ -33,14 +33,14 @@
                         <form class="form-inline" action="/make_substitution" method="get">
                             <td>
 
-                                <input type="hidden" name="ingredient" value="{{../ingredient}}">
-                                <input type="hidden" name="recipe" value="{{../recipe}}">
+                                <input type="hidden" name="ingredient" value="{{../ingredient.id}}">
+                                <input type="hidden" name="recipe" value="{{../recipe.id}}">
                                 <input type="text" name="new_name" placeholder="new recipe name">
 
 
                             </td>
                             <td>
-                                <button class="btn btn-primary" name="substitute" value="{{this.name}}">Choose
+                                <button class="btn btn-primary" name="substitute" value="{{this.id}}">Choose
                                     Substitute</button>
                             </td>
                         </form>

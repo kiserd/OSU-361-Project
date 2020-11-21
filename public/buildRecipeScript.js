@@ -183,7 +183,6 @@ function initRowObjectProperties(r, ingredientId){
     r.prepInputDiv = r.querySelector("#prepInputDiv") ;
     r.ingredientTitle = document.getElementById(`ingredientName_${ingredientId}`).textContent;
     r.ingredientId = ingredientId;
-    
 };
 
 function makeRecipeRow(ingredientId){
@@ -197,9 +196,8 @@ function makeRecipeRow(ingredientId){
     setTopHalfRecipeRow(r);
     setBottomHalfRecipeRow(r);
     hidePlaceholderText();
-
+    
     sendRecipeButton.disabled = false;
-
     recipeListDiv.appendChild(r);
     
     setTimeout(() => {
