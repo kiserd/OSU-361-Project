@@ -323,7 +323,7 @@ function getRandIconColor(){
 
 app.get('/make_substitution', async (req, res, next) => {
   // make sure user is logged in
-  if(req.query["recipe_id"] && req.session.loggedin){
+  if(req.session.loggedin){
     
     // define a few convenient variables
     var ingredient_id = req.query["ingredient"];
