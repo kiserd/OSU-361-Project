@@ -330,7 +330,6 @@ app.get('/view_substitutes', (req, res, next) => {
   var recipe = {}
   recipe.id = req.query["recipe"]
   recipe.name = req.query["recipeName"];
-  var ingredient;
 
   var queryCurrIngredient = {
     text: 'SELECT * FROM ingredients WHERE id=$1',
