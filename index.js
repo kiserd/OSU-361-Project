@@ -341,9 +341,7 @@ app.get('/make_substitution', async (req, res, next) => {
       values: [recipe_id]
     };
     var recipe = await makeQuery(queryRecipeById, true);
-    console.log(recipe);
     recipe = recipe[0];
-    console.log(recipe);
 
     // get all ingredients associated with recipe
     var queryIngredientsByRecipe = {
@@ -353,11 +351,7 @@ app.get('/make_substitution', async (req, res, next) => {
     var ingredients = await makeQuery(queryIngredientsByRecipe, true);
 
     // add skeleton in DB for new user recipe
-    var addUserRecipeGlobal = {
-      text:`INSERT INTO recipes (name, type, user_recipe) VALUES ($1, $2, $3)`,
-      values:[new_name, recipe["type"], true]
-    };
-    await makeQuery(addUserRecipeGlobal, false)
+    await addNewRecipe(new_name, recipe['type']);
 
     // get id of new recipe
     var queryRecipeIdByName = {
@@ -380,11 +374,7 @@ app.get('/make_substitution', async (req, res, next) => {
 
       // handle case where current ingredient will remain in recipe
       else {
-        var linkRecipeToIngredients = {
-          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
-          values: [new_recipe_id, ing["id"]]
-        }
-        await makeQuery(linkRecipeToIngredients, false);
+        await linkRecipeToIngredients(new_recipe_id, ing["id"]);
       }
     }
 
@@ -417,6 +407,23 @@ app.get('/make_substitution', async (req, res, next) => {
     res.send(false);
   };
 });
+
+async function addNewRecipe(name, type) {
+  var addUserRecipeGlobal = {
+    text:`INSERT INTO recipes (name, type, user_recipe) VALUES ($1, $2, $3)`,
+    values:[name, type, true]
+  };
+  await makeQuery(addUserRecipeGlobal, false)
+}
+
+async function linkRecipeToIngredients(recipe_id, ingredient_id) {
+  var linkRecipeToIngredients = {
+    text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
+    values: [recipe_id, ingredient_id]
+  }
+  await makeQuery(linkRecipeToIngredients, false);
+}
+
 
 app.get('/build_recipe', async (req , res, next) => {
   var context = {};
