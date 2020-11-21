@@ -338,7 +338,9 @@ app.get('/make_substitution', async (req, res, next) => {
       values: [recipe_id]
     };
     var recipe = await makeQuery(queryRecipeById, true);
+    console.log(recipe);
     recipe = recipe[0];
+    console.log(recipe);
 
     // get all ingredients associated with recipe
     var queryIngredientsByRecipe = {
