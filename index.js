@@ -14,18 +14,6 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 });
-
-// Logan testing out some queries
-const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE user_recipe = false`;
-const querySelectAllCustomRecipes =       `SELECT * FROM recipes WHERE user_recipe = true`;
-const querySelectIngredientById =         'SELECT * FROM ingredients WHERE id = $1';
-const querySelectRecipeById =             'SELECT * FROM recipes WHERE id = $1';
-const querySelectIngredientsByRecipeId =  `
-SELECT * FROM recipes_ingredients 
-LEFT JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id 
-WHERE recipes_ingredients.recipes_id=$1 
-                                           `;
-
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: false }));
@@ -42,26 +30,8 @@ app.use(function(req, res, next){
   next();
 })
 
-
-// Logan Kiser: Probably need to delete this
-function getImpactByRecipeIngredient(recipe) {
-  var impacts = [];
-  for (var i = 0; i < recipes.length; i++) {
-    if (recipes[i]["name"] == recipe) {
-      for (var j = 0; j < recipes[i]["ingredients"].length; j++) {
-        for (var k = 0; k < ingredients.length; k++) {
-          if (ingredients[k]["name"] == recipes[i]["ingredients"][j]) {
-            var ingDict = {}
-            ingDict["name"] = recipes[i]["ingredients"][j];
-            ingDict["impact"] = ingredients[k]["impact"];
-            impacts.push(ingDict);
-          }
-        }
-      }
-    }
-  }
-  return impacts
-}
+// Logan Kiser: potential frequently used queries
+const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE user_recipe = false`;
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -81,39 +51,6 @@ function getIngredientImage(type){
         return ingredientIcons.getForkUrl();
     }
 };
-
-// Logan Kiser: prob need to delete this..
-function subIngredient(ingredients, ingredient, substitute) {
-  for (var i = 0; i < ingredients.length; i++) {
-    if (ingredients[i] == ingredient) {
-      ingredients[i] = substitute;
-    }
-  }
-}
-
-// Logan Kiser: prob need to delete this..
-function getIngredientsByRecipe(recipe) {
-  var ingredients = [];
-  for (var i = 0; i < recipes.length; i++) {
-    if (recipes[i]["name"] == recipe) {
-      for (var j = 0; j < recipes[i]["ingredients"].length; j++) {
-        ingredients.push(recipes[i]["ingredients"][j]);
-      }  
-    }
-  }
-  return ingredients;
-}
-
-// Logan Kiser: prob need to delete this..
-function getTypeByRecipe(recipe) {
-  var type = null;
-  for (var i = 0; i < recipes.length; i++) {
-    if (recipes[i]["name"] == recipe) {
-      type = recipes[i]["type"];
-    }
-  }
-  return type;
-}
 
 function get_rand_rgb(){
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
@@ -386,12 +323,101 @@ function getRandIconColor(){
     return rgb
 };
 
-app.get('/make_substitution', (req, res, next) => {
-  // define a few convenient variables
-  var ingredient_id = req.query["ingredient"];
-  var recipe_id = req.query["recipe_id"];
-  var new_name = req.query["new_name"];
-  var substitute_id = req.query["substitute"]; 
+app.get('/make_substitution', async (req, res, next) => {
+  // make sure user is logged in
+  if(req.query["recipe_id"] && req.session.loggedin){
+    
+    // define a few convenient variables
+    var ingredient_id = req.query["ingredient"];
+    var recipe_id = req.query["recipe_id"];
+    var new_name = req.query["new_name"];
+    var substitute_id = req.query["substitute"]; 
+
+    // get all recipe info
+    var queryRecipeById = {
+      text: 'SELECT * FROM recipes WHERE id = $1',
+      values: [recipe_id]
+    };
+    var recipe = await makeQuery(queryRecipeById, true);
+    recipe = recipe[0];
+
+    // get all ingredients associated with recipe
+    var queryIngredientsByRecipe = {
+      text: `SELECT i.*, ri.amount, ri.prep 
+            FROM recipes AS r 
+            LEFT JOIN recipes_ingredients AS ri 
+            ON (r.id = ri.recipes_id) 
+            LEFT JOIN ingredients AS i 
+            ON (ri.ingredients_id = i.id) 
+            WHERE r.id = $1`,
+      values: [recipe_id]
+    };
+    var ingredients = await makeQuery(queryIngredientsByRecipe, true);
+
+    // add skeleton in DB for new user recipe
+    var addUserRecipeGlobal = {
+      text:`INSERT INTO recipes (name, type, user_recipe) VALUES ($1, $2, $3)`,
+      values:[new_name, recipe["type"], true]
+    };
+    await makeQuery(addUserRecipeGlobal, false)
+
+    // get id of new recipe
+    var queryRecipeByName = {
+      text: 'SELECT id FROM recipes WHERE name = $1',
+      values: new_name
+    };
+    new_recipe_id = await makeQuery(queryRecipeByName, true);
+
+    // update recipes_ingredients table to link new recipe to ingredients
+    for (let ing of ingredients) {
+      
+      // handle case where current ingredient is to be substituted FOR
+      if (ing.id == ingredient_id) {
+        var linkRecipeToIngredients = {
+          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
+          values: [new_recipe_id, substitute_id]
+        }
+        await makeQuery(linkRecipeToIngredients, false);
+      }
+
+      // handle case where current ingredient will remain in recipe
+      else {
+        var linkRecipeToIngredients = {
+          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
+          values: [new_recipe_id, ing["id"]]
+        }
+        await makeQuery(linkRecipeToIngredients, false);
+      }
+    }
+
+    // update users_recipes to link recipe to user
+    var linkRecipeToUser = {
+      text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0}))`,
+      values: [req.session.user.id, new_recipe_id]
+    }
+    await makeQuery(linkRecipeToUser, false);
+    
+    // render my_recipes page
+    var getRecipesQuery = {
+      text: 'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
+            'JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id '+
+            'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
+            'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
+            'WHERE users_recipes.users_id=$1 '+
+            'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id ',
+      values: [req.session.user.id]
+    }
+    var myRecipes = await makeQuery(getRecipesQuery, true);
+    context = {};
+    context["myRecipes"] = makeRecipesObject(myRecipes);
+    res.render('my_recipes', context);
+
+
+  } 
+  // handle case where user is not logged in
+  else {
+    res.send(false);
+  };
 });
 
 app.get('/build_recipe', async (req , res, next) => {
