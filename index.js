@@ -304,6 +304,7 @@ function renderSubstitutes(res, rows, recipe, ingredient)
       substitutes[i] = {};
       substitutes[i].name = rows[i].name;
       substitutes[i].impact = rows[i].impact;
+      substitutes[i].id = rows[i].id;
     }
     context["substitutes"] = substitutes;
   } else{
