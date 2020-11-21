@@ -30,8 +30,15 @@ app.use(function(req, res, next){
   next();
 })
 
-// Logan Kiser: potential frequently used queries
-const querySelectAllSystemRecipes =       `SELECT * FROM recipes WHERE user_recipe = false`;
+// Frequently used query text
+const queryTextSelectAllSystemRecipes =   `SELECT * FROM recipes WHERE user_recipe = false`;
+const queryTextIngredientsByRecipe =      `SELECT i.*, ri.amount, ri.prep 
+                                          FROM recipes AS r 
+                                          LEFT JOIN recipes_ingredients AS ri 
+                                          ON (r.id = ri.recipes_id) 
+                                          LEFT JOIN ingredients AS i 
+                                          ON (ri.ingredients_id = i.id) 
+                                          WHERE r.id = $1`;
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -109,7 +116,7 @@ class ChooseRecipeMap extends Map{
 
 app.get('/choose_recipe', async (req , res, next) => {
   var context = {};
-  var all_recipes = await makeQuery(querySelectAllSystemRecipes, true).catch(err=>console.error(err));
+  var all_recipes = await makeQuery(queryTextSelectAllSystemRecipes, true).catch(err=>console.error(err));
   var RECIPES_MAP = new ChooseRecipeMap(all_recipes);
   RECIPES_MAP.checkUserRecipes(req).then((FILTERED)=>{
     context["recipes"] = FILTERED.toSortedArray();
@@ -122,7 +129,7 @@ app.get('/get_ingredients', (req, res, next)=>{
   var context = {};
   if(req.query["recipes_id"]){
     var getIngredientsQuery = {
-      text:'SELECT * FROM ingredients WHERE id IN (SELECT ingredients_id FROM recipes_ingredients WHERE recipes_id=$1)',
+      text: queryTextIngredientsByRecipe,
       values:[req.query["recipes_id"]]
     }
     makeQuery(getIngredientsQuery, true).then(rows=>{
@@ -242,13 +249,7 @@ app.get('/view_ingredients', async (req , res, next) => {
 
   // get ingredients associated with recipe
   var queryIngredientsByRecipe = {
-    text: `SELECT i.*, ri.amount, ri.prep 
-          FROM recipes AS r 
-          LEFT JOIN recipes_ingredients AS ri 
-          ON (r.id = ri.recipes_id) 
-          LEFT JOIN ingredients AS i 
-          ON (ri.ingredients_id = i.id) 
-          WHERE r.id = $1`,
+    text: queryTextIngredientsByRecipe,
     values: [recipe_id]
    }
    var ingredients = await makeQuery(queryIngredientsByRecipe, true);
@@ -344,13 +345,7 @@ app.get('/make_substitution', async (req, res, next) => {
 
     // get all ingredients associated with recipe
     var queryIngredientsByRecipe = {
-      text: `SELECT i.*, ri.amount, ri.prep 
-            FROM recipes AS r 
-            LEFT JOIN recipes_ingredients AS ri 
-            ON (r.id = ri.recipes_id) 
-            LEFT JOIN ingredients AS i 
-            ON (ri.ingredients_id = i.id) 
-            WHERE r.id = $1`,
+      text: queryTextIngredientsByRecipe,
       values: [recipe_id]
     };
     var ingredients = await makeQuery(queryIngredientsByRecipe, true);
