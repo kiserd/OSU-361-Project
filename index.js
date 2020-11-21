@@ -387,22 +387,11 @@ function getRandIconColor(){
 };
 
 app.get('/make_substitution', (req, res, next) => {
-  var context = {};
-  var substitute = req.query["substitute"];
-  var ingredient = req.query["ingredient"];
-  var recipe = req.query["recipe"];
-  var name = req.query["new_name"];
-  var ingredients = getIngredientsByRecipe(recipe);
-  subIngredient(ingredients, ingredient, substitute);
-  var type = getTypeByRecipe(recipe);
-  var new_recipe = {};
-  new_recipe["type"] = type;
-  new_recipe["userRecipe"] = true;
-  new_recipe["name"] = name;
-  new_recipe["ingredients"] = ingredients;
-  recipes.push(new_recipe);
-  context["new_recipe"] = name;
-  res.render('make_substitution', context);
+  // define a few convenient variables
+  var ingredient_id = req.query["ingredient"];
+  var recipe_id = req.query["recipe_id"];
+  var new_name = req.query["new_name"];
+  var substitute_id = req.query["substitute"]; 
 });
 
 app.get('/build_recipe', async (req , res, next) => {
