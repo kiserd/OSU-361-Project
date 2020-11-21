@@ -369,9 +369,7 @@ function renderSubstitutes(res, rows, recipe, ingredient)
       substitutes[i].impact = rows[i].impact;
     }
     context["substitutes"] = substitutes;
-  }
-
-  else{
+  } else{
     context["message"] = 'No substitutions available!';
   }
   res.render('view_substitutes', context);
