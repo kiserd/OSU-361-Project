@@ -328,7 +328,7 @@ app.get('/make_substitution', async (req, res, next) => {
     
     // define a few convenient variables
     var ingredient_id = req.query["ingredient"];
-    var recipe_id = req.query["recipe_id"];
+    var recipe_id = req.query["recipe"];
     var new_name = req.query["new_name"];
     var substitute_id = req.query["substitute"]; 
 
