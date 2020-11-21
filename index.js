@@ -31,6 +31,7 @@ app.use(function(req, res, next){
 })
 
 // Frequently used query text
+const queryTextSelectAllIngredients =     `SELECT * FROM ingredients`;
 const queryTextSelectAllSystemRecipes =   `SELECT * FROM recipes WHERE user_recipe = false`;
 const queryTextIngredientsByRecipe =      `SELECT i.*, ri.amount, ri.prep 
                                           FROM recipes AS r 
@@ -39,6 +40,7 @@ const queryTextIngredientsByRecipe =      `SELECT i.*, ri.amount, ri.prep
                                           LEFT JOIN ingredients AS i 
                                           ON (ri.ingredients_id = i.id) 
                                           WHERE r.id = $1`;
+const queryTextRecipeIdByUserId =         `SELECT recipes_id FROM users_recipes WHERE users_id=$1`;
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -83,7 +85,7 @@ class ChooseRecipeMap extends Map{
   async checkUserRecipes(req){
     if(req.session.loggedin){
       var querySelectUserRecipesByUserId = {
-        text: 'SELECT recipes_id FROM users_recipes WHERE users_id=$1',
+        text: queryTextRecipeIdByUserId,
         values: [req.session.user.id]
       };
       const rows_1 = await makeQuery(querySelectUserRecipesByUserId, true).catch(err=>{return Promise.reject(err)});
@@ -139,7 +141,7 @@ app.get('/get_ingredients', (req, res, next)=>{
     }).catch(err=>console.error(err))
   } else {
     var queryGetAllIngredients = {
-      text: 'SELECT * FROM ingredients'
+      text: queryTextSelectAllIngredients
     };
     makeQuery(queryGetAllIngredients, true).then(rows=>{
       
@@ -226,7 +228,7 @@ app.get('/get_user_recipes', (req, res, next)=>{
   if(req.session["user"] == null){
     res.send(false);
   }else{
-    pool.query('SELECT recipes_id FROM users_recipes WHERE users_id=$1', [req.session.user.id], (err, {rows})=>{
+    pool.query(queryTextRecipeIdByUserId, [req.session.user.id], (err, {rows})=>{
       if(err) {
         console.error(err)
         res.send(false);
