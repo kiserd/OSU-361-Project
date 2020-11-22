@@ -2,8 +2,10 @@
     <div class="container">
                 {{#if isModified}}
                 <div class="row">
+                    <div class="col-md-9">
                 <div class="alert alert-{{modifyColor}}" role="alert">
                     <h5 class="alert-heading"><b>{{modifyName}}</b> has been {{modifyAction}} your Recipe Book. <a class="alert-link" href="/my_recipes?{{undoUrl}}={{modifyId}}&n={{modifyName}}">Undo?</a></h5>
+                </div>
                 </div>
                 </div>
                 {{/if}}
