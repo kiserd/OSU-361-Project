@@ -1,17 +1,28 @@
 <br/>
     <div class="container">
-        <div class="row">
-            <div class="col-md-9">
                 {{#if isModified}}
+                <div class="row">
                 <div class="alert alert-{{modifyColor}}" role="alert">
                     <h5 class="alert-heading"><b>{{modifyName}}</b> has been {{modifyAction}} your Recipe Book. <a class="alert-link" href="/my_recipes?{{undoUrl}}={{modifyId}}&n={{modifyName}}">Undo?</a></h5>
                 </div>
+                </div>
                 {{/if}}
+        <div class="row py-5 ">
+            <div class="col-md-11">
+                <div class="row d-flex align-items-center justify-content-between">
+                <div class="col">
                 <h1>Recipe Book</h1>
                 <p>This is a list of your saved recipes.</p>
                 <p>Want to add a recipe from our collection? <a href="/choose_recipe"> Browse Recipes.</a></p>
                 <p>Want to build your own recipe? <a href="/build_recipe"> Build Recipe.</a></p>
+                </div>
+                <div class="col">
+                 <div class="col-md-6 mt-0"><img style="height:14rem;"src="reading-corner-colour.svg"></div>
+                 </div>
+                </div>
+
             </div>
+            
         </div>
         <div class="row">
             <div class="col-md-9">
@@ -40,7 +51,7 @@
                             <td>
                                 <form action='/view_ingredients' method="get">
                                     <div class="form-group">
-                                        <button type="submit" name="recipe_id" value="{{this.id}}" class="btn btn-outline-primary">View/Edit</button>
+                                        <button type="submit" name="recipe_id" value="{{this.id}}" class="btn btn-outline-info">View/Edit</button>
                                     </div>
                                 </form>
                             </td>
