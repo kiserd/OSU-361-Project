@@ -367,7 +367,7 @@ app.get('/make_substitution', async (req, res, next) => {
       values: [new_name]
     };
     new_recipe_id = await makeQuery(queryRecipeIdByName, true);
-    new_recipe_id = new_recipe_id['id'];
+    new_recipe_id = new_recipe_id[0]["id"];
 
     // update recipes_ingredients table to link new recipe to ingredients
     for (let ing of ingredients) {
@@ -420,6 +420,12 @@ app.get('/make_substitution', async (req, res, next) => {
     res.send(false);
   };
 });
+
+// Logan Testing query out
+// pool.query('SELECT id FROM recipes WHERE name = $1', ['Fun Test 00'], (err, result) => {
+//   console.log(result.rows);
+
+// })
 
 
 app.get('/build_recipe', async (req , res, next) => {
