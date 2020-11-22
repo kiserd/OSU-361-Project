@@ -367,14 +367,10 @@ app.get('/make_substitution', async (req, res, next) => {
       values: [new_name]
     };
     new_recipe_id = await makeQuery(queryRecipeIdByName, true);
+    new_recipe_id = new_recipe_id['id'];
 
     // update recipes_ingredients table to link new recipe to ingredients
     for (let ing of ingredients) {
-      
-      //debug
-      console.log(ing);
-      console.log(ing["id"]);
-      console.log("substitute_id: " + String(substitute_id));
 
       // handle case where current ingredient is to be substituted FOR
       if (ing.id == ingredient_id) {
@@ -424,6 +420,7 @@ app.get('/make_substitution', async (req, res, next) => {
     res.send(false);
   };
 });
+
 
 app.get('/build_recipe', async (req , res, next) => {
   var context = {};
