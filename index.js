@@ -374,6 +374,7 @@ app.get('/make_substitution', async (req, res, next) => {
       //debug
       console.log(ing);
       console.log(ing["id"]);
+      console.log("substitute_id: " + String(substitute_id));
 
       // handle case where current ingredient is to be substituted FOR
       if (ing.id == ingredient_id) {
