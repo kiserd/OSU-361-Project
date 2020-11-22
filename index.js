@@ -41,6 +41,12 @@ const queryTextIngredientsByRecipe =      `SELECT i.*, ri.amount, ri.prep
                                           ON (ri.ingredients_id = i.id) 
                                           WHERE r.id = $1`;
 const queryTextRecipeIdByUserId =         `SELECT recipes_id FROM users_recipes WHERE users_id=$1`;
+const queryTextRecipesByUserId =          'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
+                                          'JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id '+
+                                          'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
+                                          'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
+                                          'WHERE users_recipes.users_id=$1 '+
+                                          'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id '
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -397,12 +403,7 @@ app.get('/make_substitution', async (req, res, next) => {
     
     // render my_recipes page
     var getRecipesQuery = {
-      text: 'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
-            'JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id '+
-            'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
-            'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
-            'WHERE users_recipes.users_id=$1 '+
-            'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id ',
+      text: queryTextRecipesByUserId,
       values: [req.session.user.id]
     }
     var myRecipes = await makeQuery(getRecipesQuery, true);
