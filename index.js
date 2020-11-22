@@ -41,6 +41,12 @@ const queryTextIngredientsByRecipe =      `SELECT i.*, ri.amount, ri.prep
                                           ON (ri.ingredients_id = i.id) 
                                           WHERE r.id = $1`;
 const queryTextRecipeIdByUserId =         `SELECT recipes_id FROM users_recipes WHERE users_id=$1`;
+const queryTextRecipesByUserId =          'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
+                                          'JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id '+
+                                          'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
+                                          'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
+                                          'WHERE users_recipes.users_id=$1 '+
+                                          'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id '
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -367,27 +373,25 @@ app.get('/make_substitution', async (req, res, next) => {
       values: [new_name]
     };
     new_recipe_id = await makeQuery(queryRecipeIdByName, true);
+    new_recipe_id = new_recipe_id[0]["id"];
 
-    // update recipes_ingredients table to link new recipe to ingredients
+    // loop through ingredients in original recipe
     for (let ing of ingredients) {
-      
+      var current_ingredient = null;
       // handle case where current ingredient is to be substituted FOR
       if (ing.id == ingredient_id) {
-        var linkRecipeToIngredients = {
-          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
-          values: [new_recipe_id, substitute_id]
-        }
-        await makeQuery(linkRecipeToIngredients, false);
+        current_ingredient = substitute_id
       }
-
       // handle case where current ingredient will remain in recipe
       else {
-        var linkRecipeToIngredients = {
-          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
-          values: [new_recipe_id, ing["id"]]
-        }
-        await makeQuery(linkRecipeToIngredients, false);
+        current_ingredient = ing["id"];
       }
+      // Link new recipe ID to current_ingredient
+      var linkRecipeToIngredients = {
+        text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
+        values: [new_recipe_id, current_ingredient]
+      }
+      await makeQuery(linkRecipeToIngredients, false);
     }
 
     // update users_recipes to link recipe to user
@@ -399,26 +403,20 @@ app.get('/make_substitution', async (req, res, next) => {
     
     // render my_recipes page
     var getRecipesQuery = {
-      text: 'SELECT users_recipes.*, recipes.*, SUM(impact) as recipes_impact FROM recipes_ingredients '+
-            'JOIN ingredients ON recipes_ingredients.ingredients_id=ingredients.id '+
-            'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
-            'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
-            'WHERE users_recipes.users_id=$1 '+
-            'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id ',
+      text: queryTextRecipesByUserId,
       values: [req.session.user.id]
     }
     var myRecipes = await makeQuery(getRecipesQuery, true);
     context = {};
     context["myRecipes"] = makeRecipesObject(myRecipes);
     res.render('my_recipes', context);
-
-
   } 
   // handle case where user is not logged in
   else {
     res.send(false);
   };
 });
+
 
 app.get('/build_recipe', async (req , res, next) => {
   var context = {};
