@@ -371,6 +371,10 @@ app.get('/make_substitution', async (req, res, next) => {
     // update recipes_ingredients table to link new recipe to ingredients
     for (let ing of ingredients) {
       
+      //debug
+      console.log(ing);
+      console.log(ing["id"]);
+
       // handle case where current ingredient is to be substituted FOR
       if (ing.id == ingredient_id) {
         var linkRecipeToIngredients = {
