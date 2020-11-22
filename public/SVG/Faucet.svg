@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg67"
+   sodipodi:docname="Faucet.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata71">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="726"
+     inkscape:window-height="480"
+     id="namedview69"
+     showgrid="false"
+     inkscape:zoom="13.4375"
+     inkscape:cx="32"
+     inkscape:cy="32"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg67" />
+  <defs
+     id="defs28">
+    <style
+       id="style2">.cls-1{fill:#c7cdd8;}.cls-2{fill:url(#linear-gradient);}.cls-3{fill:url(#linear-gradient-2);}.cls-4{fill:url(#linear-gradient-3);}.cls-5{fill:url(#linear-gradient-4);}.cls-6{fill:url(#linear-gradient-5);}.cls-7{fill:url(#linear-gradient-6);}.cls-8{fill:#77cacb;}.cls-9{fill:url(#linear-gradient-7);}.cls-10{fill:#8288a1;}.cls-11{fill:url(#linear-gradient-8);}.cls-12{fill:#42455e;}.cls-13{fill:#dfe3ea;}</style>
+    <linearGradient
+       id="linear-gradient"
+       x1="1.02"
+       y1="43"
+       x2="14.98"
+       y2="43"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#949aaf"
+         id="stop4" />
+      <stop
+         offset="1"
+         stop-color="#c6ccda"
+         id="stop6" />
+    </linearGradient>
+    <linearGradient
+       id="linear-gradient-2"
+       x1="29"
+       y1="16"
+       x2="29"
+       y2="12"
+       xlink:href="#linear-gradient" />
+    <linearGradient
+       id="linear-gradient-3"
+       x1="29"
+       y1="12"
+       x2="29"
+       y2="8"
+       xlink:href="#linear-gradient" />
+    <linearGradient
+       id="linear-gradient-4"
+       x1="29"
+       y1="8"
+       x2="29"
+       y2="1.02"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#d4d8e1"
+         id="stop11" />
+      <stop
+         offset="1"
+         stop-color="#f3f4f5"
+         id="stop13" />
+    </linearGradient>
+    <linearGradient
+       id="linear-gradient-5"
+       x1="23.5"
+       y1="41"
+       x2="23.5"
+       y2="16"
+       xlink:href="#linear-gradient-4" />
+    <linearGradient
+       id="linear-gradient-6"
+       x1="8"
+       y1="63"
+       x2="8"
+       y2="45"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#9dd5df"
+         id="stop17" />
+      <stop
+         offset="1"
+         stop-color="#c3e1f5"
+         id="stop19" />
+    </linearGradient>
+    <linearGradient
+       id="linear-gradient-7"
+       x1="47"
+       y1="37"
+       x2="47"
+       y2="19"
+       xlink:href="#linear-gradient" />
+    <linearGradient
+       id="linear-gradient-8"
+       x1="56.5"
+       y1="36"
+       x2="56.5"
+       y2="20"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#474f72"
+         id="stop23" />
+      <stop
+         offset="1"
+         stop-color="#878c9f"
+         id="stop25" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linear-gradient"
+       id="linearGradient73"
+       gradientUnits="userSpaceOnUse"
+       x1="1.02"
+       y1="43"
+       x2="14.98"
+       y2="43" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linear-gradient-4"
+       id="linearGradient75"
+       gradientUnits="userSpaceOnUse"
+       x1="29"
+       y1="8"
+       x2="29"
+       y2="1.02" />
+  </defs>
+  <title
+     id="title30">Faucet</title>
+  <g
+     id="Faucet"
+     transform="translate(-1)">
+    <path
+       class="cls-1"
+       d="m 27,3 h -7.28 a 2,2 0 1 0 0,2 H 27 a 1,1 0 0 0 0,-2 z"
+       id="path32" />
+    <path
+       class="cls-1"
+       d="M 38.28,3 H 31 a 1,1 0 0 0 0,2 h 7.28 a 2,2 0 1 0 0,-2 z"
+       id="path34" />
+    <path
+       class="cls-2"
+       d="m 3,41 h 10 a 2,2 0 0 1 0,4 H 3 a 2,2 0 0 1 0,-4 z"
+       id="path36"
+       style="fill:url(#linearGradient73)" />
+    <rect
+       class="cls-3"
+       x="22"
+       y="12"
+       width="14"
+       height="4"
+       id="rect38"
+       style="fill:url(#linear-gradient-2)" />
+    <path
+       class="cls-4"
+       d="m 26,8 h 6 a 2,2 0 0 1 2,2 v 2 H 24 v -2 a 2,2 0 0 1 2,-2 z"
+       id="path40"
+       style="fill:url(#linear-gradient-3)" />
+    <path
+       class="cls-5"
+       d="M 31,8 V 3 a 2,2 0 0 0 -4,0 v 5 z"
+       id="path42"
+       style="fill:url(#linearGradient75)" />
+    <path
+       class="cls-6"
+       d="m 44,22 v 12 h -4.32 c -4.49,8 -16.95,8 -21.37,0 H 17 a 4,4 0 0 0 -4,4 v 3 H 3 V 36 A 14,14 0 0 1 17,22 h 2.74 A 11.88,11.88 0 0 1 23,19.49 V 16 h 12 v 3.48 A 12,12 0 0 1 38.23,22 Z"
+       id="path44"
+       style="fill:url(#linear-gradient-5)" />
+    <path
+       class="cls-7"
+       d="M 14,57 A 6,6 0 0 1 2,57 c 0,-5.5 6,-12 6,-12 0,0 6,6.5 6,12 z"
+       id="path46"
+       style="fill:url(#linear-gradient-6)" />
+    <path
+       class="cls-8"
+       d="m 8,63 a 6,6 0 0 1 -5.92,-7.08 6,6 0 0 0 11.84,0 A 6,6 0 0 1 8,63 Z"
+       id="path48" />
+    <rect
+       class="cls-9"
+       x="44"
+       y="19"
+       width="6"
+       height="18"
+       id="rect50"
+       style="fill:url(#linear-gradient-7)" />
+    <rect
+       class="cls-10"
+       x="44"
+       y="34"
+       width="6"
+       height="3"
+       id="rect52" />
+    <rect
+       class="cls-11"
+       x="50"
+       y="20"
+       width="13"
+       height="16"
+       id="rect54"
+       style="fill:url(#linear-gradient-8)" />
+    <rect
+       class="cls-12"
+       x="50"
+       y="33"
+       width="13"
+       height="3"
+       id="rect56" />
+    <rect
+       class="cls-1"
+       x="27"
+       y="6"
+       width="4"
+       height="2"
+       id="rect58" />
+    <rect
+       class="cls-13"
+       x="23"
+       y="16"
+       width="12"
+       height="3"
+       id="rect60" />
+    <rect
+       class="cls-1"
+       x="3"
+       y="38"
+       width="10"
+       height="3"
+       id="rect62" />
+    <path
+       class="cls-1"
+       d="m 39.68,34 c -4.49,8 -16.95,8 -21.37,0 4.43,4 16.89,4 21.37,0 z"
+       id="path64" />
+  </g>
+</svg>
