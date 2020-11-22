@@ -32,7 +32,7 @@
 			</ul>
 			
 		</div>
-		<div class="nav-item dropdown navbar-dark navbar-nav">
+		<div class="nav-item dropdown bg-dark  navbar-dark navbar-nav">
 					{{#if session.loggedin}}
 					<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span style="display:inline-block; vertical-align:middle">{{session.user.username}}</span>
@@ -47,7 +47,7 @@
 					<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Login/Signup
 					</button>
-					<div class="dropdown-menu dropdown-menu-right">
+					<div class="dropdown-menu text-light dropdown-menu-right">
 					<form class="px-4 py-3" action="/login" method="POST">
 						<div class="form-group">
 						<label for="username">Username</label>
