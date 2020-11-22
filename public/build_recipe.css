@@ -164,15 +164,15 @@ text-decoration: underline;
 }
 
 #recipeListTitleDiv{
-    background:#c4daf0;
+    background:#a6d8dd;
     height: auto;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 #ingredientListTitleDiv{
-  background:#f9e6ff;
+  background:#fce0ae;
   height: 5rem;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .no-show{
