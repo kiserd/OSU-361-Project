@@ -369,26 +369,23 @@ app.get('/make_substitution', async (req, res, next) => {
     new_recipe_id = await makeQuery(queryRecipeIdByName, true);
     new_recipe_id = new_recipe_id[0]["id"];
 
-    // update recipes_ingredients table to link new recipe to ingredients
+    // loop through ingredients in original recipe
     for (let ing of ingredients) {
-
+      var current_ingredient = null;
       // handle case where current ingredient is to be substituted FOR
       if (ing.id == ingredient_id) {
-        var linkRecipeToIngredients = {
-          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
-          values: [new_recipe_id, substitute_id]
-        }
-        await makeQuery(linkRecipeToIngredients, false);
+        current_ingredient = substitute_id
       }
-
       // handle case where current ingredient will remain in recipe
       else {
-        var linkRecipeToIngredients = {
-          text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
-          values: [new_recipe_id, ing["id"]]
-        }
-        await makeQuery(linkRecipeToIngredients, false);
+        current_ingredient = ing["id"];
       }
+      // Link new recipe ID to current_ingredient
+      var linkRecipeToIngredients = {
+        text: 'INSERT INTO recipes_ingredients (recipes_id, ingredients_id) VALUES ($1, $2)',
+        values: [new_recipe_id, current_ingredient]
+      }
+      await makeQuery(linkRecipeToIngredients, false);
     }
 
     // update users_recipes to link recipe to user
@@ -412,20 +409,12 @@ app.get('/make_substitution', async (req, res, next) => {
     context = {};
     context["myRecipes"] = makeRecipesObject(myRecipes);
     res.render('my_recipes', context);
-
-
   } 
   // handle case where user is not logged in
   else {
     res.send(false);
   };
 });
-
-// Logan Testing query out
-// pool.query('SELECT id FROM recipes WHERE name = $1', ['Fun Test 00'], (err, result) => {
-//   console.log(result.rows);
-
-// })
 
 
 app.get('/build_recipe', async (req , res, next) => {
