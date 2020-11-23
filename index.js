@@ -223,12 +223,8 @@ app.post('/add_to_recipes_global', (req, res, next)=>{
         })
       )
     }
-/*     queries.push(new Promise((resolve,reject)=>{
-      return makeQuery({
-        text: `INSERT INTO users_recipes (users_id, recipes_id, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000.0})) RETURNING *`,
-        values: [req.session.user.id, rows[0].id]
-      },true).then((rows)=>resolve(rows))
-    })) */
+
+    
     return Promise.all(queries).catch(err=>console.error(err));
   })
   .then(()=>{
