@@ -47,6 +47,7 @@ const queryTextRecipesByUserId =          'SELECT users_recipes.*, recipes.*, SU
                                           'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
                                           'WHERE users_recipes.users_id=$1 '+
                                           'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id '
+const queryTextSelectAllWhereId =         'SELECT * FROM ingredients WHERE id=$1'
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -172,7 +173,7 @@ app.get('/add_recipe', (req, res, next)=>{
       values: [req.session.user.id, req.query["recipe_id"]]
     };
     var getRecipeQuery = {
-      text: `SELECT * FROM recipes WHERE id=$1`,
+      text: queryTextSelectAllWhereId,
       values: [req.query["recipe_id"]]
     };
     makeQuery(addRecipeQuery, false).then(()=>makeQuery(getRecipeQuery, true)).then(rows=>{
@@ -254,7 +255,7 @@ app.get('/view_ingredients', async (req , res, next) => {
 
   // get recipe info associated
   var queryRecipeById = {
-    text: 'SELECT * FROM recipes WHERE id=$1',
+    text: queryTextSelectAllWhereId,
     values: [recipe_id]
   }
   var recipes = await makeQuery(queryRecipeById, true);
@@ -282,7 +283,7 @@ app.get('/view_substitutes', (req, res, next) => {
   recipe.name = req.query["recipeName"];
 
   var queryCurrIngredient = {
-    text: 'SELECT * FROM ingredients WHERE id=$1',
+    text: queryTextSelectAllWhereId,
     values: [ingredient.id]
   };
 
@@ -347,7 +348,7 @@ app.get('/make_substitution', async (req, res, next) => {
 
     // get all recipe info
     var queryRecipeById = {
-      text: 'SELECT * FROM recipes WHERE id = $1',
+      text: queryTextSelectAllWhereId,
       values: [recipe_id]
     };
     var recipe = await makeQuery(queryRecipeById, true);
