@@ -687,5 +687,5 @@ app.use(function(err, req, res, next){
 });
 
 app.listen(PORT, function(){
-  console.log(`Listening on: ${ PORT }; press Ctrl-C to terminate.`);
+  console.log(`Listening on: http://localhost:${ PORT }; press Ctrl-C to terminate.`);
 });
