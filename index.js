@@ -46,8 +46,9 @@ const queryTextRecipesByUserId =          'SELECT users_recipes.*, recipes.*, SU
                                           'JOIN users_recipes ON recipes_ingredients.recipes_id=users_recipes.recipes_id '+
                                           'JOIN recipes ON users_recipes.recipes_id=recipes.id '+
                                           'WHERE users_recipes.users_id=$1 '+
-                                          'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id '
-const queryTextSelectAllWhereId =         'SELECT * FROM ingredients WHERE id=$1'
+                                          'GROUP BY users_recipes.recipes_id, users_recipes.users_id, recipes.id ';
+const queryTextSelectAllWhereId =         'SELECT * FROM ingredients WHERE id=$1';
+const queryTextSelectRecipeById =         'SELECT * FROM recipes WHERE id=$1';
 
 function getIngredientImage(type){
     if (type == "Meat") {
@@ -255,7 +256,7 @@ app.get('/view_ingredients', async (req , res, next) => {
 
   // get recipe info associated
   var queryRecipeById = {
-    text: queryTextSelectAllWhereId,
+    text: queryTextSelectRecipeById,
     values: [recipe_id]
   }
   var recipes = await makeQuery(queryRecipeById, true);
