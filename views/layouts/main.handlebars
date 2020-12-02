@@ -1,17 +1,25 @@
 <!doctype html>
 <html lang="en">
-	<head>
-    	<meta charset="utf-8">
-    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    	<!-- Bootstrap and local CSS -->
-    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css" integrity="" crossorigin="anonymous">
-		<link rel="stylesheet" href="main.css">
-    	<title>Ethical Eating - CoolJoeVim</title>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&family=IBM+Plex+Sans&display=swap" rel="stylesheet"> 	</head>
-	<body style="font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
-		<!-- Utilize stylish bootstrap navbar -->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap and local CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/yeti/bootstrap.min.css"
+		integrity="" crossorigin="anonymous">
+	<link rel="stylesheet" href="main.css">
+
+	<title>Ethical Eating - CoolJoeVim</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Crete+Round:ital@0;1&family=IBM+Plex+Sans&display=swap"
+		rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="favicon.png">
+</head>
+
+<body
+	style="font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+	<!-- Utilize stylish bootstrap navbar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #212324 !important;">
 		<a href="/" class="navbar-brand">Ethical Eating</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle navigation">
@@ -31,54 +39,69 @@
 				<li class="nav-item">
 					<a href="/water_impact" class="nav-link">About</a>
 				</li>
-				
+
 			</ul>
-			
+
 		</div>
 		<div class="nav-item dropdown bg-dark  navbar-dark navbar-nav">
-					{{#if session.loggedin}}
-					<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span style="display:inline-block; vertical-align:middle">{{session.user.username}}</span>
-					<div class="rounded img-thumbnail" id="nav_avatar" style="background-color:{{session.user.color}};"></div>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-					<a class="dropdown-item" href="/my_recipes">My Recipes</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/logout">Logout</a>
-					</div>
-					{{else}}
-					<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Login/Signup
-					</button>
-					<div class="dropdown-menu text-light dropdown-menu-right">
-					<form class="px-4 py-3" action="/login" method="POST">
-						<div class="form-group">
+			{{#if session.loggedin}}
+			<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span style="display:inline-block; vertical-align:middle">{{session.user.username}}</span>
+				<div class="rounded img-thumbnail" id="nav_avatar" style="background-color:{{session.user.color}};">
+				</div>
+			</button>
+			<div class="dropdown-menu dropdown-menu-right">
+				<a class="dropdown-item" href="/my_recipes">My Recipes</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="/logout">Logout</a>
+			</div>
+			{{else}}
+			<button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Login/Signup
+			</button>
+			<div class="dropdown-menu text-light dropdown-menu-right">
+				<form class="px-4 py-3" action="/login" method="POST">
+					<div class="form-group">
 						<label for="username">Username</label>
 						<input type="text" class="form-control" name="username" id="username" placeholder="Username">
-						</div>
-						<div class="form-group">
-						<label for="password">Password</label>
-						<input type="password" class="form-control" name="password" id="password" placeholder="Password">
-						</div>
-						<button type="submit" class="btn my-2 btn-primary">Sign in</button>
-					</form>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/new_user">New around here? Sign up</a>
-					<a class="dropdown-item" href="#" onclick="makeFunOfThem()">Forgot password?</a>
 					</div>
-					{{/if}}
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" name="password" id="password"
+							placeholder="Password">
+					</div>
+					<button type="submit" class="btn my-2 btn-primary">Sign in</button>
+				</form>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="/new_user">New around here? Sign up</a>
+				<a class="dropdown-item" href="#" onclick="makeFunOfThem()">Forgot password?</a>
+			</div>
+			{{/if}}
 		</div>
 	</nav>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    	{{{body}}}
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+	{{{body}}}
 
-    	<!-- Bootstrap and local JS -->
-    <script>
-		function makeFunOfThem(){
+	<!-- Bootstrap and local JS -->
+	<script>
+		function makeFunOfThem() {
 			alert("That sucks!")
 		}
 	</script>
-	</body>
+</body>
+<footer>
+	<!-- citation for carrot favicon image
+	<div style="float: right; font-size: 8px;">Icons made by <a href="https://www.flaticon.com/authors/ddara" title="dDara">dDara</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+	-->
+</footer>
 </html>
