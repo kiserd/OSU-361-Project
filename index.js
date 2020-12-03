@@ -107,8 +107,24 @@ class ChooseRecipeMap extends Map{
       return Promise.resolve(this);
     }
   }
-  toSortedArray(){
+  toSortedArray(desc){
+    if(desc == true){
+      return Array.from(this.values()).sort(this._inRecipeBookCompare).reverse();
+    }
     return Array.from(this.values()).sort(this._inRecipeBookCompare);
+  }
+  toSortedByName(desc){
+    if(desc == true){
+      return Array.from(this.values()).sort(this._nameCompare).reverse();
+    }
+    return Array.from(this.values()).sort(this._nameCompare);
+  }
+  toSortedByType(desc){
+    if(desc == true){
+      return Array.from(this.values()).sort(this._typeCompare).reverse();
+    }
+    return Array.from(this.values()).sort(this._typeCompare);
+  
   }
   _setUserRecipes(user_recipe_rows){
     var RECIPES_TO_SEND_FILTERED = this;
@@ -124,16 +140,53 @@ class ChooseRecipeMap extends Map{
     return RECIPES_TO_SEND_FILTERED;
   }
   _inRecipeBookCompare(book1, book2){
-    return book1.in_book - book2.in_book;
+     return book1.in_book - book2.in_book;
+  }
+  _nameCompare(book1, book2){
+      if(book1.name.toLowerCase() <= book2.name.toLowerCase()){
+        return -1
+      } else{
+        return 1
+      };
+  }
+  _typeCompare(book1, book2){
+    if(book1.type.toLowerCase() <= book2.type.toLowerCase()){
+      return -1
+    }else{
+      return 1
+    }
   }
 }
 
 app.get('/choose_recipe', async (req , res, next) => {
+
   var context = {};
   var all_recipes = await makeQuery(queryTextSelectAllSystemRecipes, true).catch(err=>console.error(err));
   var RECIPES_MAP = new ChooseRecipeMap(all_recipes);
   RECIPES_MAP.checkUserRecipes(req).then((FILTERED)=>{
-    context["recipes"] = FILTERED.toSortedArray();
+    
+    if(req.query["sort"]){
+      var q = req.query["sort"];
+      var d = (req.query["desc"] == 'true' ? true : false);
+      if(q == "name"){
+        context["recipes"] = FILTERED.toSortedByName(d);
+        context["isName"] = true;
+      } else if(q == "type"){
+        context["recipes"] = FILTERED.toSortedByType(d);
+        context["isType"] = true;
+      } else if(q == "in_book"){
+        context["recipes"] = FILTERED.toSortedArray(d);
+        context["isBook"] = true;
+      }
+      context.desc = (d == true ? false : true);
+      context.isDesc =  !(context.desc);
+    }else{
+      context.desc = true;
+      context.isDesc = false;
+      context["isBook"] = true;
+      context["recipes"] = FILTERED.toSortedArray();
+    }
+    
     res.render('choose_recipe', context);
   }).catch(err=>console.error(err));
 

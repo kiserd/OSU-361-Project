@@ -18,18 +18,61 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">View Ingredients</th>
-            <th scope="col">Save Recipe</th>
+            
+              <th scope="col"><a style="color:#222;" href="/choose_recipe?sort=name&desc={{desc}}">Name 
+              {{#if isName}}
+                {{#if isDesc}}
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                </svg>
+                {{else}}
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+                {{/if}}
+              {{/if}}
+              </a>
+              </th>
+            
+              <th scope="col"><a style="color:#222" href="/choose_recipe?sort=type&desc={{desc}}">Meal Type
+              {{#if isType}}
+                {{#if isDesc}}
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                </svg>
+                {{else}}
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+                {{/if}}
+              {{/if}}
+              </a></th>
+            <th style="color:#939393" scope="col">View Ingredients</th>
+            
+              <th scope="col"><a style="color:#222" href="/choose_recipe?sort=in_book&desc={{desc}}">Save/View Recipe
+                {{#if isBook}}
+                {{#if isDesc}}
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                </svg>
+                {{else}}
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+                {{/if}}
+              {{/if}}
+              </a></th>
+            
           </tr>
         </thead>
         <tbody>
           {{#each recipes}}
           <tr>
             <td>
-              <span id="recipe_name_{{this.id}}"><b>{{this.name}}</b></span>
-              <br/>
-              <small>{{this.type}}</small>
+              <span style="font-size:120%" id="recipe_name_{{this.id}}"><b>{{this.name}}</b></span>
+            </td>
+            <td>
+              <span>{{this.type}}</span>
             </td>
             <td>
 
