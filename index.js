@@ -86,6 +86,10 @@ app.get('/water_impact', (req , res, next) => {
   res.render('water_impact');
 });
 
+app.get('/about_us', (req , res, next) => {
+  res.render('water_impact');
+});
+
 class ChooseRecipeMap extends Map{
   constructor(rows=Array){
     super();
